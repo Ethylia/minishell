@@ -1,23 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.h                                              :+:      :+:    :+:   */
+/*   str3.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/13 13:18:16 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/13 16:42:48 by francoma         ###   ########.fr       */
+/*   Created: 2023/03/13 17:32:40 by francoma          #+#    #+#             */
+/*   Updated: 2023/03/13 17:33:48 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ENV_H
-# define ENV_H
+#include "util.h"
 
-char		**update_env(char **env, char *var);
-char		**rm_env(char **env, char *var);
-char		**copy_env(char **env);
-void		print_env(char *env[]);
-char		**free_env(char **env);
-char const	*get_var(char const **env, char const *var);
+int	starts_with(const char *s, const char *prefix)
+{
+	size_t	len;
 
-#endif
+	len = strln(prefix);
+	return (strncmp(s, prefix, len));
+}

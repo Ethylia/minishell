@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 13:11:04 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/13 15:34:22 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/13 18:25:36 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 size_t	env_len(char **env);
 
-static int	is_same_var(char *v1, char *v2)
+static int	is_same_var(char const *v1, char const *v2)
 {
 	return (strcmp_del(v1, v2, '=') == 0);
 }
@@ -92,4 +92,20 @@ char	**rm_env(char **env, char *var)
 		i++;
 	}
 	return (res);
+}
+
+char const	*get_var(char const **env, char const *var)
+{
+	size_t	i;
+
+	if (!env)
+		return (NULL);
+	i = 0;
+	while (env[i])
+	{
+		if (is_same_var(env[i], var))
+			return (env[i] + strln_del(env[i], '=') + 1);
+		i++;
+	}
+	return (NULL);
 }

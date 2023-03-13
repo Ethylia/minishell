@@ -1,8 +1,11 @@
-SRC_FILES	=	env1.c \
+SRC_FILES	=	builtins/sh_cd.c \
+				env1.c \
 				env2.c \
 				main.c \
 				util/mem.c \
-				util/str.c
+				util/str.c \
+				util/str2.c \
+				util/str3.c
 
 SRC_DIR		=	src
 

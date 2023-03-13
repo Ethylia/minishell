@@ -1,23 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.h                                              :+:      :+:    :+:   */
+/*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/13 13:18:16 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/13 16:42:48 by francoma         ###   ########.fr       */
+/*   Created: 2023/03/13 17:22:04 by francoma          #+#    #+#             */
+/*   Updated: 2023/03/13 17:26:00 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ENV_H
-# define ENV_H
+#ifndef BUILTINS_H
+# define BUILTINS_H
 
-char		**update_env(char **env, char *var);
-char		**rm_env(char **env, char *var);
-char		**copy_env(char **env);
-void		print_env(char *env[]);
-char		**free_env(char **env);
-char const	*get_var(char const **env, char const *var);
+int	sh_cd(int argc, char *argv[], char *envp[]);
 
 #endif
