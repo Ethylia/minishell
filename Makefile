@@ -1,6 +1,8 @@
-SRC_FILES	=	shell.c \
-				env1.c \
+SRC_FILES	=	env1.c \
 				env2.c \
+				main.c \
+				util/mem.c \
+				util/str.c
 
 SRC_DIR		=	src
 
@@ -11,12 +13,13 @@ NAME=minishell
 
 CC=gcc
 CCFLAGS=-Wall -Wextra -Wpedantic -fno-exceptions -Wpointer-arith -Werror
-LDFLAGS=-pthread -lreadline
+LDFLAGS=
+LDLIBS=-pthread -lreadline
 
-all: mkpaths $(NAME)
+all: $(NAME)
 
 norm:
-	norminette $(wildcard src/*.c) $(wildcard src/*.h)
+	norminette src/
 
 noerr: CCFLAGS:=$(subst -Werror,,$(CCFLAGS))
 noerr: all
@@ -31,19 +34,15 @@ clean:
 fclean: clean
 	@-rm -f $(NAME)
 
-mkpaths: $(OBJ_DIR)
-$(OBJ_DIR):
-	-mkdir $@
-
 re: fclean all
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(dir $@)
 	$(CC) $(CCFLAGS) -c -o $@ $< -MMD
 
 $(NAME): $(OBJ_FILES)
-	$(CC) $(LDFLAGS) $^ -o $(NAME)
+	$(CC) $^ -o $(NAME) $(LDFLAGS) $(LDLIBS) 
 
-.PHONY: clean fclean re mkpaths all norm
-.IGNORE: mkpaths
+.PHONY: clean fclean re all norm
 
 -include $(OBJ_FILES:.o=.d)

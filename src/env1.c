@@ -6,10 +6,13 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 14:40:05 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/13 14:38:53 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/13 15:34:40 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
+#include <stdlib.h>
+#include "util/util.h"
 #include "env.h"
 
 size_t	env_len(char **env)
@@ -24,7 +27,7 @@ size_t	env_len(char **env)
 	return (len);
 }
 
-char	**ft_copy_env(char **env)
+char	**copy_env(char **env)
 {
 	char	**res;
 	size_t	len;
@@ -33,21 +36,22 @@ char	**ft_copy_env(char **env)
 	len = env_len(env);
 	if (!len)
 		return (NULL);
-	res = ft_calloc(len, sizeof(*res));
+	res = malloc(sizeof(*res) * (len + 1));
 	if (!res)
 		return (NULL);
 	i = 0;
-	while (i < len - 1)
+	while (i < len)
 	{
-		res[i] = ft_strdup(env[i]);
+		res[i] = strdup(env[i]);
 		if (!res[i])
-			ft_free_env(res);
+			free_env(res);
 		i++;
 	}
+	res[len] = NULL;
 	return (res);
 }
 
-void	ft_print_env(char *env[])
+void	print_env(char *env[])
 {
 	if (!env)
 		return ;
@@ -58,12 +62,12 @@ void	ft_print_env(char *env[])
 	}
 }
 
-void	*free_env(char **env)
+char	**free_env(char **env)
 {
 	size_t	i;
 
 	if (!env)
-		return ;
+		return (NULL);
 	i = 0;
 	while (env[i])
 	{

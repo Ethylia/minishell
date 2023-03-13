@@ -1,22 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.h                                              :+:      :+:    :+:   */
+/*   util.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/13 13:18:16 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/13 15:34:44 by francoma         ###   ########.fr       */
+/*   Created: 2023/03/13 15:21:33 by francoma          #+#    #+#             */
+/*   Updated: 2023/03/13 15:54:16 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ENV_H
-# define ENV_H
+#ifndef UTIL_H
+# define UTIL_H
 
-char	**update_env(char **env, char *var);
-char	**rm_env(char **env, char *var);
-char	**copy_env(char **env);
-void	print_env(char *env[]);
-char	**free_env(char **env);
+char	*strdup(const char *s1);
+void	*memcpy(void *dst, const void *src, size_t n);
+
+size_t	strln(const char *s);
+int		strcmp_del(const char *s1, const char *s2, char del);
 
 #endif
