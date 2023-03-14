@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
+/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:30:34 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/14 15:51:35 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/14 16:04:11 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,9 @@ static int	is_pipeline_end(t_cmd *cmds)
 int	make_pipe(int ppipefd[2], t_cmd *cmds)
 {
 	int	pipefd[2];
+	int	res;
 	
+	res = SUCCESS;
 	if (!is_pipeline_end(cmds)
 		&& pipe(pipefd) == ERROR)
 		return (ERROR);
@@ -57,14 +59,13 @@ int	make_pipe(int ppipefd[2], t_cmd *cmds)
 			close(pipefd[0]);
 			dup2(pipefd[1], STDOUT_FILENO);
 		}
-		execve(cmds[0].path, cmds[0].argv, NULL);
-		return (ERROR);
+		return (execve(cmds[0].path, cmds[0].argv, NULL));
 	}
 	if (!is_pipeline_end(cmds))
-		(make_pipe(pipefd, cmds + 1));
+		res = make_pipe(pipefd, cmds + 1);
 	close(pipefd[0]);
 	close(pipefd[1]);
-	return (SUCCESS);
+	return (res);
 }
 
 int main(void)
@@ -76,7 +77,7 @@ int main(void)
 	cmds[2] = (t_cmd){.path = NULL};
 	if (make_pipe(NULL, cmds) == ERROR)
 		return (EXIT_FAILURE);
-	while(waitpid(-1, NULL, 0) != -1)
-		continue ;
+	while (waitpid(-1, NULL, 0) != -1)
+		;
 	return (EXIT_SUCCESS);
 }
