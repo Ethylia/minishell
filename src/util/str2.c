@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   str2.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 16:34:57 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/13 18:25:20 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/14 09:32:41 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,10 @@ char	*concatstr(size_t n, ...)
 	copy_strs(res, n, va);
 	va_end(va);
 	return (res);
+}
+
+int	whitespace(char c)
+{
+	return (c == ' ' || c == '\t' || c == '\n' || c == '\v' || c == '\f'
+		|| c == '\r');
 }
