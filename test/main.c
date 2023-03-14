@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:30:34 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/14 15:43:45 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/14 15:51:35 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,9 @@ int	make_pipe(int ppipefd[2], t_cmd *cmds)
 		return (ERROR);
 	}
 	if (!is_pipeline_end(cmds))
-		return (make_pipe(pipefd, cmds + 1));
+		(make_pipe(pipefd, cmds + 1));
+	close(pipefd[0]);
+	close(pipefd[1]);
 	return (SUCCESS);
 }
 
@@ -74,5 +76,7 @@ int main(void)
 	cmds[2] = (t_cmd){.path = NULL};
 	if (make_pipe(NULL, cmds) == ERROR)
 		return (EXIT_FAILURE);
+	while(waitpid(-1, NULL, 0) != -1)
+		continue ;
 	return (EXIT_SUCCESS);
 }

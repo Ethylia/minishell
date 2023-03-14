@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shell.c                                            :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 07:57:50 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/13 15:07:24 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/14 14:12:38 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,21 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-int	main(void)
-{
-	char	*line;
-	char	*path;
+// int	main(void)
+// {
+// 	char	*line;
+// 	char	*path;
 
-	path = getenv("PATH");
-	printf("PATH: %s\n", path);
-	line = readline("msh$ ");
-	while (line)
-	{
-		printf("%s\n", line);
-		if (*line)
-			add_history(line);
-		free(line);
-		line = readline("msh$ ");
-	}
-	printf("\n");
-}
+// 	path = getenv("PATH");
+// 	printf("PATH: %s\n", path);
+// 	line = readline("msh$ ");
+// 	while (line)
+// 	{
+// 		printf("%s\n", line);
+// 		if (*line)
+// 			add_history(line);
+// 		free(line);
+// 		line = readline("msh$ ");
+// 	}
+// 	printf("\n");
+// }
