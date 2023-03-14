@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:30:34 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/14 16:04:11 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/14 16:24:49 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <stdlib.h>
 #include <signal.h>
 #include <stdio.h>
+#include "../src/parser/cmd.h"
 
 #define ERROR -1
 #define SUCCESS 0
@@ -27,7 +28,7 @@ typedef struct s_cmd
 	char *const	*argv;
 }	t_cmd;
 
-static int	is_pipeline_start(int *ppipefd)
+static int	is_pipeline_start(t_pipe *ppipefd)
 {
 	return (ppipefd == NULL);
 }
@@ -37,34 +38,34 @@ static int	is_pipeline_end(t_cmd *cmds)
 	return (cmds[1].path == NULL);
 }
 
-int	make_pipe(int ppipefd[2], t_cmd *cmds)
+int	make_pipe(t_pipe *ppipefd, t_cmd *cmds)
 {
-	int	pipefd[2];
-	int	res;
+	t_pipe	pipefd;
+	int		res;
 	
 	res = SUCCESS;
 	if (!is_pipeline_end(cmds)
-		&& pipe(pipefd) == ERROR)
+		&& pipe(&pipefd.read) == ERROR)
 		return (ERROR);
 	cmds[0].pid = fork();
 	if (cmds[0].pid == 0)
 	{
 		if (!is_pipeline_start(ppipefd))
 		{
-			close(ppipefd[1]);
-			dup2(ppipefd[0], STDIN_FILENO);
+			close(ppipefd->write);
+			dup2(ppipefd->read, STDIN_FILENO);
 		}			
 		if (!is_pipeline_end(cmds))
 		{
-			close(pipefd[0]);
-			dup2(pipefd[1], STDOUT_FILENO);
+			close(pipefd.read);
+			dup2(pipefd.write, STDOUT_FILENO);
 		}
 		return (execve(cmds[0].path, cmds[0].argv, NULL));
 	}
 	if (!is_pipeline_end(cmds))
-		res = make_pipe(pipefd, cmds + 1);
-	close(pipefd[0]);
-	close(pipefd[1]);
+		res = make_pipe(&pipefd, cmds + 1);
+	close(pipefd.read);
+	close(pipefd.write);
 	return (res);
 }
 
