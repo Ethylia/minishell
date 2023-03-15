@@ -6,14 +6,15 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 09:03:29 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/15 14:26:04 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/15 15:45:09 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../parser/cmd.h"
 #include "../util/util.h"
+#include "../def.h"
 #include "builtins.h"
-#include "def.h"
+#include "env.h"
 
 static const char	**get_builtins_names(void)
 {
@@ -24,10 +25,10 @@ static const char	**get_builtins_names(void)
 	return (names);
 }
 
-static const t_builtin_func	*get_builtin_funcs(void)
+static const t_builtin_func	*get_builtins_funcs(void)
 {
 	static const t_builtin_func	funcs[] = {echo, cd, pwd, export,
-		unset, env, exit, NULL};
+		unset, env, bi_exit, NULL};
 
 	return (funcs);
 }
@@ -64,11 +65,16 @@ int	exec_builtin(t_cmd *cmd)
 	const char				**names;
 	size_t					i;
 
+	funcs = get_builtins_funcs();
+	names = get_builtins_names();
 	i = 0;
 	while (funcs[i])
 	{
 		if (strcmp(cmd->argv[0], names[i]) == 0)
-			return (funcs[i](get_argc(cmd->argv), cmd->argv, NULL));
+		{
+			return (funcs[i](get_argc(cmd->argv),
+				cmd->argv, *(get_exported_env())));
+		}
 		i++;
 	}
 	return (ERROR);
