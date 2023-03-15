@@ -1,26 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins.h                                         :+:      :+:    :+:   */
+/*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/13 17:22:04 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/15 09:18:33 by francoma         ###   ########.fr       */
+/*   Created: 2023/03/15 09:03:29 by francoma          #+#    #+#             */
+/*   Updated: 2023/03/15 10:24:43 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTINS_H
-# define BUILTINS_H
+#include "../parser/cmd.h"
+#include "../util/util.h"
+#include "builtins.h"
 
-# define BUILTIN_ECHO "echo"
-# define BUILTIN_CD "cd"
-# define BUILTIN_PWD "pwd"
-# define BUILTIN_EXPORT "export"
-# define BUILTIN_UNSET "unset"
-# define BUILTIN_ENV "env"
-# define BUILTIN_EXIT "exit"
+int	is_builtin(t_cmd *cmd)
+{
+	static const char *const	builtins[] = {BUILTIN_ECHO, BUILTIN_CD,
+		BUILTIN_PWD, BUILTIN_EXPORT, BUILTIN_UNSET,
+		BUILTIN_ENV, BUILTIN_EXIT, NULL};
+	size_t						i;
 
-int	sh_cd(int argc, char *argv[], char *envp[]);
-
-#endif
+	i = 0;
+	while (builtins[i])
+	{
+		if (strcmp(builtins[i], cmd->argv[0]) == 0)
+			return (1);
+		i++;
+	}
+	return (0);
+}
