@@ -1,7 +1,16 @@
-SRC_FILES	=	builtins/sh_cd.c \
+SRC_FILES	=	builtins/builtins.c \
+				builtins/cd.c \
+				builtins/echo.c \
+				builtins/export.c \
+				builtins/pwd.c \
+				cmd1.c \
 				env1.c \
 				env2.c \
+				env3.c \
+				error.c \
 				main.c \
+				pipeline.c \
+				redir.c \
 				util/mem.c \
 				util/str.c \
 				util/str2.c \

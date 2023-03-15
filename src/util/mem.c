@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mem.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
+/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 15:19:28 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/14 14:04:13 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/15 13:19:58 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*strdup(const char *s1)
 	return (s2);
 }
 
-void	*memcpy(void *dst, const void *src, size_t n)
+void	*memcopy(void *dst, const void *src, size_t n)
 {
 	size_t	i;
 

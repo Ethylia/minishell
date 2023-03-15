@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 13:11:04 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/13 18:25:36 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/15 13:32:25 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static char	**append_env(char **env, char *var)
 		free(res);
 		return (free_env(env));
 	}
-	memcpy(res, env, sizeof(*env) * (len));
+	memcopy(res, env, sizeof(*env) * (len));
 	res[len] = tmp;
 	res[len + 1] = NULL;
 	free(env);
@@ -83,8 +83,8 @@ char	**rm_env(char **env, char *var)
 			if (!res)
 				return (free_env(env));
 			free(env[i]);
-			memcpy(res, env, sizeof(*res) * i);
-			memcpy(res + i, env + i + 1, sizeof(*res) * (curr_len - i));
+			memcopy(res, env, sizeof(*res) * i);
+			memcopy(res + i, env + i + 1, sizeof(*res) * (curr_len - i));
 			res[curr_len - 1] = NULL;
 			free(env);
 			break ;
@@ -94,17 +94,17 @@ char	**rm_env(char **env, char *var)
 	return (res);
 }
 
-char const	*get_var(char const **env, char const *var)
+char const	*get_var(char *const envp[], char const *var)
 {
 	size_t	i;
 
-	if (!env)
+	if (!envp)
 		return (NULL);
 	i = 0;
-	while (env[i])
+	while (envp[i])
 	{
-		if (is_same_var(env[i], var))
-			return (env[i] + strln_del(env[i], '=') + 1);
+		if (is_same_var(envp[i], var))
+			return (envp[i] + strln_del(envp[i], '=') + 1);
 		i++;
 	}
 	return (NULL);

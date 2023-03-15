@@ -1,27 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/15 10:51:16 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/15 13:18:52 by francoma         ###   ########.fr       */
+/*   Created: 2023/03/15 11:33:44 by francoma          #+#    #+#             */
+/*   Updated: 2023/03/15 13:20:19 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <string.h>	// strerror
+#include <unistd.h>	// getcwd, write
+#include <stdio.h>	// printf
 #include <stdlib.h>	// free
-#include <errno.h>	// errno
-#include <unistd.h>	// write
-#include "def.h"
-#include "util/util.h"
+#include "../util/util.h"
+#include "../error.h"
+#include "../def.h"
 
-void	print_error(const char *problem)
+int	pwd(const int argc, char *const argv[], char *const envp[])
 {
-	char	*msg;
+	char	*cwd;
 
-	msg = concatstr(6, NAME, ": ", problem, ": ", strerror(errno), "\n");
-	write(STDERR_FILENO, msg, strln(msg));
-	free(msg);
+	(void) argc;
+	(void) argv;
+	(void) envp;
+	cwd = getcwd(NULL, 0);
+	if (!cwd)
+	{
+		print_error("pwd");
+		return (ERROR);
+	}
+	printf("%s\n", cwd);
+	free(cwd);
+	return (SUCCESS);
 }

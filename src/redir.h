@@ -1,27 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   redir.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/15 10:51:16 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/15 13:18:52 by francoma         ###   ########.fr       */
+/*   Created: 2023/03/15 11:05:10 by francoma          #+#    #+#             */
+/*   Updated: 2023/03/15 13:22:29 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <string.h>	// strerror
-#include <stdlib.h>	// free
-#include <errno.h>	// errno
-#include <unistd.h>	// write
-#include "def.h"
-#include "util/util.h"
+#ifndef REDIR_H
+# define REDIR_H
 
-void	print_error(const char *problem)
-{
-	char	*msg;
+int	redir_input(char **redirin);
+int	redir_output(char **redirout);
 
-	msg = concatstr(6, NAME, ": ", problem, ": ", strerror(errno), "\n");
-	write(STDERR_FILENO, msg, strln(msg));
-	free(msg);
-}
+#endif

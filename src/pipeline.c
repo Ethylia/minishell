@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 08:46:35 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/15 10:23:54 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/15 14:25:55 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <signal.h>
+#include "builtins/builtins.h"
 #include "parser/cmd.h"
 #include "def.h"
+#include "redir.h"
 
 static int	is_pipeline_end(t_cmd *cmd)
 {
@@ -47,8 +49,10 @@ static int	exec_cmd(t_cmd *cmd, t_pipe *prev_pipe, t_pipe *next_pipe)
 	if (!is_pipeline_end(cmd))
 		write_pipe(next_pipe);
 	// resolve VARIABLES
-	// if builtin
-	// file io
+	redir_input(cmd->redirin);
+	redir_output(cmd->redirout);
+	if (is_builtin(cmd))
+		return (exec_builtin(cmd));
 	return (execve(cmd->argv[0], cmd->argv, NULL));	
 }
 
@@ -68,6 +72,6 @@ int	pipeline(t_pipe *prev_pipe, t_cmd *cmd)
 		close_pipe(prev_pipe);
 	res = SUCCESS;
 	if (!is_pipeline_end(cmd))
-		res = make_pipe(&next_pipe, cmd->next);
+		res = pipeline(&next_pipe, cmd->next);
 	return (res);
 }
