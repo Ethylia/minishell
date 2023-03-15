@@ -1,21 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   def.h                                              :+:      :+:    :+:   */
+/*   error.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/13 17:48:26 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/15 10:52:07 by francoma         ###   ########.fr       */
+/*   Created: 2023/03/15 10:56:24 by francoma          #+#    #+#             */
+/*   Updated: 2023/03/15 13:12:37 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DEF_H
-# define DEF_H
+#ifndef ERROR_H
+# define ERROR_H
 
-# define ERROR -1
-# define SUCCESS 0
-
-# define NAME "minishell"
+void	print_error(const char *problem);
 
 #endif

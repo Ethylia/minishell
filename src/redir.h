@@ -1,21 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   def.h                                              :+:      :+:    :+:   */
+/*   redir.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/13 17:48:26 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/15 10:52:07 by francoma         ###   ########.fr       */
+/*   Created: 2023/03/15 11:05:10 by francoma          #+#    #+#             */
+/*   Updated: 2023/03/15 13:22:29 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DEF_H
-# define DEF_H
+#ifndef REDIR_H
+# define REDIR_H
 
-# define ERROR -1
-# define SUCCESS 0
-
-# define NAME "minishell"
+int	redir_input(char **redirin);
+int	redir_output(char **redirout);
 
 #endif

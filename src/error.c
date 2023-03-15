@@ -1,21 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   def.h                                              :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/13 17:48:26 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/15 10:52:07 by francoma         ###   ########.fr       */
+/*   Created: 2023/03/15 10:51:16 by francoma          #+#    #+#             */
+/*   Updated: 2023/03/15 13:18:52 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DEF_H
-# define DEF_H
+#include <string.h>	// strerror
+#include <stdlib.h>	// free
+#include <errno.h>	// errno
+#include <unistd.h>	// write
+#include "def.h"
+#include "util/util.h"
 
-# define ERROR -1
-# define SUCCESS 0
+void	print_error(const char *problem)
+{
+	char	*msg;
 
-# define NAME "minishell"
-
-#endif
+	msg = concatstr(6, NAME, ": ", problem, ": ", strerror(errno), "\n");
+	write(STDERR_FILENO, msg, strln(msg));
+	free(msg);
+}

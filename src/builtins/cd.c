@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sh_cd.c                                            :+:      :+:    :+:   */
+/*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 16:30:41 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/13 18:27:38 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/15 13:07:33 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include "../env.h"
 #include "../def.h"
 
-static void	print_path(char const *envp[], char *path)
+static void	print_path(char *const envp[], const char *path)
 {
 	const char	*home;
 
@@ -28,11 +28,11 @@ static void	print_path(char const *envp[], char *path)
 		printf("%s\n", path);
 }
 
-static int	update_oldpwd(char *envp[])
+static int	update_oldpwd(char **envp)
 {
 	char	*oldpwd;
 
-	oldpwd = concatstr(2, "OLDPWD=", get_var((char const **)envp, "PWD"));
+	oldpwd = concatstr(2, "OLDPWD=", get_var(envp, "PWD"));
 	if (!oldpwd)
 		return (ERROR);
 	envp = update_env(envp, oldpwd);
@@ -42,7 +42,7 @@ static int	update_oldpwd(char *envp[])
 	return (SUCCESS);
 }
 
-static int	update_pwd(char *envp[])
+static int	update_pwd(char **envp)
 {
 	char	*path;
 	char	*pwd;
@@ -52,7 +52,7 @@ static int	update_pwd(char *envp[])
 	free(path);
 	if (!pwd)
 		return (ERROR);
-	envp = update_env(envp, pwd);
+	envp = update_env((char **)envp, pwd);
 	free(pwd);
 	if (!envp)
 		return (ERROR);
@@ -71,7 +71,7 @@ static int	update_pwd(char *envp[])
 // ..							: (remove last dir of pwd)
 // does not start with /		: modifies pwd
 // set $PWD $OLDPWD
-int	sh_cd(int argc, char *argv[], char *envp[])
+int	cd(const int argc, char *const argv[], char *const envp[])
 {
 	char	*path;
 
@@ -80,16 +80,16 @@ int	sh_cd(int argc, char *argv[], char *envp[])
 	else if (strcmp(argv[1], "-") == 0)
 	{
 		path = getenv("OLDPWD");
-		print_path((char const **)envp, path);
+		print_path(envp, path);
 	}
 	else
 		path = argv[1];
 	if (chdir(path) == -1)
 	{
 		perror(path);
-		return (EXIT_FAILURE);
+		return (ERROR);
 	}
-	update_oldpwd(envp);
-	update_pwd(envp);
-	return (EXIT_SUCCESS);
+	update_oldpwd((char **)envp);
+	update_pwd((char **)envp);
+	return (SUCCESS);
 }

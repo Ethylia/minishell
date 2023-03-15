@@ -1,21 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   def.h                                              :+:      :+:    :+:   */
+/*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/13 17:48:26 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/15 10:52:07 by francoma         ###   ########.fr       */
+/*   Created: 2023/03/15 12:48:23 by francoma          #+#    #+#             */
+/*   Updated: 2023/03/15 13:12:25 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DEF_H
-# define DEF_H
+// env:
+// local_env: local + env
+// export: rm local_env, put in env
 
-# define ERROR -1
-# define SUCCESS 0
-
-# define NAME "minishell"
-
-#endif
+int	export(const int argc, char *const argv[], char *const envp[])
+{
+	(void) argc;
+	(void) argv;
+	(void) envp;
+	return (0);
+}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   str2.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
+/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 16:34:57 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/14 09:32:41 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/15 13:19:58 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static char	*copy_strs(char *dst, size_t n, va_list va)
 	{
 		str = va_arg(va, char *);
 		ln = strln(str);
-		memcpy(dst + whole_ln, str, ln);
+		memcopy(dst + whole_ln, str, ln);
 		whole_ln += ln;
 		i++;
 	}
