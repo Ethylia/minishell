@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 17:48:26 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/15 09:08:52 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/15 10:52:07 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,5 +15,7 @@
 
 # define ERROR -1
 # define SUCCESS 0
+
+# define NAME "minishell"
 
 #endif
