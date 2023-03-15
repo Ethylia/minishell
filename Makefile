@@ -5,7 +5,8 @@ SRC_FILES	=	builtins/sh_cd.c \
 				util/mem.c \
 				util/str.c \
 				util/str2.c \
-				util/str3.c
+				util/str3.c \
+				parser/parse.c
 
 SRC_DIR		=	src
 
@@ -15,7 +16,7 @@ OBJ_FILES:=$(addprefix $(OBJ_DIR)/,$(SRC_FILES:.c=.o))
 NAME=minishell
 
 CC=gcc
-CCFLAGS=-Wall -Wextra -Wpedantic -fno-exceptions -Wpointer-arith -Werror
+CCFLAGS=-Wall -Wextra -Wpedantic -fno-exceptions -Wpointer-arith -Werror -Isrc
 LDFLAGS=
 LDLIBS=-pthread -lreadline
 
