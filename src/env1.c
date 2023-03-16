@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 14:40:05 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/13 15:34:40 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/15 16:02:55 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char	**copy_env(char **env)
 	return (res);
 }
 
-void	print_env(char *env[])
+void	print_env(char *const env[])
 {
 	if (!env)
 		return ;

@@ -1,32 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env3.c                                             :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/15 12:57:21 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/15 16:25:05 by francoma         ###   ########.fr       */
+/*   Created: 2023/03/15 15:10:32 by francoma          #+#    #+#             */
+/*   Updated: 2023/03/15 16:02:34 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include "def.h"
+#include "env.h"
 
-char	***get_exported_env(void)
+int	env(const int argc, char *const argv[], char *const envp[])
 {
-	static char	**env;
-
-	return (&env);
-}
-
-void	set_exported_env(char	*env[])
-{
-	*(get_exported_env()) = env;
-}
-
-char	***get_local_env(void)
-{
-	static char	**env;
-
-	return (&env);
+	(void) argc;
+	(void) argv;
+	print_env(envp);
+	return (SUCCESS);	
 }

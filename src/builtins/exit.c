@@ -1,32 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env3.c                                             :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/15 12:57:21 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/15 16:25:05 by francoma         ###   ########.fr       */
+/*   Created: 2023/03/15 15:11:02 by francoma          #+#    #+#             */
+/*   Updated: 2023/03/15 16:20:35 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
+#include "env.h"
 
-char	***get_exported_env(void)
+int	bi_exit(const int argc, char *const argv[], char *const envp[])
 {
-	static char	**env;
-
-	return (&env);
-}
-
-void	set_exported_env(char	*env[])
-{
-	*(get_exported_env()) = env;
-}
-
-char	***get_local_env(void)
-{
-	static char	**env;
-
-	return (&env);
+	(void) argc;
+	(void) argv;
+	(void) envp;
+	free_env(*(get_exported_env()));
+	free_env(*(get_local_env()));
+	exit(EXIT_SUCCESS);
+	return (0);	
 }

@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 17:22:04 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/15 14:16:37 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/15 15:02:17 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,6 @@ int	pwd(const int argc, char *const argv[], char *const envp[]);
 int	export(const int argc, char *const argv[], char *const envp[]);
 int	unset(const int argc, char *const argv[], char *const envp[]);
 int	env(const int argc, char *const argv[], char *const envp[]);
-int	exit(const int argc, char *const argv[], char *const envp[]);
+int	bi_exit(const int argc, char *const argv[], char *const envp[]);
 
 #endif
