@@ -6,19 +6,13 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 15:29:19 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/15 14:27:20 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/16 15:30:47 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cmd.h"
 
 #include "util/util.h"
-
-static void	skipwhite(char **line)
-{
-	while (whitespace(**line))
-		++(*line);
-}
 
 static size_t	delim(const char *s)
 {
@@ -108,7 +102,7 @@ void	sortcmd(t_cmd *cmd, char *line, size_t *c)
 	size_t	t;
 
 	t = delim(line);
-	if (t == 1)
+	if (t > 0 && t <= 2)
 	{
 		
 	}
