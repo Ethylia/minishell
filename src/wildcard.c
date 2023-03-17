@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 11:39:40 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/17 16:24:53 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/17 16:32:40 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ int	matches_wildcard(const char *wildcard, const char *candidate)
 	size_t	i;
 	size_t	j;
 	size_t	literal_len;
-	size_t	asterix_len;
 
 	i = 0;
 	j = 0;

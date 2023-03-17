@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 14:43:46 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/17 15:15:40 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/17 16:32:04 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,8 @@ char	*find_in_path(char const *word, char const *env_path)
 // Must free return
 char	*resolve_exec_path(char *word)
 {
-	char const * 		*envp;
 	char const			*env_path;
-	char				*path;
-	
+
 	if (strchar(word, '/'))
 		return (concatstr(1, word));
 	env_path = get_var(*(get_exported_env()), "PATH");

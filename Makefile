@@ -1,26 +1,29 @@
 SRC_FILES	=	builtins/builtins.c \
-	builtins/cd.c \
-	builtins/echo.c \
-	builtins/env.c \
-	builtins/exit.c \
-	builtins/export.c \
-	builtins/pwd.c \
-	builtins/unset.c \
-	cmd1.c \
-	env1.c \
-	env2.c \
-	env3.c \
-	error.c \
-	main.c \
-	redir.c \
-	util/mem.c \
-	util/str.c \
-	util/str2.c \
-	parser/parse.c \
-	parser/token.c \
-	parser/tokentype.c \
-	util/concatstr1.c \
-	util/concatstr2.c \
+				builtins/cd.c \
+				builtins/echo.c \
+				builtins/env.c \
+				builtins/exit.c \
+				builtins/export.c \
+				builtins/pwd.c \
+				builtins/unset.c \
+				cmd1.c \
+				env1.c \
+				env2.c \
+				env3.c \
+				error.c \
+				main.c \
+				parser/parse.c \
+				parser/token.c \
+				parser/tokentype.c \
+				path.c \
+				redir.c \
+				util/concatstr1.c \
+				util/concatstr2.c \
+				util/mem.c \
+				util/str.c \
+				util/str2.c \
+				wildcard.c \
+				wildcard2.c
 
 SRC_DIR		=	src
 
