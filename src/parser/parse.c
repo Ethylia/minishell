@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 15:29:19 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/17 14:27:02 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/17 15:51:11 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,10 @@ static int	initcmd(t_cmd *cmd, t_counts c)
 		free(cmd->redirout);
 		return (0);
 	}
+	cmd->argv[c.argc] = 0;
+	cmd->redirin[c.redirin] = 0;
+	cmd->redirout[c.redirout] = 0;
+	return (1);
 }
 
 t_cmd	buildcmd(t_token *tokens)
@@ -79,17 +83,19 @@ t_cmd	buildcmd(t_token *tokens)
 	c2.argc = 0;
 	c2.redirin = 0;
 	c2.redirout = 0;
-	i = -1;
-	while (tokens[i].type)
+	i = 0;
+	while (c2.argc != c.argc || c2.redirin != c.redirin
+		|| c2.redirout != c.redirout)
 	{
-		if (tokens[i].type & (tpipe | tand | tor))
-			break ;
 		if (tokens[i].type & (tdin))
-			skiparg(&tokens + (++c2.redirin) * 0);
+			cmd.redirin[c2.redirin++] = concattokens(tokens + i + 1,
+					tokenlen(tokens + i + 1, tdelim));
 		else if (tokens[i].type & (tdout))
-			skiparg(&tokens + (++c2.redirout) * 0);
+			cmd.redirout[c2.redirout++] = concattokens(tokens + i + 1,
+					tokenlen(tokens + i + 1, tdelim));
 		else if (tokens[i].type & (td | twrd))
-			skiparg(&tokens + (++c2.argc) * 0);
+			cmd.argv[c2.argc++] = concattokens(tokens + i + 1,
+					tokenlen(tokens + i + 1, tdelim));
 	}
 	return (cmd);
 }

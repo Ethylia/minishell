@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 15:24:44 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/17 14:21:42 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/17 15:36:11 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,14 @@ char	*concattokens(t_token *tokens, size_t len)
 	i = -1;
 	j = 0;
 	strlen = 0;
+	if (tokens->type == tws)
+		++i;
 	while (++i < len)
 		strlen += tokens[i].len;
 	str = malloc(sizeof(char) * (strlen + 1));
 	if (!str)
 		return (0);
-	i = -1;
+	i = -1 + (tokens->type == tws);
 	while (++i < len)
 	{
 		memcopy(str + j, tokens[i].val, tokens[i].len);

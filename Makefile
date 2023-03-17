@@ -12,12 +12,15 @@ SRC_FILES	=	builtins/builtins.c \
 	env3.c \
 	error.c \
 	main.c \
-	pipeline.c \
 	redir.c \
 	util/mem.c \
 	util/str.c \
 	util/str2.c \
-	util/str3.c
+	parser/parse.c \
+	parser/token.c \
+	parser/tokentype.c \
+	util/concatstr1.c \
+	util/concatstr2.c \
 
 SRC_DIR		=	src
 
@@ -44,7 +47,7 @@ debug: all
 
 clean:
 	@-rm -rf $(OBJ_DIR)/*.o $(OBJ_DIR)/*.d
-	@-rm -fd $(OBJ_DIR)
+	@-rm -rf $(OBJ_DIR)/*/*.o $(OBJ_DIR)/*/*.d
 
 fclean: clean
 	@-rm -f $(NAME)

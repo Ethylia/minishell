@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 07:57:50 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/17 10:47:18 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/17 15:53:33 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,13 @@ void	execline(t_token *token)
 	while (next->type)
 	{
 		cmd = buildcmd(next);
-		r = execcmd(cmd);
+		r = 0;
+		for(int i = 0; cmd.argv[i]; i++)
+			printf("%s ", cmd.argv[i]);
+		for(int i = 0; cmd.redirin[i]; i++)
+			printf("< %s ", cmd.redirin[i]);
+		for(int i = 0; cmd.redirout[i]; i++)
+			printf("> %s ", cmd.redirout[i]);
 		freecmd(&cmd);
 		next = findafter(next, tand | tor);
 		if (!next->type)
@@ -52,8 +58,7 @@ int	main(__attribute__((unused))int argc,
 	line = readline("msh$ ");
 	while (line)
 	{
-		skipwhite((const char **)&line);
-		token = tokenize(line);
+		token = tokenize(line + countwhite(line));
 		if (token)
 		{
 			add_history(line);
