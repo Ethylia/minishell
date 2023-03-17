@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 13:09:15 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/16 16:48:16 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/17 10:43:44 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,40 @@
 
 #include "util/util.h"
 
-static size_t	createtoken(t_token *token, const char *line)
+t_token	*findnext(t_token *tokens, enum e_tokens type)
+{
+	while (tokens->type)
+	{
+		if (tokens->type & type)
+			return (tokens);
+		++tokens;
+	}
+	return (0);
+}
+
+t_token	*findafter(t_token *tokens, enum e_tokens type)
+{
+	while (tokens->type)
+	{
+		if (tokens->type & type)
+			return (tokens + 1);
+		++tokens;
+	}
+	return (tokens);
+}
+
+static size_t	createtoken(t_token *token, char *line)
 {
 	size_t	i;
 
 	token->len = 0;
-	token->next = 0;
 	token->type = gettoken(line);
-	i = (token->type == tredirin_heredoc || token->type == tredirout_append
+	i = (token->type == thdoc || token->type == tapp
 			|| token->type == tor || token->type == tand)
-		+ !(token->type == twhitespace || token->type == tword);
+		+ !(token->type == tws || token->type == twrd);
 	token->val = line + i;
-	if (token->type != twhitespace && token->type != tword)
-		return ;
+	if (token->type != tws && token->type != twrd)
+		return (i);
 	while (line[i])
 	{
 		if (gettoken(line + i) != token->type)
@@ -37,43 +58,39 @@ static size_t	createtoken(t_token *token, const char *line)
 	return (i);
 }
 
-static size_t	counttokens(const char *line)
+static size_t	counttokens(char *line)
 {
 	size_t			n;
-	enum e_tokens	type;
+	enum e_tokens	t;
 
 	n = 0;
 	while (line[0])
 	{
 		t = gettoken(line);
-		line += (t == tredirin_heredoc || t == tredirout_append
-				|| t == tor || t == tand) + !(t == twhitespace || t == tword);
-		if (t == twhitespace || t == tword)
-		{
+		line += (t == thdoc || t == tapp
+				|| t == tor || t == tand) + !(t == tws || t == twrd);
+		if (t == tws || t == twrd)
 			while (line[0] && gettoken(line) == t)
 				++line;
-		}
 		++n;
 	}
 	return (n);
 }
 
-t_token	*tokenize(const char *line)
+t_token	*tokenize(char *line)
 {
-	t_token	*token;
-	t_token	*head;
-	size_t	n;
+	t_token	*tokens;
+	size_t	i;
 
-	token = malloc(counttokens(line) * sizeof(t_token));
-	head = token;
+	i = counttokens(line);
+	if (!i)
+		return (0);
+	tokens = malloc((i + 1) * sizeof(t_token));
+	if (!tokens)
+		return (0);
+	i = 0;
 	while (line[0])
-	{
-		line += createtoken(token, line);
-		if (line[0])
-		{
-			token->next = token + 1;
-			token = token->next;
-		}
-	}
-	return (head);
+		line += createtoken(&tokens[i++], line);
+	tokens[i].type = 0;
+	return (tokens);
 }

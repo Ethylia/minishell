@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 15:33:44 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/16 13:10:46 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/17 09:35:59 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define CMD_H
 
 # include <stddef.h>
+
+#include "token.h"
 
 typedef struct s_pipe
 {
@@ -31,23 +33,12 @@ enum e_OP
 
 typedef struct s_cmd
 {
-	char			**argv;
-	char			**redirin;
-	char			**redirout;
+	char	**argv;
+	const char	**redirin;
+	const char	**redirout;
 }	t_cmd;
 
-typdef struct s_cmdtree
-{
-	struct s_cmdtree	*next;
-	struct s_cmdtree	*nodes;
-	t_cmd				*cmd;
-	int					op;
-}	t_cmdtree;
-
-// returns a pointer to the first command in the linked list
-// returns NULL if there is no command
-// remember to free the linked list
-t_cmdtree	*buildcmd(char *line);
-void		freecmd(t_cmdtree *cmd);
+t_cmd	buildcmd(t_token *tokens);
+void	freecmd(t_cmd *cmd);
 
 #endif

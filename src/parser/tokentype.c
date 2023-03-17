@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 15:24:44 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/16 16:48:26 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/17 09:37:50 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,16 @@
 static enum e_tokens _gettoken2(const char *line)
 {
 	if (line[0] == '(')
-		return (tparenthesis_in);
+		return (tpin);
 	else if (line[0] == ')')
-		return (tparenthesis_out);
+		return (tpout);
 	else if (line[0] == '"')
-		return (tdouble_quote);
+		return (tdqts);
 	else if (line[0] == '\'')
-		return (tquote);
+		return (tqts);
 	else if (line[0] == '$')
-		return (tdollar);
-	return (tword);
+		return (td);
+	return (twrd);
 }
 
 enum e_tokens gettoken(const char *line)
@@ -38,14 +38,14 @@ enum e_tokens gettoken(const char *line)
 	else if (line[0] == '|')
 		return (tpipe);
 	else if (line[0] == '<' && line[1] == '<')
-		return (tredirin_heredoc);
+		return (thdoc);
 	else if (line[0] == '>' && line[1] == '>')
-		return (tredirout_append);
+		return (tapp);
 	else if (line[0] == '<')
-		return (tredirin);
+		return (tdin);
 	else if (line[0] == '>')
-		return (tredirout);
+		return (tdout);
 	else if (whitespace(line[0]))
-		return (twhitespace);
+		return (tws);
 	return (_gettoken2(line));
 }
