@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   str2.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 16:34:57 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/15 13:19:58 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/17 14:54:40 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,16 @@ static char	*alloc_res(size_t n, va_list ori_va)
 
 static char	*copy_strs(char *dst, size_t n, va_list va)
 {
-	size_t	i;
-	size_t	ln;
-	size_t	whole_ln;
-	char	*str;
+	size_t		i;
+	size_t		ln;
+	size_t		whole_ln;
+	const char	*str;
 
 	whole_ln = 0;
 	i = 0;
 	while (i < n)
 	{
-		str = va_arg(va, char *);
+		str = va_arg(va, const char *);
 		ln = strln(str);
 		memcopy(dst + whole_ln, str, ln);
 		whole_ln += ln;

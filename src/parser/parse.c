@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 15:29:19 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/17 11:26:11 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/17 14:27:02 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,83 @@
 
 #include "util/util.h"
 
-t_cmd	buildcmd(char *line)
+static void	skiparg(t_token **tokens)
 {
-	t_cmd	cmd;
+	while ((*tokens)->type & (tws))
+		++(*tokens);
+	while ((*tokens)->type & (td | twrd))
+		++(*tokens);
+	while ((*tokens)->type & (tws))
+		++(*tokens);
+}
 
-	
+typedef struct s_counts
+{
+	size_t	argc;
+	size_t	redirin;
+	size_t	redirout;
+}	t_counts;
+
+static t_counts	countargs(t_token *tokens)
+{
+	size_t		i;
+	t_counts	c;
+
+	i = -1;
+	c.argc = 0;
+	c.redirin = 0;
+	c.redirout = 0;
+	while (tokens[++i].type)
+	{
+		if (tokens[i].type & (tpipe | tand | tor))
+			break ;
+		if (tokens[i].type & (tdin))
+			skiparg(&tokens + (++c.redirin) * 0);
+		else if (tokens[i].type & (tdout))
+			skiparg(&tokens + (++c.redirout) * 0);
+		else if (tokens[i].type & (td | twrd))
+			skiparg(&tokens + (++c.argc) * 0);
+	}
+	return (c);
+}
+
+static int	initcmd(t_cmd *cmd, t_counts c)
+{
+	cmd->argv = malloc(sizeof(char *) * (c.argc + 1));
+	cmd->redirin = malloc(sizeof(char *) * (c.redirin + 1));
+	cmd->redirout = malloc(sizeof(char *) * (c.redirout + 1));
+	if (!cmd->argv || !cmd->redirin || !cmd->redirout)
+	{
+		free(cmd->argv);
+		free(cmd->redirin);
+		free(cmd->redirout);
+		return (0);
+	}
+}
+
+t_cmd	buildcmd(t_token *tokens)
+{
+	t_cmd			cmd;
+	size_t			i;
+	const t_counts	c = countargs(tokens);
+	t_counts		c2;
+
+	initcmd(&cmd, c);
+	c2.argc = 0;
+	c2.redirin = 0;
+	c2.redirout = 0;
+	i = -1;
+	while (tokens[i].type)
+	{
+		if (tokens[i].type & (tpipe | tand | tor))
+			break ;
+		if (tokens[i].type & (tdin))
+			skiparg(&tokens + (++c2.redirin) * 0);
+		else if (tokens[i].type & (tdout))
+			skiparg(&tokens + (++c2.redirout) * 0);
+		else if (tokens[i].type & (td | twrd))
+			skiparg(&tokens + (++c2.argc) * 0);
+	}
 	return (cmd);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   str.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 15:24:11 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/13 17:31:52 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/17 14:19:56 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ size_t	strln(const char *s)
 	size_t	len;
 
 	len = 0;
-	if (!s)
-		return (len);
 	while (s[len])
 		len++;
 	return (len);
@@ -29,8 +27,6 @@ size_t	strln_del(const char *s, const char del)
 	size_t	len;
 
 	len = 0;
-	if (!s)
-		return (len);
 	while (s[len] && s[len] != del)
 		len++;
 	return (len);
@@ -41,8 +37,6 @@ int	strcmp(const char *s1, const char *s2)
 	int		diff;
 	size_t	i;
 
-	if (!s1 || !s2)
-		return (0);
 	diff = 0;
 	i = 0;
 	while (diff == 0 && (s1[i] || s2[i]))
@@ -58,8 +52,6 @@ int	strcmp_del(const char *s1, const char *s2, const char del)
 	int		diff;
 	size_t	i;
 
-	if (!s1 || !s2)
-		return (0);
 	diff = 0;
 	i = 0;
 	while (!diff
@@ -77,8 +69,6 @@ int	strncmp(const char *s1, const char *s2, size_t n)
 	int		diff;
 	size_t	i;
 
-	if (!s1 || !s2)
-		return (0);
 	diff = 0;
 	i = 0;
 	while (diff == 0 && (s1[i] || s2[i]) && i < n)

@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 15:24:44 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/17 09:37:50 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/17 14:21:42 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,50 @@
 
 #include "util/util.h"
 
-static enum e_tokens _gettoken2(const char *line)
+char	*concattokens(t_token *tokens, size_t len)
+{
+	char	*str;
+	size_t	strlen;
+	size_t	i;
+	size_t	j;
+
+	i = -1;
+	j = 0;
+	strlen = 0;
+	while (++i < len)
+		strlen += tokens[i].len;
+	str = malloc(sizeof(char) * (strlen + 1));
+	if (!str)
+		return (0);
+	i = -1;
+	while (++i < len)
+	{
+		memcopy(str + j, tokens[i].val, tokens[i].len);
+		j += tokens[i].len;
+	}
+	str[j] = 0;
+	return (str);
+}
+
+size_t	tokenlen(t_token *token, enum e_tokens delims)
+{
+	size_t	i;
+	int		q;
+
+	i = 0;
+	q = 0;
+	while (token[i].type && (!(token[i].type & delims) || q))
+	{
+		if (token[i].type == tdqts && q != 2)
+			q = (!q);
+		if (token[i].type == tqts && q != 1)
+			q = (!q) * 2;
+		++i;
+	}
+	return (i);
+}
+
+static enum e_tokens	_gettoken2(const char *line)
 {
 	if (line[0] == '(')
 		return (tpin);
@@ -29,7 +72,7 @@ static enum e_tokens _gettoken2(const char *line)
 	return (twrd);
 }
 
-enum e_tokens gettoken(const char *line)
+enum e_tokens	gettoken(const char *line)
 {
 	if (line[0] == '|' && line[1] == '|')
 		return (tor);

@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 13:09:15 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/17 10:43:44 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/17 14:51:12 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static size_t	createtoken(t_token *token, char *line)
 		+ !(token->type == tws || token->type == twrd);
 	token->val = line + i;
 	if (token->type != tws && token->type != twrd)
-		return (i);
+		return (token->len = i);
 	while (line[i])
 	{
 		if (gettoken(line + i) != token->type)
@@ -81,6 +81,7 @@ t_token	*tokenize(char *line)
 {
 	t_token	*tokens;
 	size_t	i;
+	char	q;
 
 	i = counttokens(line);
 	if (!i)
@@ -90,7 +91,15 @@ t_token	*tokenize(char *line)
 		return (0);
 	i = 0;
 	while (line[0])
-		line += createtoken(&tokens[i++], line);
+	{
+		line += createtoken(&tokens[i], line);
+		if (tokens[i].type == tdqts && q != '\'')
+			q = '"' - q;
+		if (tokens[i].type == tqts && q != '"')
+			q = '\'' - q;
+		tokens[i].quote = q * !(tokens[i].type & (tdqts | tqts));
+		++i;
+	}
 	tokens[i].type = 0;
 	return (tokens);
 }
