@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 08:46:35 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/15 14:25:55 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/16 09:28:04 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include "parser/cmd.h"
 #include "def.h"
 #include "redir.h"
+#include "env.h"
 
 static int	is_pipeline_end(t_cmd *cmd)
 {
@@ -42,18 +43,18 @@ static void	write_pipe(t_pipe *p)
 	dup2(p->write, STDOUT_FILENO);
 }
 
+// deal with cmd not found
 static int	exec_cmd(t_cmd *cmd, t_pipe *prev_pipe, t_pipe *next_pipe)
 {
 	if (prev_pipe)
 		read_pipe(prev_pipe);
 	if (!is_pipeline_end(cmd))
 		write_pipe(next_pipe);
-	// resolve VARIABLES
 	redir_input(cmd->redirin);
 	redir_output(cmd->redirout);
 	if (is_builtin(cmd))
 		return (exec_builtin(cmd));
-	return (execve(cmd->argv[0], cmd->argv, NULL));	
+	return (execve(cmd->argv[0], cmd->argv, *(get_exported_env())));	
 }
 
 int	pipeline(t_pipe *prev_pipe, t_cmd *cmd)
