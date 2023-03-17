@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 13:06:01 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/17 10:44:11 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/17 14:22:36 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ typedef struct s_token
 	const char		*val;
 	size_t			len;
 	enum e_tokens	type;
+	unsigned int	nestlvl;
+	unsigned char	quote;
 }	t_token;
 
 
@@ -46,5 +48,7 @@ enum e_tokens	gettoken(const char *line);
 t_token			*tokenize(char *line);
 t_token			*findnext(t_token *tokens, enum e_tokens type);
 t_token			*findafter(t_token *tokens, enum e_tokens type);
+char			*concattokens(t_token *tokens, size_t len);
+size_t			tokenlen(t_token *token, enum e_tokens delims);
 
 #endif

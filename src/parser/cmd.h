@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 15:33:44 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/17 09:35:59 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/17 14:11:37 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ enum e_OP
 
 typedef struct s_cmd
 {
-	char	**argv;
+	char		**argv;
 	const char	**redirin;
 	const char	**redirout;
 }	t_cmd;
