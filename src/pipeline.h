@@ -1,25 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   def.h                                              :+:      :+:    :+:   */
+/*   pipeline.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/13 17:48:26 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/20 17:35:44 by francoma         ###   ########.fr       */
+/*   Created: 2023/03/20 17:21:21 by francoma          #+#    #+#             */
+/*   Updated: 2023/03/20 17:35:09 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DEF_H
-# define DEF_H
+#ifndef PIPELINE_H
+# define PIPELINE_H
 
-# define ERROR -1
-# define SUCCESS 0
+# include "parser/cmd.h"
 
-# define NO_FILE -1
-
-# define NAME "minishell"
-# define HEREDOC_PS "> "
-# define MINISHELL_PS "msh> "
+int		is_pipeline_end(t_cmd *cmd);
+void	close_pipe(t_pipe *p);
+void	read_pipe(t_pipe *p);
+void	write_pipe(t_pipe *p);
+int		pipeline(t_cmd *cmd, t_pipe *prev_pipe);
 
 #endif

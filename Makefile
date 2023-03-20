@@ -27,7 +27,8 @@ SRC_FILES	=	builtins/builtins.c \
 				wildcard.c \
 				wildcard2.c \
 				parser/parseutil.c \
-				pipeline.c
+				pipeline.c \
+				pipeline2.c
 
 SRC_DIR		=	src
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
+/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 10:23:51 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/20 16:55:11 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/20 17:53:21 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,13 @@
 #include "error.h"
 #include "def.h"
 
-int	redir_input(char **redirin)
+int	open_input(char **redirin)
 {
 	size_t	i;
 	int		fd;
 
 	i = 0;
+	fd = ERROR;
 	while (redirin[i])
 	{
 		if (i)
@@ -34,15 +35,15 @@ int	redir_input(char **redirin)
 		}
 		i++;
 	}
-	dup2(fd, STDIN_FILENO);
-	return (SUCCESS);
+	return (fd);
 }
 
-int	redir_output(char **redirout)
+int	open_output(char **redirout)
 {
 	size_t	i;
 	int		fd;
 
+	fd = ERROR;
 	i = 0;
 	while (redirout[i])
 	{
@@ -56,6 +57,5 @@ int	redir_output(char **redirout)
 		}
 		i++;
 	}
-	dup2(fd, STDOUT_FILENO);
-	return (SUCCESS);
+	return (fd);
 }

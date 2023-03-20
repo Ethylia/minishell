@@ -3,19 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
+/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 07:57:50 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/20 16:37:09 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/20 17:54:14 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include <readline/readline.h>
 #include "readline_extra.h"
 #include "parser/token.h"
-#include "parser/cmd.h"
+#include "pipeline.h"
 #include "util/util.h"
 #include "env.h"
 #include "def.h"
@@ -33,8 +34,13 @@ void	execline(t_token *token)
 		cmd = buildcmd(next);
 		printf("cmd: %s\n", cmd.argv[0]);
 		r = pipeline(&cmd, 0);
+		//
+		while (waitpid(-1, 0, 0) != -1)
+			;
+		close(cmd.io.read);
+		close(cmd.io.write);
 		freecmd(&cmd);
-		waitpid(-1, 0, 0);
+		//
 		next = findafter(next, tand | tor);
 		if (!next->type)
 			break ;
@@ -46,11 +52,12 @@ void	execline(t_token *token)
 }
 
 int	main(__attribute__((unused))int argc,
-	__attribute__((unused))char **argv, __attribute__((unused))char **env)
+	__attribute__((unused))char **argv, char **envp)
 {
 	char				*line;
 	t_token				*token;
 
+	set_exported_env(envp);
 	init_sig_handlers();
 	line = readline(MINISHELL_PS);
 	while (line)

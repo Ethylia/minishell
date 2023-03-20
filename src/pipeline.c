@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipeline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
+/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 08:46:35 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/20 16:52:17 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/20 17:54:53 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,45 +16,49 @@
 #include <signal.h>
 #include "builtins/builtins.h"
 #include "parser/cmd.h"
-#include "def.h"
+#include "pipeline.h"
 #include "redir.h"
+#include "error.h"
+#include "path.h"
+#include "def.h"
 #include "env.h"
 
-static int	is_pipeline_end(t_cmd *cmd)
+struct s_exec_cmd_error
 {
-	return (cmd->pipecmd == NULL);
-}
+	t_cmd	*cmd;
+	t_pipe	*prev_pipe;
+	t_pipe	*next_pipe;
+	char	*path;
+};
 
-static void	close_pipe(t_pipe *p)
+static void	exec_cmd_error(struct s_exec_cmd_error var)
 {
-	close(p->read);
-	close(p->write);
-}
-
-static void	read_pipe(t_pipe *p)
-{
-	close(p->write);
-	dup2(p->read, STDIN_FILENO);
-}
-
-static void	write_pipe(t_pipe *p)
-{
-	close(p->read);
-	dup2(p->write, STDOUT_FILENO);
+	print_error(var.path);
+	free(var.path);
+	if (var.prev_pipe)
+		close_pipe(var.prev_pipe);
+	if (!is_pipeline_end(var.cmd))
+		close_pipe(var.next_pipe);	
 }
 
 // deal with cmd not found
 static int	exec_cmd(t_cmd *cmd, t_pipe *prev_pipe, t_pipe *next_pipe)
 {
+	char	*path;
+	
 	if (prev_pipe)
 		read_pipe(prev_pipe);
 	if (!is_pipeline_end(cmd))
 		write_pipe(next_pipe);
-	redir_input(cmd->redirin);
-	redir_output(cmd->redirout);
+	dup2(cmd->io.read, STDIN_FILENO);
+	dup2(cmd->io.write, STDOUT_FILENO);
 	if (is_builtin(cmd))
 		return (exec_builtin(cmd));
-	return (execve(cmd->argv[0], cmd->argv, *(get_exported_env())));
+	path = resolve_exec_path(cmd->argv[0]);
+	execve(path, cmd->argv, *(get_exported_env()));
+	exec_cmd_error((struct s_exec_cmd_error){.cmd = cmd,
+		.prev_pipe = prev_pipe, .next_pipe = next_pipe, .path = path});
+	return (ERROR);
 }
 
 int	pipeline(t_cmd *cmd, t_pipe *prev_pipe)
@@ -66,16 +70,15 @@ int	pipeline(t_cmd *cmd, t_pipe *prev_pipe)
 	if (!is_pipeline_end(cmd)
 		&& pipe(&next_pipe.read) == ERROR)
 		return (ERROR);
+	// les redirections sont faites avant le fork pour que le main process
+	// puisse fermer les fichiers lorsque le child a terminé
+	// Il serait bon que open_in/out ferme le pipe s'il y a lieu
+	cmd->io.read = open_input(cmd->redirin);
+	cmd->io.write = open_output(cmd->redirout);
 	cmd_pid = fork();
 	if (cmd_pid == 0
 		&& exec_cmd(cmd, prev_pipe, &next_pipe) == ERROR)
-	{
-		if (prev_pipe)
-			close_pipe(prev_pipe);
-		if (!is_pipeline_end(cmd))
-			close_pipe(&next_pipe);
 		exit(EXIT_FAILURE);
-	}
 	if (prev_pipe)
 		close_pipe(prev_pipe);
 	res = SUCCESS;
