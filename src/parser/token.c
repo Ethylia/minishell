@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 13:09:15 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/17 14:51:12 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/20 10:10:04 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,14 +90,15 @@ t_token	*tokenize(char *line)
 	if (!tokens)
 		return (0);
 	i = 0;
+	q = '\0';
 	while (line[0])
 	{
 		line += createtoken(&tokens[i], line);
+		tokens[i].quote = q;
 		if (tokens[i].type == tdqts && q != '\'')
 			q = '"' - q;
 		if (tokens[i].type == tqts && q != '"')
 			q = '\'' - q;
-		tokens[i].quote = q * !(tokens[i].type & (tdqts | tqts));
 		++i;
 	}
 	tokens[i].type = 0;

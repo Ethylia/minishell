@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 15:29:19 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/17 15:51:11 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/20 08:21:42 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,17 @@
 
 static void	skiparg(t_token **tokens)
 {
-	while ((*tokens)->type & (tws))
+	if ((*tokens)->type & (tdin | tdout))
 		++(*tokens);
-	while ((*tokens)->type & (td | twrd))
+	if ((*tokens)->type & (tws))
 		++(*tokens);
-	while ((*tokens)->type & (tws))
+	while (1)
+	{
+		if (!(*tokens)->type || ((*tokens)->type & (tdelim) && (!(*tokens)->quote)))
+			break ;
+		++(*tokens);
+	}
+	if ((*tokens)->type & (tws))
 		++(*tokens);
 }
 
@@ -33,23 +39,23 @@ typedef struct s_counts
 
 static t_counts	countargs(t_token *tokens)
 {
-	size_t		i;
 	t_counts	c;
 
-	i = -1;
 	c.argc = 0;
 	c.redirin = 0;
 	c.redirout = 0;
-	while (tokens[++i].type)
+	while (tokens->type)
 	{
-		if (tokens[i].type & (tpipe | tand | tor))
+		if (tokens->type & (tpipe | tand | tor))
 			break ;
-		if (tokens[i].type & (tdin))
+		if (tokens->type & (tdin))
 			skiparg(&tokens + (++c.redirin) * 0);
-		else if (tokens[i].type & (tdout))
+		else if (tokens->type & (tdout))
 			skiparg(&tokens + (++c.redirout) * 0);
-		else if (tokens[i].type & (td | twrd))
+		else if (tokens->type & (td | twrd))
 			skiparg(&tokens + (++c.argc) * 0);
+		else
+			++tokens;
 	}
 	return (c);
 }
@@ -78,6 +84,7 @@ t_cmd	buildcmd(t_token *tokens)
 	size_t			i;
 	const t_counts	c = countargs(tokens);
 	t_counts		c2;
+	size_t			j;
 
 	initcmd(&cmd, c);
 	c2.argc = 0;
@@ -87,15 +94,24 @@ t_cmd	buildcmd(t_token *tokens)
 	while (c2.argc != c.argc || c2.redirin != c.redirin
 		|| c2.redirout != c.redirout)
 	{
-		if (tokens[i].type & (tdin))
-			cmd.redirin[c2.redirin++] = concattokens(tokens + i + 1,
-					tokenlen(tokens + i + 1, tdelim));
-		else if (tokens[i].type & (tdout))
-			cmd.redirout[c2.redirout++] = concattokens(tokens + i + 1,
-					tokenlen(tokens + i + 1, tdelim));
-		else if (tokens[i].type & (td | twrd))
-			cmd.argv[c2.argc++] = concattokens(tokens + i + 1,
-					tokenlen(tokens + i + 1, tdelim));
+		if (tokens[i].type & (tdin | tdout | td | twrd))
+		{
+			j = tokenlen(tokens + i + !!(tokens[i].type & (tdin | tdout)), tdelim);
+			if (!j)
+			{
+				++i;
+				continue ;
+			}
+			if (tokens[i].type & (tdin))
+				cmd.redirin[c2.redirin++] = concattokens(tokens + i + 1, j);
+			else if (tokens[i].type & (tdout))
+				cmd.redirout[c2.redirout++] = concattokens(tokens + i + 1, j);
+			else if (tokens[i].type & (td | twrd))
+				cmd.argv[c2.argc++] = concattokens(tokens + i, j);
+			i += j;
+		}
+		else
+			++i;
 	}
 	return (cmd);
 }

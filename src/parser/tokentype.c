@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 15:24:44 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/17 15:36:11 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/20 10:50:53 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,14 @@ char	*concattokens(t_token *tokens, size_t len)
 	strlen = 0;
 	if (tokens->type == tws)
 		++i;
-	while (++i < len)
-		strlen += tokens[i].len;
+	while (++i < len && !(tokens[i].type == tws && !tokens[i].quote))
+		if (tokens[i].type != tqts)
+			strlen += tokens[i].len;
 	str = malloc(sizeof(char) * (strlen + 1));
 	if (!str)
 		return (0);
 	i = -1 + (tokens->type == tws);
-	while (++i < len)
+	while (++i < len && !(tokens[i].type == tws && !tokens[i].quote))
 	{
 		memcopy(str + j, tokens[i].val, tokens[i].len);
 		j += tokens[i].len;
@@ -48,6 +49,8 @@ size_t	tokenlen(t_token *token, enum e_tokens delims)
 
 	i = 0;
 	q = 0;
+	if (token->type == tws)
+		++i;
 	while (token[i].type && (!(token[i].type & delims) || q))
 	{
 		if (token[i].type == tdqts && q != 2)
@@ -56,6 +59,8 @@ size_t	tokenlen(t_token *token, enum e_tokens delims)
 			q = (!q) * 2;
 		++i;
 	}
+	if (token[i].type == tws)
+		++i;
 	return (i);
 }
 
@@ -90,7 +95,7 @@ enum e_tokens	gettoken(const char *line)
 		return (tdin);
 	else if (line[0] == '>')
 		return (tdout);
-	else if (whitespace(line[0]))
+	else if (is_ws(line[0]))
 		return (tws);
 	return (_gettoken2(line));
 }
