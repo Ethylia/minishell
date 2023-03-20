@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   str2.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 17:32:40 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/17 15:18:41 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/20 10:50:54 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*strchar(const char *s, int c)
 	return (NULL);
 }
 
-int	whitespace(char c)
+int	is_ws(char c)
 {
 	return (c == ' ' || c == '\t' || c == '\n' || c == '\v' || c == '\f'
 		|| c == '\r');
@@ -44,7 +44,7 @@ int	whitespace(char c)
 
 void	skipwhite(const char **line)
 {
-	while (whitespace(**line))
+	while (is_ws(**line))
 		++(*line);
 }
 
@@ -53,7 +53,7 @@ size_t	countwhite(const char *line)
 	size_t	i;
 
 	i = 0;
-	while (whitespace(line[i]))
+	while (is_ws(line[i]))
 		++i;
 	return (i);
 }
