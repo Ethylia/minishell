@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 15:11:02 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/15 16:20:35 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/20 13:33:30 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,9 @@ int	bi_exit(const int argc, char *const argv[], char *const envp[])
 	(void) argc;
 	(void) argv;
 	(void) envp;
+	// free les autres trucs
 	free_env(*(get_exported_env()));
 	free_env(*(get_local_env()));
 	exit(EXIT_SUCCESS);
-	return (0);	
+	return (0);
 }

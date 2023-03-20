@@ -4,6 +4,7 @@ SRC_FILES	=	builtins/builtins.c \
 				builtins/env.c \
 				builtins/exit.c \
 				builtins/export.c \
+				builtins/heredoc.c \
 				builtins/pwd.c \
 				builtins/unset.c \
 				cmd1.c \
@@ -17,6 +18,7 @@ SRC_FILES	=	builtins/builtins.c \
 				parser/tokentype.c \
 				path.c \
 				redir.c \
+				sig.c \
 				util/concatstr1.c \
 				util/concatstr2.c \
 				util/mem.c \
@@ -34,7 +36,7 @@ NAME=minishell
 
 CC=gcc
 CCFLAGS=-Wall -Wextra -Wpedantic -fno-exceptions -Wpointer-arith -Werror -Isrc
-LDFLAGS=
+LDFLAGS=-L/Users/francoma/homebrew/opt/readline/lib
 LDLIBS=-pthread -lreadline
 
 all: $(NAME)

@@ -3,39 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
+/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 07:57:50 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/20 11:38:36 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/20 13:52:09 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <readline/readline.h>
-#include "env.h"
+#include "readline_extra.h"
 #include "parser/token.h"
-#include "util/util.h"
 #include "parser/cmd.h"
-
-static void	sigint_handler(int sig)
-{
-	(void)sig;
-	printf("\n");
-	rl_replace_line("", 0);
-	rl_on_new_line();
-	rl_redisplay();
-}
+#include "util/util.h"
+#include "env.h"
+#include "def.h"
+#include "sig.h"
 
 void	execline(t_token *token)
 {
 	t_cmd	cmd;
 	t_token	*next;
-	// size_t	plevel;
 	int		r;
 
 	next = token;
-	// plevel = 0;
 	while (next->type)
 	{
 		cmd = buildcmd(next);
@@ -63,8 +55,8 @@ int	main(__attribute__((unused))int argc,
 	char				*line;
 	t_token				*token;
 
-	signal(SIGINT, sigint_handler);
-	line = readline("msh$ ");
+	init_sig_handlers();
+	line = readline(MINISHELL_PS);
 	while (line)
 	{
 		token = tokenize(line + countwhite(line));
@@ -75,7 +67,7 @@ int	main(__attribute__((unused))int argc,
 			free(token);
 		}
 		free(line);
-		line = readline("msh$ ");
+		line = readline(MINISHELL_PS);
 	}
 	rl_clear_history();
 }

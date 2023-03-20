@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 10:51:16 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/15 13:18:52 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/20 09:45:31 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,4 +24,11 @@ void	print_error(const char *problem)
 	msg = concatstr(6, NAME, ": ", problem, ": ", strerror(errno), "\n");
 	write(STDERR_FILENO, msg, strln(msg));
 	free(msg);
+}
+
+void	exit_error(const char *problem)
+{
+	print_error(problem);
+	// free stuff
+	exit(EXIT_FAILURE);
 }

@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 17:22:04 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/15 15:02:17 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/20 13:35:30 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,6 @@ int	export(const int argc, char *const argv[], char *const envp[]);
 int	unset(const int argc, char *const argv[], char *const envp[]);
 int	env(const int argc, char *const argv[], char *const envp[]);
 int	bi_exit(const int argc, char *const argv[], char *const envp[]);
+int	bi_heredoc(const char *eof);
 
 #endif
