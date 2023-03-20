@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 07:57:50 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/20 13:52:09 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/20 16:37:09 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,10 @@ void	execline(t_token *token)
 	while (next->type)
 	{
 		cmd = buildcmd(next);
-		r = 0;
-		for(int i = 0; cmd.argv[i]; i++)
-			printf("%s ", cmd.argv[i]);
-		for(int i = 0; cmd.redirin[i]; i++)
-			printf("< %s ", cmd.redirin[i]);
-		for(int i = 0; cmd.redirout[i]; i++)
-			printf("> %s ", cmd.redirout[i]);
+		printf("cmd: %s\n", cmd.argv[0]);
+		r = pipeline(&cmd, 0);
 		freecmd(&cmd);
+		waitpid(-1, 0, 0);
 		next = findafter(next, tand | tor);
 		if (!next->type)
 			break ;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipeline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 08:46:35 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/16 09:28:04 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/20 16:52:17 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 
 static int	is_pipeline_end(t_cmd *cmd)
 {
-	return (cmd->next->argv == NULL);
+	return (cmd->pipecmd == NULL);
 }
 
 static void	close_pipe(t_pipe *p)
@@ -34,7 +34,7 @@ static void	close_pipe(t_pipe *p)
 static void	read_pipe(t_pipe *p)
 {
 	close(p->write);
-	dup2(p->read, STDIN_FILENO);	
+	dup2(p->read, STDIN_FILENO);
 }
 
 static void	write_pipe(t_pipe *p)
@@ -54,10 +54,10 @@ static int	exec_cmd(t_cmd *cmd, t_pipe *prev_pipe, t_pipe *next_pipe)
 	redir_output(cmd->redirout);
 	if (is_builtin(cmd))
 		return (exec_builtin(cmd));
-	return (execve(cmd->argv[0], cmd->argv, *(get_exported_env())));	
+	return (execve(cmd->argv[0], cmd->argv, *(get_exported_env())));
 }
 
-int	pipeline(t_pipe *prev_pipe, t_cmd *cmd)
+int	pipeline(t_cmd *cmd, t_pipe *prev_pipe)
 {
 	pid_t	cmd_pid;
 	t_pipe	next_pipe;
@@ -67,12 +67,19 @@ int	pipeline(t_pipe *prev_pipe, t_cmd *cmd)
 		&& pipe(&next_pipe.read) == ERROR)
 		return (ERROR);
 	cmd_pid = fork();
-	if (cmd_pid == 0)
-		exec_cmd(cmd, prev_pipe, &next_pipe);
+	if (cmd_pid == 0
+		&& exec_cmd(cmd, prev_pipe, &next_pipe) == ERROR)
+	{
+		if (prev_pipe)
+			close_pipe(prev_pipe);
+		if (!is_pipeline_end(cmd))
+			close_pipe(&next_pipe);
+		exit(EXIT_FAILURE);
+	}
 	if (prev_pipe)
 		close_pipe(prev_pipe);
 	res = SUCCESS;
 	if (!is_pipeline_end(cmd))
-		res = pipeline(&next_pipe, cmd->next);
+		res = pipeline(cmd->pipecmd, &next_pipe);
 	return (res);
 }

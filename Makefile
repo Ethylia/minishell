@@ -25,7 +25,9 @@ SRC_FILES	=	builtins/builtins.c \
 				util/str.c \
 				util/str2.c \
 				wildcard.c \
-				wildcard2.c
+				wildcard2.c \
+				parser/parseutil.c \
+				pipeline.c
 
 SRC_DIR		=	src
 
@@ -36,7 +38,7 @@ NAME=minishell
 
 CC=gcc
 CCFLAGS=-Wall -Wextra -Wpedantic -fno-exceptions -Wpointer-arith -Werror -Isrc
-LDFLAGS=-L/Users/francoma/homebrew/opt/readline/lib
+LDFLAGS=-L${HOME}/.brew/opt/readline/lib
 LDLIBS=-pthread -lreadline
 
 all: $(NAME)

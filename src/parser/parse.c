@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 15:29:19 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/20 08:21:42 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/20 16:19:43 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static t_counts	countargs(t_token *tokens)
 	return (c);
 }
 
-static int	initcmd(t_cmd *cmd, t_counts c)
+static int	initcmd(t_cmd *cmd, t_counts c, t_counts *c2, size_t *i)
 {
 	cmd->argv = malloc(sizeof(char *) * (c.argc + 1));
 	cmd->redirin = malloc(sizeof(char *) * (c.redirin + 1));
@@ -75,43 +75,39 @@ static int	initcmd(t_cmd *cmd, t_counts c)
 	cmd->argv[c.argc] = 0;
 	cmd->redirin[c.redirin] = 0;
 	cmd->redirout[c.redirout] = 0;
+	cmd->pipecmd = 0;
+	c2->argc = 0;
+	c2->redirin = 0;
+	c2->redirout = 0;
+	i[0] = 0;
 	return (1);
 }
 
 t_cmd	buildcmd(t_token *tokens)
 {
 	t_cmd			cmd;
-	size_t			i;
+	size_t			i[2];
 	const t_counts	c = countargs(tokens);
 	t_counts		c2;
-	size_t			j;
 
-	initcmd(&cmd, c);
-	c2.argc = 0;
-	c2.redirin = 0;
-	c2.redirout = 0;
-	i = 0;
+	initcmd(&cmd, c, &c2, i);
 	while (c2.argc != c.argc || c2.redirin != c.redirin
 		|| c2.redirout != c.redirout)
 	{
-		if (tokens[i].type & (tdin | tdout | td | twrd))
+		if (tokens[i[0]].type & (tdin | tdout | td | twrd))
 		{
-			j = tokenlen(tokens + i + !!(tokens[i].type & (tdin | tdout)), tdelim);
-			if (!j)
-			{
-				++i;
+			if (toke(tokens, &i[0], &i[1]))
 				continue ;
-			}
-			if (tokens[i].type & (tdin))
-				cmd.redirin[c2.redirin++] = concattokens(tokens + i + 1, j);
-			else if (tokens[i].type & (tdout))
-				cmd.redirout[c2.redirout++] = concattokens(tokens + i + 1, j);
-			else if (tokens[i].type & (td | twrd))
-				cmd.argv[c2.argc++] = concattokens(tokens + i, j);
-			i += j;
+			if (tokens[i[0]].type & (tdin))
+				cmd.redirin[c2.redirin++] = concattokens(tokens + i[0] + 1, i[1]);
+			else if (tokens[i[0]].type & (tdout))
+				cmd.redirout[c2.redirout++] = concattokens(tokens + i[0] + 1, i[1]);
+			else if (tokens[i[0]].type & (td | twrd))
+				cmd.argv[c2.argc++] = concattokens(tokens + i[0], i[1]);
+			i[0] += i[1];
 		}
 		else
-			++i;
+			++i[0];
 	}
 	return (cmd);
 }
