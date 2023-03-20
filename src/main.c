@@ -6,28 +6,36 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 07:57:50 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/17 15:53:33 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/20 11:38:36 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <readline/readline.h>
-#include <readline/history.h>
 #include "env.h"
 #include "parser/token.h"
 #include "util/util.h"
 #include "parser/cmd.h"
 
+static void	sigint_handler(int sig)
+{
+	(void)sig;
+	printf("\n");
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	rl_redisplay();
+}
+
 void	execline(t_token *token)
 {
 	t_cmd	cmd;
 	t_token	*next;
-	size_t	plevel;
+	// size_t	plevel;
 	int		r;
 
 	next = token;
-	plevel = 0;
+	// plevel = 0;
 	while (next->type)
 	{
 		cmd = buildcmd(next);
@@ -55,6 +63,7 @@ int	main(__attribute__((unused))int argc,
 	char				*line;
 	t_token				*token;
 
+	signal(SIGINT, sigint_handler);
 	line = readline("msh$ ");
 	while (line)
 	{
@@ -68,5 +77,5 @@ int	main(__attribute__((unused))int argc,
 		free(line);
 		line = readline("msh$ ");
 	}
-	clear_history();
+	rl_clear_history();
 }
