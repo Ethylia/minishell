@@ -18,8 +18,16 @@
 
 typedef struct s_pipe
 {
-	int	read;
-	int	write;
+	union
+	{
+		int	pipe[2];
+		struct
+		{
+			int	read;
+			int	write;
+		};	
+	};
+	
 }	t_pipe;
 
 enum e_OP
