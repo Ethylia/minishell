@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 09:03:29 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/16 08:52:03 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/21 08:56:29 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,11 @@ int	exec_builtin(t_cmd *cmd)
 	{
 		if (strcmp(cmd->argv[0], names[i]) == 0)
 		{
-			return (get_builtin_func(i)(get_argc(cmd->argv),
-				cmd->argv, *(get_exported_env())));
+			if (get_builtin_func(i)(get_argc(cmd->argv),
+				cmd->argv, *(get_exported_env())) == ERROR)
+				return (ERROR);
+			else
+				exit(EXIT_SUCCESS);
 		}
 		i++;
 	}

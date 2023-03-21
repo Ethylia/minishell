@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 10:51:16 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/20 09:45:31 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/21 10:47:59 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@
 #include "def.h"
 #include "util/util.h"
 
-void	print_error(const char *problem)
+#include <stdio.h>
+void	print_err(const char *problem)
 {
 	char	*msg;
 
@@ -28,7 +29,7 @@ void	print_error(const char *problem)
 
 void	exit_error(const char *problem)
 {
-	print_error(problem);
+	print_err(problem);
 	// free stuff
 	exit(EXIT_FAILURE);
 }

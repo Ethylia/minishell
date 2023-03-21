@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 15:33:44 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/20 17:39:23 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/21 10:51:29 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define CMD_H
 
 # include <stddef.h>
-
 # include "token.h"
 
 typedef struct s_pipe
@@ -36,7 +35,6 @@ typedef struct s_cmd
 	char			**argv;
 	char			**redirin;
 	char			**redirout;
-	t_pipe			io;
 	struct s_cmd	*pipecmd;
 }	t_cmd;
 

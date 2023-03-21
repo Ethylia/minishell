@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 07:57:50 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/20 17:54:14 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/21 10:51:14 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,12 @@ void	execline(t_token *token)
 	{
 		cmd = buildcmd(next);
 		printf("cmd: %s\n", cmd.argv[0]);
+		// general exec_cmd which
+		//		distinguishes single builtin from pipeline
+		//		retrieves exit status
+		//		freecmd
 		r = pipeline(&cmd, 0);
-		//
-		while (waitpid(-1, 0, 0) != -1)
-			;
-		close(cmd.io.read);
-		close(cmd.io.write);
 		freecmd(&cmd);
-		//
 		next = findafter(next, tand | tor);
 		if (!next->type)
 			break ;

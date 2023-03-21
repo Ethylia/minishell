@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 14:43:46 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/17 16:32:04 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/21 09:21:48 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 #define ENV_PATH_SEP ':'
 #define NO_RIGHTS 0000
 
-char	*find_in_path(char const *word, char const *env_path)
+static char	*find_in_path(char const *word, char const *env_path)
 {
 	char	*path;
 	size_t	start;
@@ -47,28 +47,27 @@ char	*find_in_path(char const *word, char const *env_path)
 	return (NULL);
 }
 
+static char	*copy_word(char *word)
+{
+	return (concatstr(1, word));
+}
+
+
 // Must free return
 char	*resolve_exec_path(char *word)
 {
-	char const			*env_path;
+	char const	*env_path;
+	char		*exec_path;	
 
 	if (strchar(word, '/'))
-		return (concatstr(1, word));
+		return (copy_word(word));
 	env_path = get_var(*(get_exported_env()), "PATH");
 	if (!env_path)
 		env_path = get_var(*(get_local_env()), "PATH");
-	if (env_path)
-		return (find_in_path(word, env_path));
-	return (NULL);
+	if (!env_path)
+		return (copy_word(word));
+	exec_path = find_in_path(word, env_path);
+	if (!exec_path)
+		return (copy_word(word));
+	return (exec_path);
 }
-
-// int	main(int argc, char *argv[], char *envp[])
-// {
-// 	char		*path;
-
-// 	set_exported_env(envp);
-// 	path = resolve_exec_path("./yes");
-// 	printf("%s\n", path);
-// 	free(path);
-// 	return (0);
-// }
