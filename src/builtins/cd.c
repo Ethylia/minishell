@@ -33,6 +33,7 @@ static int	update_oldpwd(char **envp)
 	char	*oldpwd;
 
 	oldpwd = concatstr(2, "OLDPWD=", get_var(envp, "PWD"));
+	printf("OLDPWD=%s\n", oldpwd);
 	if (!oldpwd)
 		return (ERROR);
 	envp = update_env(envp, oldpwd);
@@ -52,7 +53,7 @@ static int	update_pwd(char **envp)
 	free(path);
 	if (!pwd)
 		return (ERROR);
-	envp = update_env((char **)envp, pwd);
+	envp = update_env(envp, pwd);
 	free(pwd);
 	if (!envp)
 		return (ERROR);
@@ -73,13 +74,13 @@ static int	update_pwd(char **envp)
 // set $PWD $OLDPWD
 int	cd(const int argc, char *const argv[], char *const envp[])
 {
-	char	*path;
+	const char	*path;
 
 	if (argc == 0)
 		path = getenv("HOME");
 	else if (strcmp(argv[1], "-") == 0)
 	{
-		path = getenv("OLDPWD");
+		path = get_var(envp, "OLDPWD");
 		print_path(envp, path);
 	}
 	else
