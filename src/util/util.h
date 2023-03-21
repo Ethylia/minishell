@@ -15,7 +15,7 @@
 
 # include <stddef.h>
 
-char	*strdup(const char *s1);
+char	*strdupe(const char *s1);
 void	*memcopy(void *dst, const void *src, size_t n);
 char	*strchar(const char *s, int c);
 

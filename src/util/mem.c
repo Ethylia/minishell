@@ -14,14 +14,12 @@
 #include <stdlib.h>
 #include "util.h"
 
-char	*strdup(const char *s1)
+char	*strdupe(const char *s1)
 {
 	size_t	len;
 	char	*s2;
 	size_t	i;
 
-	if (!s1)
-		return (NULL);
 	len = strln(s1);
 	s2 = malloc(sizeof(*s2) * (len + 1));
 	if (!s2)

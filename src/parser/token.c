@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
+/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 13:09:15 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/20 14:21:10 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/21 14:19:07 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_token	*findnext(t_token *tokens, enum e_tokens type)
 			return (tokens);
 		++tokens;
 	}
-	return (0);
+	return (tokens);
 }
 
 t_token	*findafter(t_token *tokens, enum e_tokens type)
@@ -81,7 +81,7 @@ t_token	*tokenize(char *line)
 {
 	t_token	*tokens;
 	size_t	i;
-	char	q;
+	char	q[2];
 
 	i = counttokens(line);
 	if (!i)
@@ -90,15 +90,14 @@ t_token	*tokenize(char *line)
 	if (!tokens)
 		return (0);
 	i = 0;
-	q = '\0';
+	q[0] = '\0';
+	q[1] = 0;
 	while (line[0])
 	{
 		line += createtoken(&tokens[i], line);
-		tokens[i].quote = q;
-		if (tokens[i].type == tdqts && q != '\'')
-			q = '"' - q;
-		if (tokens[i].type == tqts && q != '"')
-			q = '\'' - q;
+		tokens[i].quote = getquote(&tokens[i], &q[0]);
+		q[1] = getnestlvl(&tokens[i], q[1]);
+		tokens[i].nestlvl = q[1];
 		++i;
 	}
 	tokens[i].type = 0;

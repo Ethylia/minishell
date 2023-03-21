@@ -31,7 +31,7 @@ static char	**append_env(char **env, char *var)
 	res = malloc(sizeof(*res) * (len + 2));
 	if (!res)
 		return (free_env(env));
-	tmp = strdup(var);
+	tmp = strdupe(var);
 	if (!tmp)
 	{
 		free(res);
@@ -54,7 +54,7 @@ char	**update_env(char **env, char *var)
 	{
 		if (is_same_var(env[i], var))
 		{
-			tmp = strdup(var);
+			tmp = strdupe(var);
 			if (!tmp)
 				return (free_env(env));
 			free(env[i]);

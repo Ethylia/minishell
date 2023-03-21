@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 09:03:29 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/21 08:56:29 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/21 12:11:57 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	exec_builtin(t_cmd *cmd)
 				cmd->argv, *(get_exported_env())) == ERROR)
 				return (ERROR);
 			else
-				exit(EXIT_SUCCESS);
+				return (SUCCESS);
 		}
 		i++;
 	}

@@ -42,7 +42,7 @@ char	**copy_env(char **env)
 	i = 0;
 	while (i < len)
 	{
-		res[i] = strdup(env[i]);
+		res[i] = strdupe(env[i]);
 		if (!res[i])
 			free_env(res);
 		i++;

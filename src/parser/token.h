@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
+/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 13:06:01 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/20 08:15:31 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/21 13:28:04 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,7 @@ t_token			*findnext(t_token *tokens, enum e_tokens type);
 t_token			*findafter(t_token *tokens, enum e_tokens type);
 char			*concattokens(t_token *tokens, size_t len);
 size_t			tokenlen(t_token *token, enum e_tokens delims);
+unsigned int	getnestlvl(t_token *token, unsigned int lvl);
+char			getquote(t_token *token, char *q);
 
 #endif

@@ -6,12 +6,14 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 10:23:51 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/21 10:30:10 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/21 15:44:57 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <fcntl.h>
 #include <unistd.h>
+#include <fcntl.h>
+#include "builtins/builtins.h"
+#include "parser/token.h"
 #include "parser/cmd.h"
 #include "pipeline.h"
 #include "error.h"
@@ -35,24 +37,26 @@ int	redir_input(t_cmd *cmd, t_pipe *prev_pipe)
 
 	fd = handle_prev_pipe(prev_pipe);
 	i = 0;
-	while (cmd->redirin[i])
+	while (cmd->redirin[i].str)
 	{
 		if (fd != NO_FILE)
 			close(fd);
-		fd = open(cmd->redirin[i], O_RDONLY);
+		if (cmd->redirin[i].type & tdin)
+			fd = open(cmd->redirin[i].str, O_RDONLY);
+		else
+			fd = bi_heredoc(cmd->redirin[i].str);
 		if (fd == ERROR)
 		{
-			print_err(cmd->redirin[i]);
+			print_err(cmd->redirin[i].str);
 			return (ERROR);
 		}
 		i++;
 	}
-	if (fd != NO_FILE)
-	{
-		if (dup2(fd, STDIN_FILENO) == ERROR)
-			return (ERROR);
-		close(fd);
-	}
+	if (fd == NO_FILE)
+		return (SUCCESS);
+	if (dup2(fd, STDIN_FILENO) == ERROR)
+		return (ERROR);
+	close(fd);
 	return (SUCCESS);
 }
 
@@ -63,7 +67,15 @@ static int	handle_next_pipe(t_cmd *cmd, t_pipe *next_pipe)
 		close(next_pipe->read);
 		return (next_pipe->write);
 	}
-	return (NO_FILE);}
+	return (NO_FILE);
+}
+
+static int	get_flags(t_redir *redir)
+{
+	if (redir->type == tdout)
+		return (O_CREAT | O_WRONLY);
+	return (O_APPEND | O_WRONLY);
+}
 
 int	redir_output(t_cmd *cmd, t_pipe *next_pipe)
 {
@@ -72,14 +84,15 @@ int	redir_output(t_cmd *cmd, t_pipe *next_pipe)
 
 	fd = handle_next_pipe(cmd, next_pipe);
 	i = 0;
-	while (cmd->redirout[i])
+	while (cmd->redirout[i].str)
 	{
 		if (fd != NO_FILE)
 			close(fd);
-		fd = open(cmd->redirout[i], O_CREAT | O_WRONLY, REDIROUT_MODE);
+		fd = open(cmd->redirout[i].str,
+			get_flags(&cmd->redirout[i]), REDIROUT_MODE);
 		if (fd == ERROR)
 		{
-			print_err(cmd->redirout[i]);
+			print_err(cmd->redirout[i].str);
 			return (ERROR);
 		}
 		i++;

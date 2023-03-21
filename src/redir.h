@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 11:05:10 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/21 10:44:36 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/21 13:57:05 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define REDIR_H
 
 # include <unistd.h>
+# include <fcntl.h>
 
 # define NO_FILE -1
 // redir output mode is defined by umask

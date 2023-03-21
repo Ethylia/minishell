@@ -7,7 +7,6 @@ SRC_FILES	=	builtins/builtins.c \
 				builtins/heredoc.c \
 				builtins/pwd.c \
 				builtins/unset.c \
-				cmd1.c \
 				env1.c \
 				env2.c \
 				env3.c \
@@ -27,7 +26,8 @@ SRC_FILES	=	builtins/builtins.c \
 				wildcard.c \
 				wildcard2.c \
 				parser/parseutil.c \
-				pipeline.c 
+				pipeline.c \
+				parser/tokenutil.c
 
 SRC_DIR		=	src
 
@@ -50,7 +50,7 @@ noerr: CCFLAGS:=$(subst -Werror,,$(CCFLAGS))
 noerr: all
 
 debug: CCFLAGS+=-g -O0
-debug: all
+debug: fclean all
 
 clean:
 	@-rm -rf $(OBJ_DIR)/*.o $(OBJ_DIR)/*.d

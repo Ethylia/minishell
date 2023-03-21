@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 15:33:44 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/21 10:51:29 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/21 14:26:14 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,38 @@ enum e_OP
 	OP_OR
 };
 
+typedef struct s_redir
+{
+	char			*str;
+	enum e_tokens	type;
+}	t_redir;
+
 typedef struct s_cmd
 {
 	char			**argv;
-	char			**redirin;
-	char			**redirout;
+	t_redir			*redirout;
+	t_redir			*redirin;
 	struct s_cmd	*pipecmd;
 }	t_cmd;
+
+typedef struct s_counts
+{
+	size_t	argc;
+	size_t	redirin;
+	size_t	redirout;
+}	t_counts;
+
+typedef struct s_cmdgroup
+{
+	t_cmd		cmd;
+	size_t		i[2];
+	t_counts	c[2];
+}	t_cmdgroup;
 
 t_cmd	buildcmd(t_token *tokens);
 void	freecmd(t_cmd *cmd);
 int		toke(t_token *tokens, size_t *i, size_t *j);
+void	buildpipe(t_cmd *cmd, t_token *tokens);
+void	setredir(t_cmdgroup *g, enum e_tokens type, t_token *tokens, size_t i);
 
 #endif

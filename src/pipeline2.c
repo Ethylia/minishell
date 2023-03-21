@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 08:46:35 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/20 17:20:53 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/21 15:42:50 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,4 @@ void	close_pipe(t_pipe *p)
 {
 	close(p->read);
 	close(p->write);
-}
-
-void	read_pipe(t_pipe *p)
-{
-	close(p->write);
-	dup2(p->read, STDIN_FILENO);
-}
-
-void	write_pipe(t_pipe *p)
-{
-	close(p->read);
-	dup2(p->write, STDOUT_FILENO);
 }
