@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 15:59:49 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/22 14:48:08 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/22 16:56:13 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ void	free_wildcard_values(char **wildcard_values)
 	size_t			i;
 
 	i = 0;
+	if (!wildcard_values)
+		return ;
 	while (wildcard_values[i])
 	{
 		free(wildcard_values[i]);
@@ -47,6 +49,29 @@ size_t	count_wildcard_values(const char *wildcard)
 	}
 	closedir(folder);
 	return (count);
+}
+
+size_t	wildcardvalslen(const char *wildcard)
+{
+	size_t			len;
+	DIR				*folder;
+	struct dirent	*entry;
+	size_t			c;
+
+	c = 0;
+	folder = opendir(".");
+	if (!folder)
+		return (0);
+	while (1)
+	{
+		entry = readdir(folder);
+		if (!entry)
+			break ;
+		if (matches_wildcard(wildcard, entry->d_name))
+			len += strlen(entry->d_name) + (++c) * 0;
+	}
+	closedir(folder);
+	return (len + !!(c) * (c - 1));
 }
 
 typedef struct s_wildcard_values
@@ -86,18 +111,22 @@ char	**wildcard_values(const char *wildcard)
 
 	var.count = count_wildcard_values(wildcard);
 	var.res = malloc(sizeof(*var.res) * (var.count + 1));
+	if (!var.res)
+		return (NULL);
 	var.res[var.count] = NULL;
 	var.i = 0;
 	var.folder = opendir(".");
 	if (!var.folder)
+	{
+		free(var.res);
 		return (NULL);
+	}
 	wildcard_values_loop(&var, wildcard);
 	closedir(var.folder);
 	return (var.res);
 }
 
-
-// gcc wildcard.c wildcard2.c util/*.c
+// // gcc wildcard.c wildcard2.c util/*.c
 // #include <stdio.h>
 // int main(int argc, char const *argv[])
 // {

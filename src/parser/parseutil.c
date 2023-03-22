@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 13:44:21 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/22 14:20:07 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/22 16:01:13 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,32 @@
 #include "token.h"
 #include "cmd.h"
 
+static size_t	tokenlen(t_token *token, enum e_tokens delims)
+{
+	size_t	i;
+	int		q;
+
+	i = 0;
+	q = 0;
+	if (token->type == tws)
+		++i;
+	while (token[i].type && (!(token[i].type & delims) || q))
+	{
+		if (token[i].type & tdqts && q != 2)
+			q = (!q);
+		if (token[i].type & tqts && q != 1)
+			q = (!q) * 2;
+		++i;
+	}
+	if (token[i].type == tws)
+		++i;
+	return (i);
+}
+
 int	toke(t_token *tokens, size_t *i, size_t *j)
 {
-	*j = tokenlen(tokens + *i + !!(tokens[*i].type & (tdin | tdout | tapp | thdoc)), tdelim);
+	*j = tokenlen(tokens + *i
+			+ !!(tokens[*i].type & (tdin | tdout | tapp | thdoc)), tdelim);
 	if (!*j)
 	{
 		++i[0];

@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 14:40:05 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/22 11:22:06 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/22 16:18:46 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,12 @@ void	print_env(char *const env[])
 	}
 }
 
-char	**free_env(char **env)
+void	free_env(char **env)
 {
 	size_t	i;
 
 	if (!env)
-		return (NULL);
+		return ;
 	i = 0;
 	while (env[i])
 	{
@@ -75,5 +75,13 @@ char	**free_env(char **env)
 		i++;
 	}
 	free(env);
-	return (NULL);
 }
+
+// int	main(int argc, char *argv[], char *envp[])
+// {
+// 	char	**env;
+
+// 	env = copy_env((const char **)envp);
+// 	update_env(&env, "PWD=OK");
+// 	printf("%s\n", get_var(env, "PWD"));
+// }

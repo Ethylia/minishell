@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 15:24:44 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/22 10:11:38 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/22 16:48:29 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,18 @@
 #include "util/util.h"
 #include "env.h"
 #include "data.h"
+#include "wildcard.h"
+
+size_t	wildchars(t_token *token, size_t *len)
+{
+	if (token->type == twrd && !token->quote)
+	{
+		wildcard
+		return (1);
+	}
+	*len += token->len;
+	return (1);
+}
 
 size_t	tokenchars(t_token *token, size_t *len)
 {
@@ -34,59 +46,33 @@ size_t	tokenchars(t_token *token, size_t *len)
 		++(*len);
 		return (1);
 	}
+	return (wildchars(token, len));
 	*len += token->len;
 	return (1);
 }
 
-char	*concattokens(t_token *tokens, size_t len)
+char	*concattokens(t_token *tokens, ssize_t len)
 {
 	char	*str;
 	size_t	strlen;
-	size_t	i;
-	size_t	j;
+	ssize_t	i[2];
 
-	i = 0;
-	j = 0;
+	i[0] = -1;
+	i[1] = 0;
 	strlen = 0;
 	if (tokens->type & tws)
-		++i;
-	while (i < len && !(tokens[i].type & tws && !tokens[i].quote))
-	{
-		if (!(tokens[i].type & (tqts | tdqts) && !tokens[i].quote))
-			i += tokenchars(&tokens[i], &strlen);
-		else
-			++i;
-	}
+		++i[0];
+	while (++i[0] < len && !(tokens[i[0]].type & tws && !tokens[i[0]].quote))
+		if (!(tokens[i[0]].type & (tqts | tdqts) && !tokens[i[0]].quote))
+			i[0] += tokenchars(&tokens[i[0]], &strlen) - 1;
 	str = malloc(sizeof(char) * (strlen + 1));
 	if (!str)
 		return (0);
-	i = 0 + (tokens->type & tws);
-	while (i < len && !(tokens[i].type & tws && !tokens[i].quote))
-		j += tokenval(str + j, &tokens[i], &i);
-	str[j] = 0;
+	i[0] = 0 + (tokens->type & tws);
+	while (i[0] < len && !(tokens[i[0]].type & tws && !tokens[i[0]].quote))
+		i[1] += tokenval(str + i[1], &tokens[i[0]], &i[0]);
+	str[i[1]] = 0;
 	return (str);
-}
-
-size_t	tokenlen(t_token *token, enum e_tokens delims)
-{
-	size_t	i;
-	int		q;
-
-	i = 0;
-	q = 0;
-	if (token->type == tws)
-		++i;
-	while (token[i].type && (!(token[i].type & delims) || q))
-	{
-		if (token[i].type & tdqts && q != 2)
-			q = (!q);
-		if (token[i].type & tqts && q != 1)
-			q = (!q) * 2;
-		++i;
-	}
-	if (token[i].type == tws)
-		++i;
-	return (i);
 }
 
 static enum e_tokens	_gettoken2(const char *line)

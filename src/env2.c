@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 13:11:04 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/22 11:22:47 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/22 16:52:23 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,77 +21,82 @@ static int	is_same_var(char const *v1, char const *v2)
 	return (strcmp_del(v1, v2, '=') == 0);
 }
 
-static char	**append_env(char **env, const char *var)
+static void append_env(char ***env, const char *var)
 {
 	size_t	len;
 	char	**res;
 	char	*tmp;
 
-	len = env_len((const char **)env);
+	len = env_len((const char **)*env);
 	res = malloc(sizeof(*res) * (len + 2));
 	if (!res)
-		return (free_env(env));
+	{
+		free_env(*env);
+		return ;
+	}
 	tmp = strdupe(var);
 	if (!tmp)
 	{
 		free(res);
-		return (free_env(env));
+		free_env(*env);
+		return ;
 	}
-	memcopy(res, env, sizeof(*env) * (len));
+	memcopy(res, *env, sizeof(*res) * (len));
 	res[len] = tmp;
 	res[len + 1] = NULL;
-	free(env);
-	return (res);
+	free(*env);
+	*env = res;
 }
 
-char	**update_env(char **env, const char *var)
+void	update_env(char ***env, const char *var)
 {
 	size_t	i;
 	char	*tmp;
 
 	i = 0;
-	while (env && env[i])
+	while (*env && (*env)[i])
 	{
-		if (is_same_var(env[i], var))
+		if (is_same_var((*env)[i], var))
 		{
 			tmp = strdupe(var);
 			if (!tmp)
-				return (free_env(env));
-			free(env[i]);
-			env[i] = tmp;
-			return (env);
+			{
+				free_env(*env);
+				return ;
+			}
+			free((*env)[i]);
+			(*env)[i] = tmp;
+			return ;
 		}
 		i++;
 	}
-	return (append_env(env, var));
+	append_env(env, var);
 }
 
-char	**rm_env(char **env, char *var)
+void	rm_env(char ***env, char *var)
 {
 	size_t	i;
 	size_t	curr_len;
 	char	**res;
 
-	res = env;
 	i = 0;
-	while (env && env[i])
-	{
-		if (is_same_var(env[i], var))
-		{
-			curr_len = env_len((const char **)env);
-			res = malloc(sizeof(*res) * curr_len);
-			if (!res)
-				return (free_env(env));
-			free(env[i]);
-			memcopy(res, env, sizeof(*res) * i);
-			memcopy(res + i, env + i + 1, sizeof(*res) * (curr_len - i));
-			res[curr_len - 1] = NULL;
-			free(env);
-			break ;
-		}
+	while (*env && (*env)[i] && !is_same_var((*env)[i], var))
 		i++;
+	if (!is_same_var((*env)[i], var))
+		return ;
+	curr_len = env_len((const char **)(*env));
+	res = malloc(sizeof(*res) * curr_len);
+	if (!res)
+	{
+		free_env(*env);
+		return ;
 	}
-	return (res);
+	free((*env)[i]);
+	memcopy(res, *env, sizeof(*res) * i);
+	memcopy(res + i, *env + i + 1, sizeof(*res) * (curr_len - i));
+	res[curr_len - 1] = NULL;
+	free(*env);
+	*env = res;
 }
 
 char const	*get_var(char *const envp[], char const *var)

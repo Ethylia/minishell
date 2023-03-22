@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 12:31:49 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/22 14:10:00 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/22 16:14:34 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	updateps1(const char *path)
 		ps1 = concatstr(3, "PS1=", path, " $ ");
 	if (!ps1)
 		return ;
-	(getdata())->local_env = update_env(getdata()->local_env, ps1);
+	update_env(&(getdata()->local_env), ps1);
 	free(ps1);
 }
 
@@ -50,7 +50,7 @@ int	update_oldpwd(char **envp)
 	oldpwd = concatstr(2, "OLDPWD=", get_var(envp, "PWD"));
 	if (!oldpwd)
 		return (ERROR);
-	envp = update_env(envp, oldpwd);
+	update_env(&envp, oldpwd);
 	free(oldpwd);
 	if (!envp)
 		return (ERROR);
@@ -68,7 +68,7 @@ int	update_pwd(char **envp)
 	free(path);
 	if (!pwd)
 		return (ERROR);
-	envp = update_env(envp, pwd);
+	update_env(&envp, pwd);
 	free(pwd);
 	if (!envp)
 		return (ERROR);

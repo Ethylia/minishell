@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 13:09:15 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/22 14:37:58 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/22 16:00:01 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,6 @@ t_token	*findnext(t_token *tokens, enum e_tokens type)
 	{
 		if (tokens->type & type)
 			return (tokens);
-		++tokens;
-	}
-	return (tokens);
-}
-
-t_token	*findafter(t_token *tokens, enum e_tokens type)
-{
-	while (tokens->type)
-	{
-		if (tokens->type & type)
-			return (tokens + 1);
 		++tokens;
 	}
 	return (tokens);
