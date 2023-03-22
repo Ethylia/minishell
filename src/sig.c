@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sig.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 09:05:19 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/20 14:36:43 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/22 07:31:58 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,6 @@
 #include "error.h"
 #include "def.h"
 
-int	*getquitflag(void)
-{
-	static int	quitflag = 0;
-
-	return (&quitflag);
-}
-
 static void	sig_handler(int signo)
 {
 	if (signo == SIGINT)
@@ -31,16 +24,14 @@ static void	sig_handler(int signo)
 		printf("\n");
 		rl_replace_line("", 0);
 		rl_on_new_line();
-		rl_redisplay();
+		// rl_redisplay();
 	}
 	else if (signo == SIGQUIT)
 	{
-		*(getquitflag()) = 1;
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		// if exit code is 131,
 		//	printf("Quit: %d\n", signo);
-
 	}
 }
 

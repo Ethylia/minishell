@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 14:43:46 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/21 09:21:48 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/22 07:45:59 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <unistd.h>
 #include "env.h"
 #include "util/util.h"
+#include "data.h"
 
 #define ENV_PATH_SEP ':'
 #define NO_RIGHTS 0000
@@ -61,9 +62,9 @@ char	*resolve_exec_path(char *word)
 
 	if (strchar(word, '/'))
 		return (copy_word(word));
-	env_path = get_var(*(get_exported_env()), "PATH");
+	env_path = get_var(getdata()->exported_env, "PATH");
 	if (!env_path)
-		env_path = get_var(*(get_local_env()), "PATH");
+		env_path = get_var(getdata()->local_env, "PATH");
 	if (!env_path)
 		return (copy_word(word));
 	exec_path = find_in_path(word, env_path);

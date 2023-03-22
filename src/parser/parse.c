@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 15:29:19 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/21 15:24:08 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/22 08:19:10 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ static void	skiparg(t_token **tokens)
 		++(*tokens);
 	while (1)
 	{
-		if (!(*tokens)->type || ((*tokens)->type & (tdelim) && (!(*tokens)->quote)))
+		if (!(*tokens)->type || ((*tokens)->type
+				& (tdelim) && (!(*tokens)->quote)))
 			break ;
 		++(*tokens);
 	}
@@ -110,18 +111,22 @@ void	freecmd(t_cmd *cmd)
 {
 	size_t	i;
 
-	i = -1;
 	if (cmd->pipecmd)
 		freecmd(cmd->pipecmd);
-	while (cmd->argv[++i])
+	cmd->pipecmd = 0;
+	i = -1;
+	while (cmd->argv && cmd->argv[++i])
 		free(cmd->argv[i]);
 	free(cmd->argv);
 	i = -1;
-	while (cmd->redirin[++i].type)
+	while (cmd->redirin && cmd->redirin[++i].type)
 		free(cmd->redirin[i].str);
 	free(cmd->redirin);
 	i = -1;
-	while (cmd->redirout[++i].type)
+	while (cmd->redirout && cmd->redirout[++i].type)
 		free(cmd->redirout[i].str);
 	free(cmd->redirout);
+	cmd->argv = 0;
+	cmd->redirin = 0;
+	cmd->redirout = 0;
 }

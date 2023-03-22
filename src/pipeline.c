@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipeline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 08:46:35 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/21 15:45:27 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/22 08:24:16 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 #include "def.h"
 #include "env.h"
 #include "sig.h"
+#include "data.h"
 
 static void	close_pipe(t_pipe *p)
 {
@@ -52,20 +53,20 @@ static int	exec_cmd(t_cmd *cmd, t_pipe *prev_pipe, t_pipe *next_pipe)
 
 	if (redir_input(cmd, prev_pipe) == ERROR
 		|| redir_output(cmd, next_pipe) == ERROR)
-		return(exit_err(NULL));
+		return (exit_err(NULL));
 	if (is_builtin(cmd))
 	{
 		if (exec_builtin(cmd) == ERROR)
-			return(exit_err(NULL));
+			return (exit_err(NULL));
 		exit(EXIT_SUCCESS);
 	}
 	exec_path = resolve_exec_path(cmd->argv[0]);
 	if (!exec_path)
-		return(exit_err(NULL));
-	execve(exec_path, cmd->argv, *(get_exported_env()));
-	return(exit_err(exec_path));
+		return (exit_err(NULL));
+	execve(exec_path, cmd->argv, getdata()->exported_env);
+	return (exit_err(exec_path));
 }
- 
+
 int	pipeline(t_cmd *cmd, t_pipe *prev_pipe)
 {
 	pid_t	cmd_pid;
@@ -84,13 +85,10 @@ int	pipeline(t_cmd *cmd, t_pipe *prev_pipe)
 	else
 	{
 		waitpid(cmd_pid, &res, 0);
-		if (WIFEXITED(res))
-			res = WEXITSTATUS(res);
-		if (*getquitflag() == 1 && res == 3)
-		{
-			*getquitflag() = 0;
+		if (!WIFEXITED(res) && res == 3)
 			printf("Quit: 3\n");
-		}
+		else if (WIFEXITED(res))
+			res = WEXITSTATUS(res);
 	}
 	return (res);
 }

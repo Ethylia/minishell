@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sig.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 13:49:56 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/20 13:51:39 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/22 07:30:08 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,5 @@
 # define SIG_H
 
 void	init_sig_handlers(void);
-int		*getquitflag(void);
 
 #endif

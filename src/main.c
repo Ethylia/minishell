@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 07:57:50 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/21 15:47:28 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/22 08:20:22 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,31 +24,30 @@
 #include "env.h"
 #include "def.h"
 #include "sig.h"
+#include "data.h"
 
-#include <stdio.h>
 int	exec_cmd(t_token *tokens)
 {
-	t_cmd	cmd;
 	int		stat;
 
-	cmd = buildcmd(tokens);
-	if (is_builtin(&cmd) && !cmd.pipecmd)
-		stat = exec_builtin(&cmd);
+	getdata()->cmd = buildcmd(tokens);
+	if (is_builtin(&getdata()->cmd) && !(getdata()->cmd.pipecmd))
+		stat = exec_builtin(&getdata()->cmd);
 	else
 	{
-		stat = pipeline(&cmd, 0);
+		stat = pipeline(&getdata()->cmd, 0);
 		if (stat == ERROR)
 			stat = EXIT_FAILURE;
 		waitpid(ANY_CHILD, 0, 0);
 	}
-	freecmd(&cmd);
-	printf("$?: %i\n", stat);
+	freecmd(&getdata()->cmd);
+	// printf("$?: %i\n", stat);
 	return (stat);
 }
 
 t_token	*nextcmd(t_token *token, int stat)
 {
-	t_token	*next;
+	t_token			*next;
 	unsigned int	nestlvl;
 
 	next = findnext(token, tand | tor);
@@ -92,11 +91,12 @@ int	main(__attribute__((unused))int argc,
 	char				*line;
 	t_token				*token;
 
-	set_exported_env((const char **)envp);
+	getdata()->exported_env = copy_env((const char **)envp);
 	init_sig_handlers();
-	if (!get_var(*get_exported_env(), "PS1"))
-		*(get_local_env()) = copy_env((const char* []){"PS1="MINISHELL_PS, NULL});
-	line = readline(get_var(*get_local_env(), "PS1"));
+	if (!get_var(getdata()->exported_env, "PS1"))
+		(getdata())->local_env
+			= copy_env((const char *[]){"PS1="MSHELLPS, NULL});
+	line = readline(get_var(getdata()->local_env, "PS1"));
 	while (line)
 	{
 		token = tokenize(line + countwhite(line));
@@ -107,9 +107,8 @@ int	main(__attribute__((unused))int argc,
 			free(token);
 		}
 		free(line);
-		line = readline(get_var(*get_local_env(), "PS1"));
+		line = readline(get_var(getdata()->local_env, "PS1"));
 	}
 	rl_clear_history();
-	free_env(*get_exported_env());
-	free_env(*get_local_env());
+	freedata();
 }

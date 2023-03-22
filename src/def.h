@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   def.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 17:48:26 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/21 13:33:09 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/22 07:22:11 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,6 @@
 
 # define NAME "minishell"
 # define HEREDOC_PS "> "
-# define MINISHELL_PS "msh$ "
+# define MSHELLPS "msh$ "
 
 #endif

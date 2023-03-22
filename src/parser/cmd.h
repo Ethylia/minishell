@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 15:33:44 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/21 14:26:14 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/22 07:39:00 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ typedef struct s_pipe
 			int	write;
 		};	
 	};
-	
 }	t_pipe;
 
 enum e_OP

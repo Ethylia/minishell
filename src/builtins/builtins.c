@@ -3,18 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 09:03:29 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/21 12:11:57 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/22 07:44:54 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../parser/cmd.h"
-#include "../util/util.h"
-#include "../def.h"
+#include "parser/cmd.h"
+#include "util/util.h"
+#include "def.h"
 #include "builtins.h"
 #include "env.h"
+#include "data.h"
 
 static const char	**get_builtins_names(void)
 {
@@ -71,7 +72,7 @@ int	exec_builtin(t_cmd *cmd)
 		if (strcmp(cmd->argv[0], names[i]) == 0)
 		{
 			if (get_builtin_func(i)(get_argc(cmd->argv),
-				cmd->argv, *(get_exported_env())) == ERROR)
+				cmd->argv, getdata()->exported_env) == ERROR)
 				return (ERROR);
 			else
 				return (SUCCESS);

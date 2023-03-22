@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 17:22:04 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/20 13:35:30 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/22 07:22:56 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@
 # define BUILTIN_EXIT "exit"
 
 # include "../parser/cmd.h"
-
 
 int	is_builtin(t_cmd *cmd);
 int	exec_builtin(t_cmd *cmd);

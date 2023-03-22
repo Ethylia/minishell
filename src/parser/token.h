@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 13:06:01 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/21 13:28:04 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/22 07:57:39 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,16 @@ enum e_tokens
 	tws = 1 << 12,
 	twrd = 1 << 13,
 	tdelim = tand | tor | tpipe | tdin | thdoc
-		| tdout | tapp | tws | tpin | tpout
+	| tdout | tapp | tws | tpin | tpout
 };
 
-typedef struct s_token
+	typedef struct s_token
 {
-	const char		*val;
-	size_t			len;
-	enum e_tokens	type;
-	unsigned int	nestlvl;
-	unsigned char	quote;
+	const char *val;
+	size_t len;
+	enum e_tokens type;
+	unsigned int nestlvl;
+	unsigned char quote;
 }	t_token;
 
 

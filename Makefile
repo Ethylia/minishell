@@ -9,7 +9,6 @@ SRC_FILES	=	builtins/builtins.c \
 				builtins/unset.c \
 				env1.c \
 				env2.c \
-				env3.c \
 				error.c \
 				main.c \
 				parser/parse.c \
@@ -27,7 +26,8 @@ SRC_FILES	=	builtins/builtins.c \
 				wildcard2.c \
 				parser/parseutil.c \
 				pipeline.c \
-				parser/tokenutil.c
+				parser/tokenutil.c \
+				data.c
 
 SRC_DIR		=	src
 
