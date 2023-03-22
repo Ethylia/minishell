@@ -17,6 +17,13 @@
 #include "error.h"
 #include "def.h"
 
+int	*getquitflag(void)
+{
+	static int	quitflag = 0;
+
+	return (&quitflag);
+}
+
 static void	sig_handler(int signo)
 {
 	if (signo == SIGINT)
@@ -28,6 +35,7 @@ static void	sig_handler(int signo)
 	}
 	else if (signo == SIGQUIT)
 	{
+		*(getquitflag()) = 1;
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		// if exit code is 131,

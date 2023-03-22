@@ -62,7 +62,7 @@ int	redir_input(t_cmd *cmd, t_pipe *prev_pipe)
 
 static int	handle_next_pipe(t_cmd *cmd, t_pipe *next_pipe)
 {
-	if (!is_pipeline_end(cmd))
+	if (cmd->pipecmd)
 	{
 		close(next_pipe->read);
 		return (next_pipe->write);

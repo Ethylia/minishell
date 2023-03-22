@@ -14,5 +14,6 @@
 # define SIG_H
 
 void	init_sig_handlers(void);
+int		*getquitflag(void);
 
 #endif

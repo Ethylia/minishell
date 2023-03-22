@@ -44,7 +44,10 @@ int	echo(const int argc, char *const argv[], char *const envp[])
 
 	(void) envp;
 	if (argc == 1)
+	{
+		write(STDOUT_FILENO, "\n", 1);
 		return (SUCCESS);
+	}
 	opts = parse_option(argv[1]);
 	i = opts.arg_start;
 	while (i < argc)
