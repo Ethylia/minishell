@@ -15,7 +15,7 @@
 #include "util/util.h"
 #include "env.h"
 
-size_t	env_len(char **env)
+size_t	env_len(const char **env)
 {
 	size_t	len;
 
@@ -27,7 +27,7 @@ size_t	env_len(char **env)
 	return (len);
 }
 
-char	**copy_env(char **env)
+char	**copy_env(const char **env)
 {
 	char	**res;
 	size_t	len;

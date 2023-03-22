@@ -20,7 +20,7 @@ char	***get_exported_env(void)
 	return (&env);
 }
 
-void	set_exported_env(char	*env[])
+void	set_exported_env(const char	*env[])
 {
 	*(get_exported_env()) = copy_env(env);
 }

@@ -21,7 +21,7 @@ static int	is_same_var(char const *v1, char const *v2)
 	return (strcmp_del(v1, v2, '=') == 0);
 }
 
-static char	**append_env(char **env, char *var)
+static char	**append_env(char **env, const char *var)
 {
 	size_t	len;
 	char	**res;
@@ -44,7 +44,7 @@ static char	**append_env(char **env, char *var)
 	return (res);
 }
 
-char	**update_env(char **env, char *var)
+char	**update_env(char **env, const char *var)
 {
 	size_t	i;
 	char	*tmp;

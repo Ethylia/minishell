@@ -13,15 +13,15 @@
 #ifndef ENV_H
 # define ENV_H
 
-char		**update_env(char **env, char *var);
+char		**update_env(char **env, const char *var);
 char		**rm_env(char **env, char *var);
-char		**copy_env(char **env);
+char		**copy_env(const char **env);
 void		print_env(char *const env[]);
 char		**free_env(char **env);
 char const	*get_var(char *const envp[], char const *var);
 
 char		***get_exported_env(void);
-void		set_exported_env(char *env[]);
+void		set_exported_env(const char *env[]);
 char		***get_local_env(void);
 
 #endif
