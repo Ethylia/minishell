@@ -10,9 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include <fcntl.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <sys/wait.h>
 #include <signal.h>
 #include "builtins/builtins.h"
 #include "parser/cmd.h"
@@ -22,12 +24,7 @@
 #include "path.h"
 #include "def.h"
 #include "env.h"
-
-#include <stdio.h>
-int	is_pipeline_end(t_cmd *cmd)
-{
-	return (cmd->pipecmd == NULL);
-}
+#include "sig.h"
 
 static void	close_pipe(t_pipe *p)
 {
@@ -61,9 +58,6 @@ static int	exec_cmd(t_cmd *cmd, t_pipe *prev_pipe, t_pipe *next_pipe)
 		if (exec_builtin(cmd) == ERROR)
 			return(exit_err(NULL));
 		exit(EXIT_SUCCESS);
-		// return (SUCCESS);
-		// else
-			// return (exit_success(NULL));
 	}
 	exec_path = resolve_exec_path(cmd->argv[0]);
 	if (!exec_path)
@@ -78,19 +72,25 @@ int	pipeline(t_cmd *cmd, t_pipe *prev_pipe)
 	t_pipe	next_pipe;
 	int		res;
 
-	if (!is_pipeline_end(cmd)
-		&& pipe(next_pipe.pipe) == ERROR)
+	if (cmd->pipecmd && pipe(next_pipe.pipe) == ERROR)
 		return (ERROR);
 	cmd_pid = fork();
-	if (cmd_pid == 0
-		&& exec_cmd(cmd, prev_pipe, &next_pipe) == ERROR)
+	if (cmd_pid == 0 && exec_cmd(cmd, prev_pipe, &next_pipe) == ERROR)
 		exit(EXIT_FAILURE);
 	if (prev_pipe)
 		close_pipe(prev_pipe);
-	res = SUCCESS;
-	if (!is_pipeline_end(cmd))
+	if (cmd->pipecmd)
 		res = pipeline(cmd->pipecmd, &next_pipe);
-	if (cmd_pid == 0)
-		exit(res);
+	else
+	{
+		waitpid(cmd_pid, &res, 0);
+		if (WIFEXITED(res))
+			res = WEXITSTATUS(res);
+		if (*getquitflag() == 1 && res == 3)
+		{
+			*getquitflag() = 0;
+			printf("Quit: 3\n");
+		}
+	}
 	return (res);
 }

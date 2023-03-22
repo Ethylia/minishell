@@ -36,14 +36,10 @@ int	exec_cmd(t_token *tokens)
 		stat = exec_builtin(&cmd);
 	else
 	{
-		if (pipeline(&cmd, 0) == ERROR)
+		stat = pipeline(&cmd, 0);
+		if (stat == ERROR)
 			stat = EXIT_FAILURE;
-		else
-		{
-			while (waitpid(ANY_CHILD, &stat, 0) != NO_CHILD_LEFT)
-				;
-			stat = WEXITSTATUS(stat);
-		}
+		waitpid(ANY_CHILD, 0, 0);
 	}
 	freecmd(&cmd);
 	printf("$?: %i\n", stat);
@@ -96,9 +92,11 @@ int	main(__attribute__((unused))int argc,
 	char				*line;
 	t_token				*token;
 
-	set_exported_env(envp);
+	set_exported_env((const char **)envp);
 	init_sig_handlers();
-	line = readline(MINISHELL_PS);
+	if (!get_var(*get_exported_env(), "PS1"))
+		*(get_local_env()) = copy_env((const char* []){"PS1="MINISHELL_PS, NULL});
+	line = readline(get_var(*get_local_env(), "PS1"));
 	while (line)
 	{
 		token = tokenize(line + countwhite(line));
@@ -109,7 +107,9 @@ int	main(__attribute__((unused))int argc,
 			free(token);
 		}
 		free(line);
-		line = readline(MINISHELL_PS);
+		line = readline(get_var(*get_local_env(), "PS1"));
 	}
 	rl_clear_history();
+	free_env(*get_exported_env());
+	free_env(*get_local_env());
 }

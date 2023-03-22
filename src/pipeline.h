@@ -15,7 +15,6 @@
 
 # include "parser/cmd.h"
 
-int	is_pipeline_end(t_cmd *cmd);
 int	pipeline(t_cmd *cmd, t_pipe *prev_pipe);
 
 #endif

@@ -21,11 +21,6 @@
 #include "env.h"
 #include "path.h"
 
-int	is_pipeline_end(t_cmd *cmd)
-{
-	return (cmd->pipecmd == NULL);
-}
-
 void	close_pipe(t_pipe *p)
 {
 	close(p->read);
