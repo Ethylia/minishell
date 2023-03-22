@@ -3,61 +3,61 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 16:30:41 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/21 15:56:42 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/22 14:28:27 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>	// free
-#include <stdio.h>	// printf
-#include <unistd.h>	// getcwd
+#include <unistd.h>	// write
 #include "../util/util.h"
-#include "../env.h"
 #include "../def.h"
+#include "../env.h"
+#include "data.h"
+#include "cd.h"
 
-static void	print_path(char *const envp[], const char *path)
+#define MSG_OLDPWD_NOT_SET NAME ": cd: OLDPWD not set\n"
+#define MSG_HOME_NOT_SET NAME ": cd: HOME not set\n"
+
+static const char	*get_home(char **envp)
 {
+	const char *path;
+
+	path = get_var(envp, "HOME");
+	if (!path)
+	{
+		write(STDERR_FILENO, MSG_HOME_NOT_SET, strln(MSG_HOME_NOT_SET));
+		return (NULL);
+	}
+	return (path);
+}
+
+static const char *get_oldpwd(char **envp)
+{
+	const char *path;
+
+	path = get_var(envp, "OLDPWD");
+	if (!path)
+	{
+		write(STDERR_FILENO, MSG_OLDPWD_NOT_SET, strln(MSG_OLDPWD_NOT_SET));
+		return (NULL);
+	}
+	print_path(envp, path);
+	return (path);	
+}
+
+static char	*resolve_home(char **envp, char *argv)
+{
+	char		*path;
 	const char	*home;
 
-	home = get_var(envp, "HOME");
-	if (starts_with(home, path))
-		printf("~%s\n", path + strln(home));
-	else
-		printf("%s\n", path);
-}
-
-static int	update_oldpwd(char **envp)
-{
-	char	*oldpwd;
-
-	oldpwd = concatstr(2, "OLDPWD=", get_var(envp, "PWD"));
-	printf("OLDPWD=%s\n", oldpwd);
-	if (!oldpwd)
-		return (ERROR);
-	envp = update_env(envp, oldpwd);
-	free(oldpwd);
-	if (!envp)
-		return (ERROR);
-	return (SUCCESS);
-}
-
-static int	update_pwd(char **envp)
-{
-	char	*path;
-	char	*pwd;
-
-	path = getcwd(NULL, 0);
-	pwd = concatstr(2, "PWD=", path);
-	free(path);
-	if (!pwd)
-		return (ERROR);
-	envp = update_env(envp, pwd);
-	free(pwd);
-	if (!envp)
-		return (ERROR);
-	return (SUCCESS);
+	home = get_home(envp);
+	if (!home)
+		return (NULL);
+	path = concatstr(2, home, argv + 1);
+	return (path);
 }
 
 // if stdin: don't cd
@@ -72,24 +72,30 @@ static int	update_pwd(char **envp)
 // ..							: (remove last dir of pwd)
 // does not start with /		: modifies pwd
 // set $PWD $OLDPWD
-int	cd(const int argc, char *const argv[], char *const envp[])
+int	bi_cd(const int argc, char *const argv[], char **envp)
 {
 	const char	*path;
+	char		*resolved_path;
 
-	if (argc == 0)
-		path = getenv("HOME");
+	resolved_path = NULL;
+	if (argc == 1)
+		path = get_home(envp);
 	else if (strcmp(argv[1], "-") == 0)
+		path = get_oldpwd(envp);
+	else if (starts_with(argv[1], "~"))
 	{
-		path = get_var(envp, "OLDPWD");
-		print_path(envp, path);
+		resolved_path = resolve_home(envp, argv[1]);
+		path = resolved_path;
 	}
 	else
 		path = argv[1];
-	if (chdir(path) == -1)
+	if (!path || chdir(path) == ERROR)
 	{
-		perror(path);
+		if (path)
+			perror(path);
 		return (ERROR);
 	}
+	free(resolved_path);
 	update_oldpwd((char **)envp);
 	update_pwd((char **)envp);
 	return (SUCCESS);

@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 09:03:29 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/22 07:44:54 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/22 14:30:02 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,9 @@
 #include "builtins.h"
 #include "env.h"
 #include "data.h"
+#include "redir.h"
 
-static const char	**get_builtins_names(void)
+const char	**get_builtins_names(void)
 {
 	static const char	*names[] = {BUILTIN_ECHO, BUILTIN_CD,
 		BUILTIN_PWD, BUILTIN_EXPORT, BUILTIN_UNSET,
@@ -26,10 +27,10 @@ static const char	**get_builtins_names(void)
 	return (names);
 }
 
-static t_builtin_func	get_builtin_func(size_t i)
+t_builtin_func	get_builtin_func(size_t i)
 {
-	static const t_builtin_func	funcs[] = {echo, cd, pwd, export,
-		unset, env, bi_exit, NULL};
+	static const t_builtin_func	funcs[] = {bi_echo, bi_cd, bi_pwd, bi_export,
+		bi_unset, bi_env, bi_exit, NULL};
 
 	return (funcs[i]);
 }
@@ -48,36 +49,4 @@ int	is_builtin(t_cmd *cmd)
 		i++;
 	}
 	return (0);
-}
-
-static int	get_argc(char *const argv[])
-{
-	int	argc;
-
-	argc = 0;
-	while (argv[argc])
-		argc++;
-	return (argc);
-}
-
-int	exec_builtin(t_cmd *cmd)
-{
-	const char				**names;
-	size_t					i;
-
-	names = get_builtins_names();
-	i = 0;
-	while (names[i])
-	{
-		if (strcmp(cmd->argv[0], names[i]) == 0)
-		{
-			if (get_builtin_func(i)(get_argc(cmd->argv),
-				cmd->argv, getdata()->exported_env) == ERROR)
-				return (ERROR);
-			else
-				return (SUCCESS);
-		}
-		i++;
-	}
-	return (ERROR);
 }

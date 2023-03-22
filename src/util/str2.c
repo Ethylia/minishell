@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 17:32:40 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/20 10:50:54 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/22 12:06:25 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	starts_with(const char *s, const char *prefix)
 	size_t	len;
 
 	len = strln(prefix);
-	return (strncmp(s, prefix, len));
+	return (strncmp(s, prefix, len) == 0);
 }
 
 char	*strchar(const char *s, int c)

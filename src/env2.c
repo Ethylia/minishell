@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env2.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 13:11:04 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/15 13:32:25 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/22 11:22:47 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "util/util.h"
 #include "env.h"
 
-size_t	env_len(char **env);
+size_t	env_len(const char **env);
 
 static int	is_same_var(char const *v1, char const *v2)
 {
@@ -27,7 +27,7 @@ static char	**append_env(char **env, const char *var)
 	char	**res;
 	char	*tmp;
 
-	len = env_len(env);
+	len = env_len((const char **)env);
 	res = malloc(sizeof(*res) * (len + 2));
 	if (!res)
 		return (free_env(env));
@@ -78,7 +78,7 @@ char	**rm_env(char **env, char *var)
 	{
 		if (is_same_var(env[i], var))
 		{
-			curr_len = env_len(env);
+			curr_len = env_len((const char **)env);
 			res = malloc(sizeof(*res) * curr_len);
 			if (!res)
 				return (free_env(env));

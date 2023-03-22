@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parseutil.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 13:44:21 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/21 15:25:39 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/22 14:20:07 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cmd.h"
+#include "builtins/builtins.h"
 #include "token.h"
+#include "cmd.h"
 
 int	toke(t_token *tokens, size_t *i, size_t *j)
 {
@@ -29,13 +30,13 @@ void	setredir(t_cmdgroup *g, enum e_tokens type, t_token *tokens, size_t i)
 	if (type & (tdin | thdoc))
 	{
 		g->cmd.redirin[g->c[1].redirin].type = type;
-		g->cmd.redirin[g->c[1].redirin].str = concattokens(tokens, i);
+		g->cmd.redirin[g->c[1].redirin].str = concattokens(tokens + 1, i);
 		++(g->c[1].redirin);
 	}
 	else
 	{
 		g->cmd.redirout[g->c[1].redirout].type = type;
-		g->cmd.redirout[g->c[1].redirout].str = concattokens(tokens, i);
+		g->cmd.redirout[g->c[1].redirout].str = concattokens(tokens + 1, i);
 		++(g->c[1].redirout);
 	}
 }

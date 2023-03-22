@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 13:09:15 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/21 14:19:07 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/22 14:37:58 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static size_t	createtoken(t_token *token, char *line)
 	i = (token->type == thdoc || token->type == tapp
 			|| token->type == tor || token->type == tand)
 		+ !(token->type == tws || token->type == twrd);
-	token->val = line + i;
+	token->val = line;
 	if (token->type != tws && token->type != twrd)
 		return (token->len = i);
 	while (line[i])

@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/15 15:10:08 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/15 15:11:41 by francoma         ###   ########.fr       */
+/*   Created: 2023/03/22 14:30:37 by francoma          #+#    #+#             */
+/*   Updated: 2023/03/22 14:30:48 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	unset(const int argc, char *const argv[], char *const envp[])
+int	bi_unset(const int argc, char *const argv[], char **envp)
 {
 	(void) argc;
 	(void) argv;
 	(void) envp;
-	return (0);	
+	return (0);
 }

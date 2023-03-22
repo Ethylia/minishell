@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 08:46:35 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/22 08:24:16 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/22 14:41:04 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <stdlib.h>
 #include <sys/wait.h>
 #include <signal.h>
+#include <readline/readline.h>
 #include "builtins/builtins.h"
 #include "parser/cmd.h"
 #include "pipeline.h"
@@ -85,8 +86,8 @@ int	pipeline(t_cmd *cmd, t_pipe *prev_pipe)
 	else
 	{
 		waitpid(cmd_pid, &res, 0);
-		if (!WIFEXITED(res) && res == 3)
-			printf("Quit: 3\n");
+		if (!WIFEXITED(res) && res == SIGQUIT)
+			printf("Quit: %i\n", SIGQUIT);
 		else if (WIFEXITED(res))
 			res = WEXITSTATUS(res);
 	}

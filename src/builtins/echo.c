@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 11:15:18 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/15 13:11:24 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/22 14:28:06 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static struct s_options	parse_option(char *option)
 	return (res);
 }
 
-int	echo(const int argc, char *const argv[], char *const envp[])
+int	bi_echo(const int argc, char *const argv[], char **envp)
 {
 	struct s_options	opts;
 	int					i;

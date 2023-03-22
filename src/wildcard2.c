@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wildcard2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 15:59:49 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/17 16:26:37 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/22 14:48:08 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	free_wildcard_values(char **wildcard_values)
 	free(wildcard_values);
 }
 
-static size_t	count_wildcard_values(const char *wildcard)
+size_t	count_wildcard_values(const char *wildcard)
 {
 	DIR				*folder;
 	struct dirent	*entry;

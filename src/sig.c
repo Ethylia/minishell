@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 09:05:19 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/22 07:31:58 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/22 14:34:16 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,16 @@ static void	sig_handler(int signo)
 {
 	if (signo == SIGINT)
 	{
-		printf("\n");
 		rl_replace_line("", 0);
+		printf("\n");
 		rl_on_new_line();
-		// rl_redisplay();
+		rl_redisplay();
 	}
 	else if (signo == SIGQUIT)
 	{
-		rl_replace_line("", 0);
-		rl_on_new_line();
+		rl_redisplay();
+		// rl_replace_line("", 0);
+		// rl_on_new_line();
 		// if exit code is 131,
 		//	printf("Quit: %d\n", signo);
 	}

@@ -1,5 +1,7 @@
 SRC_FILES	=	builtins/builtins.c \
+				builtins/builtins2.c \
 				builtins/cd.c \
+				builtins/cd2.c \
 				builtins/echo.c \
 				builtins/env.c \
 				builtins/exit.c \
@@ -49,7 +51,8 @@ norm:
 noerr: CCFLAGS:=$(subst -Werror,,$(CCFLAGS))
 noerr: all
 
-debug: CCFLAGS+=-g -O0
+debug: CCFLAGS+=-g -O0 -fsanitize=address
+debug: LDFLAGS+=-fsanitize=address
 debug: fclean all
 
 clean:

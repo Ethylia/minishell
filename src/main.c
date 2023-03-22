@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 07:57:50 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/22 08:20:22 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/22 14:21:25 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 #include "def.h"
 #include "sig.h"
 #include "data.h"
+#include "error.h"
 
 int	exec_cmd(t_token *tokens)
 {
@@ -36,9 +37,8 @@ int	exec_cmd(t_token *tokens)
 	else
 	{
 		stat = pipeline(&getdata()->cmd, 0);
-		if (stat == ERROR)
-			stat = EXIT_FAILURE;
-		waitpid(ANY_CHILD, 0, 0);
+		while (waitpid(ANY_CHILD, 0, 0) != NO_CHILD_LEFT)
+			continue ;
 	}
 	freecmd(&getdata()->cmd);
 	// printf("$?: %i\n", stat);
@@ -65,11 +65,11 @@ t_token	*nextcmd(t_token *token, int stat)
 	return (next);
 }
 
-void	execline(t_token *token)
+int	execline(t_token *token)
 {
 	t_token	*next;
-	// t_cmd	cmd;
 	int		stat;
+	// t_cmd	cmd;
 
 	next = token;
 	while (next->type)
@@ -83,6 +83,29 @@ void	execline(t_token *token)
 		stat = exec_cmd(next);
 		next = nextcmd(next, stat);
 	}
+	return (stat);
+}
+
+void	updateps1(const char *path);
+
+static t_data	*init_data(const char **envp)
+{
+	t_data *const	data = getdata();
+	char			*path;
+
+	data->exported_env = copy_env(envp);
+	if (!data->exported_env)
+		return (NULL);
+	if (!get_var(data->exported_env, "PS1"))
+		data->local_env = copy_env((const char *[]){"PS1="MSHELLPS, NULL});
+	if (!data->local_env)
+		return (NULL);
+	path = getcwd(NULL, 0);
+	if (!path)
+		return (NULL);
+	updateps1(path);
+	free(path);
+	return (data);
 }
 
 int	main(__attribute__((unused))int argc,
@@ -91,11 +114,10 @@ int	main(__attribute__((unused))int argc,
 	char				*line;
 	t_token				*token;
 
-	getdata()->exported_env = copy_env((const char **)envp);
+	if (!init_data((const char **) envp))
+		exit_error("");
 	init_sig_handlers();
-	if (!get_var(getdata()->exported_env, "PS1"))
-		(getdata())->local_env
-			= copy_env((const char *[]){"PS1="MSHELLPS, NULL});
+	// rm_env(getdata()->local_env, "PS1");
 	line = readline(get_var(getdata()->local_env, "PS1"));
 	while (line)
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 10:51:16 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/21 10:47:59 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/22 13:34:53 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <errno.h>	// errno
 #include <unistd.h>	// write
 #include "def.h"
+#include "data.h"
 #include "util/util.h"
 
 #include <stdio.h>
@@ -30,6 +31,6 @@ void	print_err(const char *problem)
 void	exit_error(const char *problem)
 {
 	print_err(problem);
-	// free stuff
+	freedata();
 	exit(EXIT_FAILURE);
 }
