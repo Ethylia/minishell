@@ -6,13 +6,14 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 15:19:28 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/23 09:32:14 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/23 13:42:16 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stddef.h>
 #include <stdlib.h>
 #include "util.h"
+#include "data.h"
 
 char	*strdupe(const char *s1)
 {
@@ -53,7 +54,10 @@ void	*ralloc(const void *src, size_t n, size_t sn)
 
 	dst = malloc(n);
 	if (!dst)
+	{
+		freedata();
 		exit(1);
+	}
 	memcopy(dst, src, sn);
 	return (dst);
 }

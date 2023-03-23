@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 14:16:22 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/23 11:25:15 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/23 13:51:25 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "redir.h"
 #include "def.h"
 #include "data.h"
+#include "env.h"
 
 static int	get_argc(char *const argv[])
 {
@@ -42,14 +43,25 @@ static void	recover_fd_backup(t_pipe fd_backup)
 	dup2(fd_backup.read, STDIN_FILENO);
 }
 
+static int	assignment(const char *str)
+{
+	if (get_var((getdata())->exported_env, str))
+		update_env(&(getdata())->exported_env, str);
+	else
+		update_env(&(getdata())->local_env, str);
+	return (SUCCESS);
+}
+
 int	exec_builtin(t_cmd *cmd)
 {
 	const char	**names;
 	size_t		i;
 
+	if (strchar(cmd->argv[0], '='))
+		return (assignment(cmd->argv[0]));
 	names = get_builtins_names();
-	i = 0;
-	while (names[i])
+	i = -1;
+	while (names[++i])
 	{
 		if (strcmp(cmd->argv[0], names[i]) == 0)
 		{
@@ -58,7 +70,6 @@ int	exec_builtin(t_cmd *cmd)
 				return (ERROR);
 			return (SUCCESS);
 		}
-		i++;
 	}
 	return (ERROR);
 }
