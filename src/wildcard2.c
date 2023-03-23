@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wildcard2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 15:59:49 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/22 16:56:13 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/23 09:09:43 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,27 +51,14 @@ size_t	count_wildcard_values(const char *wildcard)
 	return (count);
 }
 
-size_t	wildcardvalslen(const char *wildcard)
+size_t	wildlen(const char *const *wildcard)
 {
 	size_t			len;
-	DIR				*folder;
-	struct dirent	*entry;
-	size_t			c;
 
-	c = 0;
-	folder = opendir(".");
-	if (!folder)
-		return (0);
-	while (1)
-	{
-		entry = readdir(folder);
-		if (!entry)
-			break ;
-		if (matches_wildcard(wildcard, entry->d_name))
-			len += strlen(entry->d_name) + (++c) * 0;
-	}
-	closedir(folder);
-	return (len + !!(c) * (c - 1));
+	len = 0;
+	while (wildcard[len])
+		len++;
+	return (len);
 }
 
 typedef struct s_wildcard_values

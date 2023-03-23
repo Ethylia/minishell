@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mem.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 15:19:28 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/15 13:19:58 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/23 09:32:14 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,16 @@ void	*memcopy(void *dst, const void *src, size_t n)
 		((unsigned char *)dst)[i] = ((unsigned char *)src)[i];
 		i++;
 	}
+	return (dst);
+}
+
+void	*ralloc(const void *src, size_t n, size_t sn)
+{
+	void	*dst;
+
+	dst = malloc(n);
+	if (!dst)
+		exit(1);
+	memcopy(dst, src, sn);
 	return (dst);
 }

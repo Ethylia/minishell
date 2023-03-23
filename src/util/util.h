@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   util.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 15:21:33 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/20 11:43:04 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/23 09:12:12 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ char	*concatstr_ln(size_t n, ...);
 int		is_ws(char c);
 void	skipwhite(const char **line);
 size_t	countwhite(const char *line);
+void	*ralloc(const void *src, size_t n, size_t sn);
 
 int		starts_with(const char *s, const char *prefix);
 

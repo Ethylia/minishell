@@ -3,16 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   parseutil.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 13:44:21 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/22 16:01:13 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/23 09:51:16 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins/builtins.h"
 #include "token.h"
 #include "cmd.h"
+#include "util/util.h"
+#include "wildcard.h"
 
 static size_t	tokenlen(t_token *token, enum e_tokens delims)
 {
@@ -73,4 +75,32 @@ void	buildpipe(t_cmd *cmd, t_token *tokens)
 	}
 	else
 		cmd->pipecmd = 0;
+}
+
+void	buildarg(t_cmdgroup *g, t_token *tokens, size_t i)
+{
+	char	*arg;
+	char	**wilds;
+	size_t	j;
+
+	arg = concattokens(tokens, i);
+	if (strchar(arg, '*'))
+	{
+		wilds = wildcard_values(arg);
+		if (wilds && wilds[0])
+		{
+			free(arg);
+			j = -1;
+			g->c[0].argc += wildlen((const char *const *)wilds) - 1;
+			g->cmd.argv = ralloc(g->cmd.argv, 8 * (g->c[0].argc + 1),
+					wildlen((const char *const *)g->cmd.argv) * sizeof(char *));
+			while (wilds[++j])
+				g->cmd.argv[g->c[1].argc++] = wilds[j];
+			free(wilds);
+			return ;
+		}
+		free_wildcard_values(wilds);
+	}
+	g->cmd.argv[g->c[1].argc++] = arg;
+	return ;
 }

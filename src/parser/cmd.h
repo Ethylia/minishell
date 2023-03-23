@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 15:33:44 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/22 07:39:00 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/23 09:24:34 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,5 +70,6 @@ void	freecmd(t_cmd *cmd);
 int		toke(t_token *tokens, size_t *i, size_t *j);
 void	buildpipe(t_cmd *cmd, t_token *tokens);
 void	setredir(t_cmdgroup *g, enum e_tokens type, t_token *tokens, size_t i);
+void	buildarg(t_cmdgroup *g, t_token *tokens, size_t i);
 
 #endif

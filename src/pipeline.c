@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipeline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 08:46:35 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/22 14:41:04 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/23 08:22:59 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 #include "env.h"
 #include "sig.h"
 #include "data.h"
+#include "util/util.h"
 
 static void	close_pipe(t_pipe *p)
 {
@@ -41,11 +42,21 @@ static int	exit_err(char *exec_path)
 	return (ERROR);
 }
 
-// static int	exit_success(char *exec_path)
-// {
-// 	free(exec_path);
-// 	return (SUCCESS);
-// }
+static int	exit_notfound(char *exec_path)
+{
+	char	*msg;
+
+	msg = concatstr(4, NAME, ": ", exec_path, ": Command not found\n");
+	if (!msg)
+	{
+		free(exec_path);
+		return (ERROR);
+	}
+	write(STDERR_FILENO, msg, strln(msg));
+	free(exec_path);
+	free(msg);
+	return (ERROR);
+}
 
 // cmd not found: currently displays "file or dir not found"
 static int	exec_cmd(t_cmd *cmd, t_pipe *prev_pipe, t_pipe *next_pipe)
@@ -58,13 +69,15 @@ static int	exec_cmd(t_cmd *cmd, t_pipe *prev_pipe, t_pipe *next_pipe)
 	if (is_builtin(cmd))
 	{
 		if (exec_builtin(cmd) == ERROR)
-			return (exit_err(NULL));
+			return (exit_notfound(NULL));
 		exit(EXIT_SUCCESS);
 	}
 	exec_path = resolve_exec_path(cmd->argv[0]);
 	if (!exec_path)
 		return (exit_err(NULL));
 	execve(exec_path, cmd->argv, getdata()->exported_env);
+	if (!strchar(cmd->argv[0], '/'))
+		return (exit_notfound(exec_path));
 	return (exit_err(exec_path));
 }
 

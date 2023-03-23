@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokentype.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 15:24:44 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/22 16:48:30 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/23 09:22:13 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,7 @@
 #include "data.h"
 #include "wildcard.h"
 
-size_t	wildchars(t_token *token, size_t *len)
-{
-	if (token->type == twrd && !token->quote)
-	{
-		wildcard
-		return (1);
-	}
-	*len += token->len;
-	return (1);
-}
-
-size_t	tokenchars(t_token *token, size_t *len)
+static size_t	tokenchars(t_token *token, size_t *len)
 {
 	const char	*s = 0;
 
@@ -46,7 +35,6 @@ size_t	tokenchars(t_token *token, size_t *len)
 		++(*len);
 		return (1);
 	}
-	return (wildchars(token, len));
 	*len += token->len;
 	return (1);
 }

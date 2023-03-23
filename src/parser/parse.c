@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 15:29:19 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/22 08:19:10 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/23 09:24:49 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,13 +97,13 @@ t_cmd	buildcmd(t_token *tokens)
 				setredir(&g,
 					tokens[g.i[0]].type, tokens + g.i[0] + 1, g.i[1]);
 			else if (tokens[g.i[0]].type & (td | twrd))
-				g.cmd.argv[g.c[1].argc++]
-					= concattokens(tokens + g.i[0], g.i[1]);
+				buildarg(&g, tokens + g.i[0], g.i[1]);
 			g.i[0] += g.i[1];
 		}
 		else
 			++g.i[0];
 	}
+	g.cmd.argv[g.c[1].argc] = 0;
 	return (g.cmd);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenutil.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 13:20:58 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/22 16:03:49 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/23 09:22:07 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,45 +41,7 @@ unsigned int	getnestlvl(t_token *token, unsigned int lvl)
 	return (lvl);
 }
 
-size_t	copywilds(char *str, char **wilds)
-{
-	size_t	i;
-	size_t	j;
-
-	i = -1;
-	j = 0;
-	while (wilds[++i])
-	{
-		memcopy(str + j, wilds[i], strln(wilds[i]));
-		j += strln(wilds[i]) + !!(wilds[i + 1]);
-		if (!wilds[i + 1])
-			str[j - 1] = ' ';
-	}
-	return (j);
-}
-
-size_t	wildval(char *str, t_token *token)
-{
-	char	**s;
-	size_t	j;
-
-	if (token->type == twrd && !token->quote && strchar(str, '*'))
-	{
-		s = wildcard_values(str);
-		if (!s || !s[0])
-		{
-			free_wildcard_values(s);
-			memcopy(str, token->val, token->len);
-			return (token->len);
-		}
-		j = copywilds(str, s);
-		return (j);
-	}
-	memcopy(str, token->val, token->len);
-	return (token->len);
-}
-
-size_t	tokenval(char *str, t_token *token, size_t *i)
+size_t	tokenval(char *str, t_token *token, ssize_t *i)
 {
 	const char	*s;
 
@@ -101,5 +63,6 @@ size_t	tokenval(char *str, t_token *token, size_t *i)
 		}
 		return (1);
 	}
-	return (wildval(str, token));
+	memcopy(str, token->val, token->len);
+	return (token->len);
 }
