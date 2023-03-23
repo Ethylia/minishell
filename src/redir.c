@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
+/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 10:23:51 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/23 13:52:38 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/23 15:19:52 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static int	handle_next_pipe(t_cmd *cmd, t_pipe *next_pipe)
 static int	get_flags(t_redir *redir)
 {
 	if (redir->type == tdout)
-		return (O_CREAT | O_WRONLY);
+		return (O_TRUNC | O_CREAT | O_WRONLY);
 	return (O_APPEND | O_WRONLY);
 }
 
