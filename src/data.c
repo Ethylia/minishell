@@ -6,13 +6,14 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 14:54:24 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/22 08:20:41 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/23 14:11:41 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "data.h"
 #include "env.h"
+#include "readline_extra.h"
 
 t_data	*getdata(void)
 {
@@ -36,4 +37,5 @@ void	freedata(void)
 		data->local_env = NULL;
 	}
 	freecmd(&data->cmd);
+	rl_clear_history();
 }

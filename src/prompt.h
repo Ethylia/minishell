@@ -6,13 +6,13 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 15:07:52 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/23 15:08:45 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/23 15:57:51 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PROMPT_H
 # define PROMPT_H
 
-void	displayprompt(void);
+char	*displayprompt(void);
 
 #endif

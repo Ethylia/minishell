@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 15:21:33 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/23 15:39:45 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/23 15:52:54 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	skipwhite(const char **line);
 size_t	countwhite(const char *line);
 void	*ralloc(const void *src, size_t n, size_t sn);
 int		isalphaunder(char c);
+char	*intoa(int n);
 
 int		starts_with(const char *s, const char *prefix);
 

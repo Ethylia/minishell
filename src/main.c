@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 07:57:50 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/23 15:31:14 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/23 16:16:59 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ t_token	*nextcmd(t_token *token, int stat)
 int	execline(t_token *token)
 {
 	t_token	*next;
+	char	*res[2];
 	int		stat;
 
 	next = token;
@@ -75,6 +76,11 @@ int	execline(t_token *token)
 	{
 		stat = exec_cmd(next);
 		next = nextcmd(next, stat);
+		res[0] = intoa(stat);
+		res[1] = concatstr(2, "?=", res[0]);
+		free(res[0]);
+		update_env(&(getdata()->local_env), res[1]);
+		free(res[1]);
 	}
 	return (stat);
 }
@@ -97,6 +103,7 @@ static t_data	*init_data(const char **envp)
 	if (!path)
 		exit_error("");
 	updateps1(path);
+	update_env(&data->local_env, "?=0");
 	free(path);
 	return (data);
 }
@@ -109,8 +116,7 @@ int	main(__attribute__((unused))int argc,
 
 	init_data((const char **) envp);
 	init_sig_handlers();
-	displayprompt();
-	line = readline("");
+	line = displayprompt();
 	getdata()->intflag = 0;
 	while (line)
 	{
@@ -122,8 +128,7 @@ int	main(__attribute__((unused))int argc,
 			free(token);
 		}
 		free(line);
-		displayprompt();
-		line = readline(" ");
+		line = displayprompt();
 		getdata()->intflag = 0;
 	}
 	freedata();
