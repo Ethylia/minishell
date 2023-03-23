@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 12:48:23 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/23 16:43:25 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/23 16:48:59 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <unistd.h>
 #include "data.h"
 #include "util/util.h"
 #include "env.h"
@@ -24,6 +25,15 @@ int	assignment(const char *str)
 	return (SUCCESS);
 }
 
+static void	print_er(const char *str)
+{
+	const size_t	l = strln_del(str, '=');
+
+	write(STDERR_FILENO, "minishell: export: `", 20);
+	write(STDERR_FILENO, str, l);
+	write(STDERR_FILENO, "': not a valid identifier\n", 26);
+}
+
 int	bi_export(const int argc, char *const argv[], char **envp)
 {
 	(void) envp;
@@ -31,8 +41,7 @@ int	bi_export(const int argc, char *const argv[], char **envp)
 		return (ERROR);
 	if (!isalphaunder(argv[1][0]) || !stralphanumunder(argv[1]))
 	{
-		printf("minishell: export: `%.*s' is not a valid identifier\n",
-			(int)strln_del(argv[1], '='), argv[1]);
+		print_er(argv[1]);
 		return (ERROR);
 	}
 	if (get_var((getdata())->local_env, argv[1]))
@@ -40,7 +49,8 @@ int	bi_export(const int argc, char *const argv[], char **envp)
 		if (strchar(argv[1], '='))
 			update_env(&(getdata())->exported_env, argv[1]);
 		else
-			update_env(&(getdata())->exported_env, get_var((getdata())->local_env, argv[1]));
+			update_env(&(getdata())->exported_env,
+				get_var((getdata())->local_env, argv[1]));
 		rm_env(&((getdata())->local_env), argv[1]);
 	}
 	else if (strchar(argv[1], '='))
