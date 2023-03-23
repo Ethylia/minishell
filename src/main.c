@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 07:57:50 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/22 14:21:25 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/23 11:24:44 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	exec_cmd(t_token *tokens)
 
 	getdata()->cmd = buildcmd(tokens);
 	if (is_builtin(&getdata()->cmd) && !(getdata()->cmd.pipecmd))
-		stat = exec_builtin(&getdata()->cmd);
+		stat = exec_redir_builtin(&getdata()->cmd);
 	else
 	{
 		stat = pipeline(&getdata()->cmd, 0);

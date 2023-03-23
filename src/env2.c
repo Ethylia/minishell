@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env2.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
+/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 13:11:04 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/22 16:52:23 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/23 10:51:13 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	is_same_var(char const *v1, char const *v2)
 	return (strcmp_del(v1, v2, '=') == 0);
 }
 
-static void append_env(char ***env, const char *var)
+static void	append_env(char ***env, const char *var)
 {
 	size_t	len;
 	char	**res;
@@ -82,7 +82,7 @@ void	rm_env(char ***env, char *var)
 	i = 0;
 	while (*env && (*env)[i] && !is_same_var((*env)[i], var))
 		i++;
-	if (!is_same_var((*env)[i], var))
+	if (*env || !(*env)[i])
 		return ;
 	curr_len = env_len((const char **)(*env));
 	res = malloc(sizeof(*res) * curr_len);
