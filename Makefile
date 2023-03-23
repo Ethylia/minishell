@@ -29,7 +29,8 @@ SRC_FILES	=	builtins/builtins.c \
 				parser/parseutil.c \
 				pipeline.c \
 				parser/tokenutil.c \
-				data.c
+				data.c \
+				prompt.c
 
 SRC_DIR		=	src
 
