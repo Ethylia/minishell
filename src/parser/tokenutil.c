@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 13:20:58 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/23 09:22:07 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/23 10:15:03 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,9 @@ size_t	tokenval(char *str, t_token *token, ssize_t *i)
 	const char	*s;
 
 	++(*i);
-	if (token->type == td)
+	if (token->type & (tqts | tdqts) && !token->quote)
+		return (0);
+	if (token->type == td && token->quote != '\'')
 	{
 		if ((++token)->type & twrd)
 		{

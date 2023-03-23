@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 17:22:04 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/22 14:29:32 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/23 10:07:53 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,5 @@ const char		**get_builtins_names(void);
 t_builtin_func	get_builtin_func(size_t i);
 int				is_builtin(t_cmd *cmd);
 int				exec_builtin(t_cmd *cmd);
-
 
 #endif

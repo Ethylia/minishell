@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 16:30:41 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/22 14:28:28 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/23 10:10:04 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@
 #include "data.h"
 #include "cd.h"
 
-#define MSG_OLDPWD_NOT_SET NAME ": cd: OLDPWD not set\n"
-#define MSG_HOME_NOT_SET NAME ": cd: HOME not set\n"
+#define MSG_OLDPWD_NOT_SET "minishell: cd: OLDPWD not set\n"
+#define MSG_HOME_NOT_SET "minishell: cd: HOME not set\n"
 
 static const char	*get_home(char **envp)
 {
-	const char *path;
+	const char	*path;
 
 	path = get_var(envp, "HOME");
 	if (!path)
@@ -34,9 +34,9 @@ static const char	*get_home(char **envp)
 	return (path);
 }
 
-static const char *get_oldpwd(char **envp)
+static const char	*get_oldpwd(char **envp)
 {
-	const char *path;
+	const char	*path;
 
 	path = get_var(envp, "OLDPWD");
 	if (!path)
@@ -45,7 +45,7 @@ static const char *get_oldpwd(char **envp)
 		return (NULL);
 	}
 	print_path(envp, path);
-	return (path);	
+	return (path);
 }
 
 static char	*resolve_home(char **envp, char *argv)

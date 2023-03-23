@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 10:23:51 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/21 15:44:57 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/23 10:26:38 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ static int	get_flags(t_redir *redir)
 		return (O_CREAT | O_WRONLY);
 	return (O_APPEND | O_WRONLY);
 }
+
 
 int	redir_output(t_cmd *cmd, t_pipe *next_pipe)
 {

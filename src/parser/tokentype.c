@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 15:24:44 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/23 09:22:13 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/23 10:12:41 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,14 @@ char	*concattokens(t_token *tokens, ssize_t len)
 	strlen = 0;
 	if (tokens->type & tws)
 		++i[0];
-	while (++i[0] < len && !(tokens[i[0]].type & tws && !tokens[i[0]].quote))
+	while (++i[0] < len && !((tokens[i[0]].type & tws) && !tokens[i[0]].quote))
 		if (!(tokens[i[0]].type & (tqts | tdqts) && !tokens[i[0]].quote))
 			i[0] += tokenchars(&tokens[i[0]], &strlen) - 1;
 	str = malloc(sizeof(char) * (strlen + 1));
 	if (!str)
 		return (0);
 	i[0] = 0 + (tokens->type & tws);
-	while (i[0] < len && !(tokens[i[0]].type & tws && !tokens[i[0]].quote))
+	while (i[0] < len && !((tokens[i[0]].type & tws) && !tokens[i[0]].quote))
 		i[1] += tokenval(str + i[1], &tokens[i[0]], &i[0]);
 	str[i[1]] = 0;
 	return (str);

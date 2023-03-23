@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 14:16:22 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/22 14:38:00 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/23 10:26:38 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	get_argc(char *const argv[])
 static t_pipe	backup_fd(void)
 {
 	t_pipe		fd_backup;			
-	
+
 	fd_backup.read = dup(STDIN_FILENO);
 	fd_backup.write = dup(STDOUT_FILENO);
 	return (fd_backup);
@@ -38,7 +38,7 @@ static t_pipe	backup_fd(void)
 
 static void	recover_fd_backup(t_pipe fd_backup)
 {
-	dup2(fd_backup.write , STDOUT_FILENO);
+	dup2(fd_backup.write, STDOUT_FILENO);
 	dup2(fd_backup.read, STDIN_FILENO);
 }
 
