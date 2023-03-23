@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sig.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 09:05:19 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/22 14:34:16 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/23 16:13:03 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,24 +16,22 @@
 #include "readline_extra.h"
 #include "error.h"
 #include "def.h"
+#include "data.h"
+#include "env.h"
+#include <unistd.h>
 
 static void	sig_handler(int signo)
 {
-	if (signo == SIGINT)
+	if (signo == SIGINT && isatty(STDOUT_FILENO))
 	{
 		rl_replace_line("", 0);
 		printf("\n");
 		rl_on_new_line();
-		rl_redisplay();
+		if (getdata()->intflag)
+			rl_redisplay();
 	}
-	else if (signo == SIGQUIT)
-	{
+	else if (signo == SIGQUIT && isatty(STDOUT_FILENO))
 		rl_redisplay();
-		// rl_replace_line("", 0);
-		// rl_on_new_line();
-		// if exit code is 131,
-		//	printf("Quit: %d\n", signo);
-	}
 }
 
 void	init_sig_handlers(void)

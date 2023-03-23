@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 10:51:16 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/22 13:34:53 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/23 14:02:36 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 #include "data.h"
 #include "util/util.h"
 
-#include <stdio.h>
 void	print_err(const char *problem)
 {
 	char	*msg;

@@ -6,14 +6,14 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 12:48:23 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/23 16:40:26 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/23 16:43:25 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../data.h"
-#include "../util/util.h"
-#include "../env.h"
-#include "../def.h"
+#include "data.h"
+#include "util/util.h"
+#include "env.h"
+#include "def.h"
 
 int	assignment(const char *str)
 {
@@ -29,6 +29,12 @@ int	bi_export(const int argc, char *const argv[], char **envp)
 	(void) envp;
 	if (argc < 2)
 		return (ERROR);
+	if (!isalphaunder(argv[1][0]) || !stralphanumunder(argv[1]))
+	{
+		printf("minishell: export: `%.*s' is not a valid identifier\n",
+			(int)strln_del(argv[1], '='), argv[1]);
+		return (ERROR);
+	}
 	if (get_var((getdata())->local_env, argv[1]))
 	{
 		if (strchar(argv[1], '='))
