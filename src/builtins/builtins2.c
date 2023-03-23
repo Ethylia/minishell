@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 14:16:22 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/23 13:51:25 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/23 13:58:43 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "def.h"
 #include "data.h"
 #include "env.h"
+#include "redir.h"
 
 static int	get_argc(char *const argv[])
 {
@@ -41,15 +42,6 @@ static void	recover_fd_backup(t_pipe fd_backup)
 {
 	dup2(fd_backup.write, STDOUT_FILENO);
 	dup2(fd_backup.read, STDIN_FILENO);
-}
-
-static int	assignment(const char *str)
-{
-	if (get_var((getdata())->exported_env, str))
-		update_env(&(getdata())->exported_env, str);
-	else
-		update_env(&(getdata())->local_env, str);
-	return (SUCCESS);
 }
 
 int	exec_builtin(t_cmd *cmd)

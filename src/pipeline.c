@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipeline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 08:46:35 by francoma          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2023/03/23 13:48:30 by eboyce-n         ###   ########.fr       */
-=======
-/*   Updated: 2023/03/23 11:11:15 by francoma         ###   ########.fr       */
->>>>>>> 8ad0a6e7eca1b20487715f157027878b468f7016
+/*   Updated: 2023/03/23 13:59:51 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +63,8 @@ static int	exec_cmd(t_cmd *cmd, t_pipe *prev_pipe, t_pipe *next_pipe)
 {
 	char	*exec_path;
 
-	if (redin(cmd, prev_pipe) == ERROR
-		|| redout(cmd, next_pipe) == ERROR)
+	if (redir_input(cmd, prev_pipe) == ERROR
+		|| redir_output(cmd, next_pipe) == ERROR)
 		return (exit_err(NULL));
 	if (is_builtin(cmd))
 	{
