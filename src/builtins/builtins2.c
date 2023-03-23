@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 14:16:22 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/23 13:49:06 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/23 13:51:25 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,6 @@ int	exec_builtin(t_cmd *cmd)
 {
 	const char	**names;
 	size_t		i;
-	t_pipe		fd_backup;
-	int			res;
 
 	if (strchar(cmd->argv[0], '='))
 		return (assignment(cmd->argv[0]));
@@ -67,16 +65,25 @@ int	exec_builtin(t_cmd *cmd)
 	{
 		if (strcmp(cmd->argv[0], names[i]) == 0)
 		{
-			fd_backup = backup_fd();
-			if (redout(cmd, NULL) == ERROR || redin(cmd, NULL) == ERROR
-				|| get_builtin_func(i)(get_argc(cmd->argv),
+			if (get_builtin_func(i)(get_argc(cmd->argv),
 				cmd->argv, getdata()->exported_env) == ERROR)
-				res = ERROR;
-			else
-				res = SUCCESS;
-			recover_fd_backup(fd_backup);
-			return (res);
+				return (ERROR);
+			return (SUCCESS);
 		}
 	}
 	return (ERROR);
+}
+
+int	exec_redir_builtin(t_cmd *cmd)
+{
+	t_pipe		fd_backup;
+	int			res;
+
+	fd_backup = backup_fd();
+	if (redir_input(cmd, NULL) == ERROR
+		|| redir_output(cmd, NULL) == ERROR)
+		return (EXIT_FAILURE);
+	res = exec_builtin(cmd);
+	recover_fd_backup(fd_backup);
+	return (res == ERROR);
 }

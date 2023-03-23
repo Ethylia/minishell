@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 10:23:51 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/23 13:48:30 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/23 13:52:38 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	handle_prev_pipe(t_pipe *prev_pipe)
 	return (NO_FILE);
 }
 
-int	redin(t_cmd *cmd, t_pipe *prev_pipe)
+int	redir_input(t_cmd *cmd, t_pipe *prev_pipe)
 {
 	size_t	i;
 	int		fd;
@@ -62,7 +62,7 @@ int	redin(t_cmd *cmd, t_pipe *prev_pipe)
 
 static int	handle_next_pipe(t_cmd *cmd, t_pipe *next_pipe)
 {
-	if (cmd->pipecmd && next_pipe)
+	if (next_pipe && cmd->pipecmd)
 	{
 		close(next_pipe->read);
 		return (next_pipe->write);
@@ -77,8 +77,7 @@ static int	get_flags(t_redir *redir)
 	return (O_APPEND | O_WRONLY);
 }
 
-
-int	redout(t_cmd *cmd, t_pipe *next_pipe)
+int	redir_output(t_cmd *cmd, t_pipe *next_pipe)
 {
 	size_t	i;
 	int		fd;

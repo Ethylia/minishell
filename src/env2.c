@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   env2.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
+/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 13:11:04 by francoma          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/03/23 11:36:32 by eboyce-n         ###   ########.fr       */
+=======
+/*   Updated: 2023/03/23 10:51:13 by francoma         ###   ########.fr       */
+>>>>>>> 8ad0a6e7eca1b20487715f157027878b468f7016
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +86,7 @@ void	rm_env(char ***env, char *var)
 	i = 0;
 	while (*env && (*env)[i] && !is_same_var((*env)[i], var))
 		i++;
-	if (!is_same_var((*env)[i], var))
+	if (*env || !(*env)[i])
 		return ;
 	curr_len = env_len((const char **)(*env));
 	res = malloc(sizeof(*res) * curr_len);
