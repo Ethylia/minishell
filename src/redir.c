@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 10:23:51 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/23 10:26:38 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/23 11:08:51 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	redir_input(t_cmd *cmd, t_pipe *prev_pipe)
 
 static int	handle_next_pipe(t_cmd *cmd, t_pipe *next_pipe)
 {
-	if (cmd->pipecmd)
+	if (cmd->pipecmd && next_pipe)
 	{
 		close(next_pipe->read);
 		return (next_pipe->write);
@@ -90,7 +90,7 @@ int	redir_output(t_cmd *cmd, t_pipe *next_pipe)
 		if (fd != NO_FILE)
 			close(fd);
 		fd = open(cmd->redirout[i].str,
-			get_flags(&cmd->redirout[i]), REDIROUT_MODE);
+				get_flags(&cmd->redirout[i]), REDIROUT_MODE);
 		if (fd == ERROR)
 		{
 			print_err(cmd->redirout[i].str);
