@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 11:39:40 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/17 16:32:40 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/23 10:02:19 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,10 @@ int	matches_wildcard(const char *wildcard, const char *candidate)
 
 	i = 0;
 	j = 0;
+	if (starts_with(wildcard, "*") && starts_with(candidate, "."))
+		return (0);
+	if (starts_with(wildcard, "./"))
+		wildcard += 2;
 	while (1)
 	{
 		literal_len = strln_del(wildcard + i, '*');
