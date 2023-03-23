@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 07:57:50 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/23 11:24:44 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/23 13:48:49 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,6 @@ int	main(__attribute__((unused))int argc,
 	if (!init_data((const char **) envp))
 		exit_error("");
 	init_sig_handlers();
-	// rm_env(getdata()->local_env, "PS1");
 	line = readline(get_var(getdata()->local_env, "PS1"));
 	while (line)
 	{

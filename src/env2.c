@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 13:11:04 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/23 10:51:13 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/23 13:54:22 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	rm_env(char ***env, char *var)
 	i = 0;
 	while (*env && (*env)[i] && !is_same_var((*env)[i], var))
 		i++;
-	if (*env || !(*env)[i])
+	if (!*env || !(*env)[i])
 		return ;
 	curr_len = env_len((const char **)(*env));
 	res = malloc(sizeof(*res) * curr_len);
@@ -93,7 +93,7 @@ void	rm_env(char ***env, char *var)
 	}
 	free((*env)[i]);
 	memcopy(res, *env, sizeof(*res) * i);
-	memcopy(res + i, *env + i + 1, sizeof(*res) * (curr_len - i));
+	memcopy(res + i, *env + i + 1, sizeof(*res) * (curr_len - i - 1));
 	res[curr_len - 1] = NULL;
 	free(*env);
 	*env = res;
