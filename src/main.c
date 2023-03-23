@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 07:57:50 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/23 13:57:02 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/23 15:31:14 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 #include "sig.h"
 #include "data.h"
 #include "error.h"
+#include "prompt.h"
 
 int	exec_cmd(t_token *tokens)
 {
@@ -41,7 +42,6 @@ int	exec_cmd(t_token *tokens)
 			continue ;
 	}
 	freecmd(&getdata()->cmd);
-	// printf("$?: %i\n", stat);
 	return (stat);
 }
 
@@ -51,9 +51,9 @@ t_token	*nextcmd(t_token *token, int stat)
 	unsigned int	nestlvl;
 
 	next = findnext(token, tand | tor);
-	nestlvl = next->nestlvl;
 	if (!next->type)
 		return (next);
+	nestlvl = next->nestlvl;
 	if (stat != 0)
 		while (next->type == tand || next->nestlvl > nestlvl)
 			next = findnext(next + 1, tand | tor);
@@ -73,12 +73,6 @@ int	execline(t_token *token)
 	next = token;
 	while (next->type)
 	{
-		// cmd = buildcmd(next);
-		// printf("cmd: %s\n", cmd.argv[0]);
-		// general exec_cmd which
-		//		distinguishes single builtin from pipeline
-		//		retrieves exit status
-		//		freecmd
 		stat = exec_cmd(next);
 		next = nextcmd(next, stat);
 	}
@@ -94,14 +88,14 @@ static t_data	*init_data(const char **envp)
 
 	data->exported_env = copy_env(envp);
 	if (!data->exported_env)
-		return (NULL);
+		exit_error("");
 	if (!get_var(data->exported_env, "PS1"))
 		data->local_env = copy_env((const char *[]){"PS1="MSHELLPS, NULL});
 	if (!data->local_env)
-		return (NULL);
+		exit_error("");
 	path = getcwd(NULL, 0);
 	if (!path)
-		return (NULL);
+		exit_error("");
 	updateps1(path);
 	free(path);
 	return (data);
@@ -113,10 +107,11 @@ int	main(__attribute__((unused))int argc,
 	char				*line;
 	t_token				*token;
 
-	if (!init_data((const char **) envp))
-		exit_error("");
+	init_data((const char **) envp);
 	init_sig_handlers();
-	line = readline(get_var(getdata()->local_env, "PS1"));
+	displayprompt();
+	line = readline("");
+	getdata()->intflag = 0;
 	while (line)
 	{
 		token = tokenize(line + countwhite(line));
@@ -127,8 +122,9 @@ int	main(__attribute__((unused))int argc,
 			free(token);
 		}
 		free(line);
-		line = readline(get_var(getdata()->local_env, "PS1"));
+		displayprompt();
+		line = readline(" ");
+		getdata()->intflag = 0;
 	}
-	rl_clear_history();
 	freedata();
 }
