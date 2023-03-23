@@ -41,7 +41,7 @@ NAME=minishell
 CC=gcc
 CCFLAGS=-Wall -Wextra -Wpedantic -fno-exceptions -Wpointer-arith -Werror -Isrc
 LDFLAGS=-L${HOME}/.brew/opt/readline/lib
-LDLIBS=-pthread -lreadline
+LDLIBS=-lreadline
 
 all: $(NAME)
 
