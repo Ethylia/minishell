@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 08:46:35 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/23 08:22:59 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/23 13:48:30 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,8 @@ static int	exec_cmd(t_cmd *cmd, t_pipe *prev_pipe, t_pipe *next_pipe)
 {
 	char	*exec_path;
 
-	if (redir_input(cmd, prev_pipe) == ERROR
-		|| redir_output(cmd, next_pipe) == ERROR)
+	if (redin(cmd, prev_pipe) == ERROR
+		|| redout(cmd, next_pipe) == ERROR)
 		return (exit_err(NULL));
 	if (is_builtin(cmd))
 	{

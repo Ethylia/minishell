@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 13:11:04 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/22 16:52:23 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/23 11:36:32 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	is_same_var(char const *v1, char const *v2)
 	return (strcmp_del(v1, v2, '=') == 0);
 }
 
-static void append_env(char ***env, const char *var)
+static void	append_env(char ***env, const char *var)
 {
 	size_t	len;
 	char	**res;

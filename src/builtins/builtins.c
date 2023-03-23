@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 09:03:29 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/22 14:30:02 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/23 11:50:54 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,13 @@ t_builtin_func	get_builtin_func(size_t i)
 	return (funcs[i]);
 }
 
+static	int	isalphaunder(char c)
+{
+	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || c == '_')
+		return (1);
+	return (0);
+}
+
 int	is_builtin(t_cmd *cmd)
 {
 	const char	**names;
@@ -42,6 +49,8 @@ int	is_builtin(t_cmd *cmd)
 
 	names = get_builtins_names();
 	i = 0;
+	if (isalphaunder(cmd->argv[0][0]) && strchar(cmd->argv[0], '='))
+		return (1);
 	while (names[i])
 	{
 		if (strcmp(names[i], cmd->argv[0]) == 0)
