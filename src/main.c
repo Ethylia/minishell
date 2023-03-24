@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
+/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 07:57:50 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/23 16:16:59 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/24 08:55:26 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,4 +132,5 @@ int	main(__attribute__((unused))int argc,
 		getdata()->intflag = 0;
 	}
 	freedata();
+	return (EXIT_SUCCESS);
 }

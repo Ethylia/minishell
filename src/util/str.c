@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   str.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
+/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 15:24:11 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/17 14:19:56 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/24 08:55:13 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,12 @@ int	strcmp_del(const char *s1, const char *s2, const char del)
 
 	diff = 0;
 	i = 0;
-	while (!diff
-		&& (s1[i] != '\0' || s2[i] != '\0')
-		&& (s1[i] != del && s2[i] != del))
+	while (!diff)
 	{
 		diff = (unsigned char)s1[i] - (unsigned char)s2[i];
+		if ((s1[i] == '\0' && s2[i] == del)
+			|| (s1[i] == del && s2[i] == '\0'))
+			return (0);
 		i++;
 	}
 	return (diff);
