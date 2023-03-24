@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 15:11:02 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/24 14:14:53 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/24 16:01:31 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,8 @@ int	bi_exit(const int argc, char *const argv[], char **envp)
 	const unsigned char	exit_status = atouc(get_var(getdata()->local_env, "?"));
 
 	(void) envp;
-	write(STDOUT_FILENO, "exit\n", 5);
+	if (getdata()->isinteractive)
+		write(STDOUT_FILENO, "exit\n", 5);
 	if (argc < 2)
 	{
 		freedata();
