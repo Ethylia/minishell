@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 12:31:49 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/22 16:14:34 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/24 08:53:30 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,13 @@ void	updateps1(const char *path)
 	char				*ps1;
 	const char *const	home = get_var(getdata()->exported_env, "HOME");
 
-	if (starts_with(path, home))
-		ps1 = concatstr(4, "PS1=", "~", path + strln(home), " $ ");
+	if (home)
+	{
+		if (starts_with(path, home))
+			ps1 = concatstr(4, "PS1=", "~", path + strln(home), " $ ");
+		else
+			ps1 = concatstr(3, "PS1=", path, " $ ");
+	}
 	else
 		ps1 = concatstr(3, "PS1=", path, " $ ");
 	if (!ps1)
