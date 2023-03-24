@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 13:09:15 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/24 08:30:13 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/24 10:02:26 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,16 @@ t_token	*findnext(t_token *tokens, enum e_tokens type)
 	return (tokens);
 }
 
-static size_t	createtoken(t_token *token, char *line)
+static size_t	createtoken(t_token *token, char *line, char q)
 {
 	size_t	i;
 
 	token->len = 0;
 	token->type = gettoken(line);
+	if (token->type & (tqts) && q == '"')
+		token->type = twrd;
+	if (token->type & (tdqts) && q == '\'')
+		token->type = twrd;
 	i = (token->type == thdoc || token->type == tapp
 			|| token->type == tor || token->type == tand)
 		+ !(token->type == tws || token->type == twrd);
@@ -39,7 +43,8 @@ static size_t	createtoken(t_token *token, char *line)
 		return (token->len = i);
 	while (line[i])
 	{
-		if (gettoken(line + i) != token->type)
+		if (!(line[i] == '\'' && q == '\"') && !(line[i] == '\"' && q == '\'')
+			&& gettoken(line + i) != token->type)
 			break ;
 		++i;
 	}
@@ -83,8 +88,8 @@ t_token	*tokenize(char *line)
 	q[1] = 0;
 	while (line[0])
 	{
-		line += createtoken(&tokens[i], line);
-		tokens[i].quote = getquote(&tokens[i], &q[0]);
+		line += createtoken(&tokens[i], line, q[0]);
+		tokens[i].quote = getquote(&tokens[i], &q[0], line);
 		q[1] = getnestlvl(&tokens[i], q[1]);
 		tokens[i].nestlvl = q[1];
 		++i;

@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 15:24:44 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/23 11:29:10 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/24 09:39:42 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ static size_t	tokenchars(t_token *token, size_t *len)
 {
 	const char	*s = 0;
 
-	if (token->type == td && !token->quote)
+	if (token->type == td && token->quote != '\'')
 	{
 		if ((++token)->type & twrd)
 		{
-			s = get_var(getdata()->local_env, token->val);
+			s = get_varn(getdata()->local_env, token->val, token->len);
 			if (!s)
-				s = get_var(getdata()->exported_env, token->val);
+				s = get_varn(getdata()->exported_env, token->val, token->len);
 			if (s)
 				*len += strln(s);
 			return (2);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenutil.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 13:20:58 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/23 10:15:03 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/24 09:53:56 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,26 @@
 #include "util/util.h"
 #include "wildcard.h"
 
-char	getquote(t_token *token, char *q)
+char	getquote(t_token *token, char *q, const char *line)
 {
 	if (token->type == tdqts && *q != '\'')
 	{
 		*q = '"' - *q;
+		if (*q == '"' && !strchar(line, '"'))
+		{
+			*q = '\0';
+			return ('\'');
+		}
 		return (0);
 	}
 	if (token->type == tqts && *q != '"')
 	{
 		*q = '\'' - *q;
+		if (*q == '\'' && !strchar(line, '\''))
+		{
+			*q = '\0';
+			return ('"');
+		}
 		return (0);
 	}
 	return (*q);
@@ -53,9 +63,9 @@ size_t	tokenval(char *str, t_token *token, ssize_t *i)
 		if ((++token)->type & twrd)
 		{
 			++(*i);
-			s = get_var(getdata()->local_env, token->val);
+			s = get_varn(getdata()->local_env, token->val, token->len);
 			if (!s)
-				s = get_var(getdata()->exported_env, token->val);
+				s = get_varn(getdata()->exported_env, token->val, token->len);
 			if (s)
 			{
 				memcopy(str, s, strln(s));

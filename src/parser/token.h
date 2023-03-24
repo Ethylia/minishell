@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 13:06:01 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/23 09:22:01 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/24 09:45:13 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ t_token			*tokenize(char *line);
 t_token			*findnext(t_token *tokens, enum e_tokens type);
 char			*concattokens(t_token *tokens, ssize_t len);
 unsigned int	getnestlvl(t_token *token, unsigned int lvl);
-char			getquote(t_token *token, char *q);
+char			getquote(t_token *token, char *q, const char *line);
 size_t			tokenval(char *str, t_token *token, ssize_t *i);
 
 #endif

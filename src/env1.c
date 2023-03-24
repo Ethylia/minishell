@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env1.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 14:40:05 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/23 10:46:50 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/24 09:38:47 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,32 @@ void	free_env(char **env)
 		i++;
 	}
 	free(env);
+}
+
+char const	*get_varn(char *const envp[], char const *var, size_t l)
+{
+	size_t	i;
+	char	*tmp;
+
+	if (!envp)
+		return (NULL);
+	i = 0;
+	while (envp[i])
+	{
+		tmp = malloc(sizeof(*tmp) * (l + 1));
+		if (!tmp)
+			return (NULL);
+		memcopy(tmp, var, l);
+		tmp[l] = '\0';
+		if (is_same_var(envp[i], tmp))
+		{
+			free(tmp);
+			return (envp[i] + strln_del(envp[i], '=') + 1);
+		}
+		free(tmp);
+		i++;
+	}
+	return (NULL);
 }
 
 // int	main(int argc, char *argv[], char *envp[])
