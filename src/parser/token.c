@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 13:09:15 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/24 10:02:26 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/24 11:01:01 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,20 +25,29 @@ t_token	*findnext(t_token *tokens, enum e_tokens type)
 	return (tokens);
 }
 
+static size_t	quotewrd(t_token *token)
+{
+	token->type = twrd;
+	token->len = 1;
+	return (1);
+}
+
 static size_t	createtoken(t_token *token, char *line, char q)
 {
 	size_t	i;
 
 	token->len = 0;
 	token->type = gettoken(line);
-	if (token->type & (tqts) && q == '"')
-		token->type = twrd;
-	if (token->type & (tdqts) && q == '\'')
-		token->type = twrd;
+	token->val = line;
+	if (token->type & (tqts) && (q == '"' || (!strchar(line + 1, '\'')
+				&& !q)))
+		return (quotewrd(token));
+	if (token->type & (tdqts) && (q == '\'' || (!strchar(line + 1, '\"')
+				&& !q)))
+		return (quotewrd(token));
 	i = (token->type == thdoc || token->type == tapp
 			|| token->type == tor || token->type == tand)
 		+ !(token->type == tws || token->type == twrd);
-	token->val = line;
 	if (token->type != tws && token->type != twrd)
 		return (token->len = i);
 	while (line[i])
@@ -89,7 +98,7 @@ t_token	*tokenize(char *line)
 	while (line[0])
 	{
 		line += createtoken(&tokens[i], line, q[0]);
-		tokens[i].quote = getquote(&tokens[i], &q[0], line);
+		tokens[i].quote = getquote(&tokens[i], &q[0]);
 		q[1] = getnestlvl(&tokens[i], q[1]);
 		tokens[i].nestlvl = q[1];
 		++i;
