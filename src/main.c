@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 07:57:50 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/24 13:21:20 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/24 15:08:28 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,14 @@
 
 int	exec_cmd(t_token *tokens)
 {
-	int		stat;
+	int				stat;
+	const t_token	*n = findnext(tokens, tfirst);
 
+	if (n->type & (tor | tand | tpipe))
+	{
+		write(STDERR_FILENO, "minishell: syntax error\n", 24);
+		return (-1);
+	}
 	getdata()->cmd = buildcmd(tokens);
 	if (is_builtin(&getdata()->cmd) && !(getdata()->cmd.pipecmd))
 		stat = exec_redir_builtin(&getdata()->cmd);
@@ -75,6 +81,8 @@ int	execline(t_token *token)
 	while (next->type)
 	{
 		stat = exec_cmd(next);
+		if (stat == -1)
+			return (1);
 		next = nextcmd(next, stat);
 		res[0] = intoa(stat);
 		res[1] = concatstr(2, "?=", res[0]);
@@ -109,30 +117,29 @@ static t_data	*init_data(const char **envp)
 	return (data);
 }
 
-int	main(int argc,
-	__attribute__((unused))char **argv, char **envp)
+int	main(int argc, __attribute__((unused))char **argv, char **envp)
 {
-	char				*line;
-	t_token				*token;
+	char	*line;
+	t_token	*atom;
 
 	if (argc > 1)
 		return (EXIT_FAILURE);
 	init_data((const char **) envp);
 	init_sig_handlers();
 	line = displayprompt();
-	rl_already_prompted = 0;
 	while (line)
 	{
-		token = tokenize(line + countwhite(line));
-		if (token)
+		getdata()->tokens = tokenize(line + countwhite(line));
+		if (getdata()->tokens)
 		{
 			add_history(line);
-			execline(token);
-			free(token);
+			execline(getdata()->tokens);
+			atom = getdata()->tokens;
+			getdata()->tokens = 0;
+			free(atom);
 		}
 		free(line);
 		line = displayprompt();
-		rl_already_prompted = 0;
 	}
 	freedata();
 	return (EXIT_SUCCESS);

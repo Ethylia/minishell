@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 15:29:19 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/23 11:26:36 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/24 12:53:37 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ t_cmd	buildcmd(t_token *tokens)
 		if (tokens[g.i[0]].type & (tdin | tdout | tapp | thdoc | td | twrd))
 		{
 			if (toke(tokens, &g.i[0], &g.i[1]))
-				continue ;
+				;//continue ;
 			if (tokens[g.i[0]].type & (tdin | thdoc | tdout | tapp))
 				setredir(&g,
 					tokens[g.i[0]].type, tokens + g.i[0], g.i[1]);
