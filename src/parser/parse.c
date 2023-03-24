@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 15:29:19 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/24 12:53:37 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/24 15:58:57 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,10 @@ void	freecmd(t_cmd *cmd)
 	size_t	i;
 
 	if (cmd->pipecmd)
+	{
 		freecmd(cmd->pipecmd);
+		free(cmd->pipecmd);
+	}
 	cmd->pipecmd = 0;
 	i = -1;
 	while (cmd->argv && cmd->argv[++i])
