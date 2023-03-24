@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 10:56:24 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/24 11:02:13 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/24 13:52:13 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 initializing signal redirection.\n"
 
 int		print_err(const char *problem);
+int		print_err2(const char *program, const char *val, const char *error);
 void	exit_error(const char *problem);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 10:51:16 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/24 11:02:04 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/24 13:52:21 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,17 @@ int	print_err(const char *problem)
 {
 	char	*msg;
 
-	msg = concatstr(6, NAME, ": ", problem, ": ", strerror(errno), "\n");
+	msg = concatstr(5, NAME": ", problem, ": ", strerror(errno), "\n");
+	write(STDERR_FILENO, msg, strln(msg));
+	free(msg);
+	return (ERROR);
+}
+
+int	print_err2(const char *program, const char *val, const char *error)
+{
+	char	*msg;
+
+	msg = concatstr(7, NAME": ", program, ": ", val, ": ", error, "\n");
 	write(STDERR_FILENO, msg, strln(msg));
 	free(msg);
 	return (ERROR);

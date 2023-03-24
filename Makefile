@@ -53,9 +53,12 @@ norm:
 noerr: CCFLAGS:=$(subst -Werror,,$(CCFLAGS))
 noerr: all
 
-debug: CCFLAGS+=-g -O0 -fsanitize=address
-debug: LDFLAGS+=-fsanitize=address
-debug: fclean all
+sanit: CCFLAGS+=-g -O0 -fsanitize=address
+sanit: LDFLAGS+=-fsanitize=address
+sanit: re
+
+debug: CCFLAGS+=-g -O0
+debug: re
 
 clean:
 	@-rm -rf $(OBJ_DIR)/*.o $(OBJ_DIR)/*.d
