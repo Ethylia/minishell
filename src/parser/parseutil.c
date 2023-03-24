@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 13:44:21 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/23 11:27:01 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/24 08:32:26 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,12 @@
 static size_t	tokenlen(t_token *token, enum e_tokens delims)
 {
 	size_t	i;
-	int		q;
 
 	i = 0;
-	q = 0;
 	if (token->type == tws)
 		++i;
-	while (token[i].type && (!(token[i].type & delims) || q))
-	{
-		if (token[i].type & tdqts && q != 2)
-			q = (!q);
-		if (token[i].type & tqts && q != 1)
-			q = (!q) * 2;
+	while (token[i].type && (!(token[i].type & delims) || token[i].quote))
 		++i;
-	}
 	if (token[i].type == tws)
 		++i;
 	return (i);
