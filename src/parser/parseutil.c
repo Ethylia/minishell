@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 13:44:21 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/24 08:32:26 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/24 12:56:11 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,7 @@ int	toke(t_token *tokens, size_t *i, size_t *j)
 	*j = tokenlen(tokens + *i
 			+ !!(tokens[*i].type & (tdin | tdout | tapp | thdoc)), tdelim);
 	if (!*j)
-	{
-		++i[0];
 		return (1);
-	}
 	return (0);
 }
 

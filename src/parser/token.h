@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 13:06:01 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/24 11:04:54 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/24 11:34:07 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,9 @@ enum e_tokens
 	tws = 1 << 12,
 	twrd = 1 << 13,
 	tdelim = tand | tor | tpipe | tdin | thdoc
-	| tdout | tapp | tws | tpin | tpout
+	| tdout | tapp | tws | tpin | tpout,
+	tfirst = td | twrd | tdqts | tqts | tapp
+	| thdoc | tpipe | tdout | tdin | tor | tand
 };
 	typedef struct s_token
 {

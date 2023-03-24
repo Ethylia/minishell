@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 07:57:50 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/24 10:18:27 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/24 13:06:56 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,14 @@
 
 int	exec_cmd(t_token *tokens)
 {
-	int		stat;
+	int				stat;
+	const t_token	*n = findnext(tokens, tfirst);
 
+	if (n->type & (tor | tand | tpipe))
+	{
+		write(STDERR_FILENO, "minishell: syntax error\n", 24);
+		return (-1);
+	}
 	getdata()->cmd = buildcmd(tokens);
 	if (is_builtin(&getdata()->cmd) && !(getdata()->cmd.pipecmd))
 		stat = exec_redir_builtin(&getdata()->cmd);
@@ -75,6 +81,8 @@ int	execline(t_token *token)
 	while (next->type)
 	{
 		stat = exec_cmd(next);
+		if (stat == -1)
+			return (1);
 		next = nextcmd(next, stat);
 		res[0] = intoa(stat);
 		res[1] = concatstr(2, "?=", res[0]);
@@ -109,8 +117,7 @@ static t_data	*init_data(const char **envp)
 	return (data);
 }
 
-int	main(int argc,
-	__attribute__((unused))char **argv, char **envp)
+int	main(int argc, __attribute__((unused))char **argv, char **envp)
 {
 	char				*line;
 	t_token				*token;
