@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 09:05:19 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/24 10:13:28 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/24 10:25:56 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	sig_handler(int signo)
 	if (signo == SIGINT && isatty(STDOUT_FILENO))
 	{
 		rl_replace_line("", 0);
-		printf("\n");
+		write(1, "\n", 1);
 		rl_on_new_line();
 		rl_already_prompted = 1;
 		rl_redisplay();

@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 08:46:35 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/23 13:59:51 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/24 10:35:40 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ static int	exit_notfound(char *exec_path)
 // cmd not found: currently displays "file or dir not found"
 static int	exec_cmd(t_cmd *cmd, t_pipe *prev_pipe, t_pipe *next_pipe)
 {
-	char	*exec_path;
+	char		*exec_path;
+	const char	*p;
 
 	if (redir_input(cmd, prev_pipe) == ERROR
 		|| redir_output(cmd, next_pipe) == ERROR)
@@ -76,7 +77,10 @@ static int	exec_cmd(t_cmd *cmd, t_pipe *prev_pipe, t_pipe *next_pipe)
 	if (!exec_path)
 		return (exit_err(NULL));
 	execve(exec_path, cmd->argv, getdata()->exported_env);
-	if (!strchar(cmd->argv[0], '/'))
+	p = get_var(getdata()->local_env, "PATH");
+	if (!p)
+		p = get_var(getdata()->exported_env, "PATH");
+	if (p && p[0] && !strchar(cmd->argv[0], '/'))
 		return (exit_notfound(exec_path));
 	return (exit_err(exec_path));
 }
@@ -100,7 +104,7 @@ int	pipeline(t_cmd *cmd, t_pipe *prev_pipe)
 	{
 		waitpid(cmd_pid, &res, 0);
 		if (!WIFEXITED(res) && res == SIGQUIT)
-			printf("Quit: %i\n", SIGQUIT);
+			write(1, "Quit: 3\n", 8);
 		else if (WIFEXITED(res))
 			res = WEXITSTATUS(res);
 	}

@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 07:57:50 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/24 10:17:56 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/24 10:18:27 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,12 +109,14 @@ static t_data	*init_data(const char **envp)
 	return (data);
 }
 
-int	main(__attribute__((unused))int argc,
+int	main(int argc,
 	__attribute__((unused))char **argv, char **envp)
 {
 	char				*line;
 	t_token				*token;
 
+	if (argc > 1)
+		return (EXIT_FAILURE);
 	init_data((const char **) envp);
 	init_sig_handlers();
 	line = displayprompt();
