@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 13:06:01 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/24 10:45:50 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/24 11:04:54 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ enum e_tokens
 	tdelim = tand | tor | tpipe | tdin | thdoc
 	| tdout | tapp | tws | tpin | tpout
 };
-
 	typedef struct s_token
 {
 	const char *val;
@@ -44,7 +43,6 @@ enum e_tokens
 	unsigned int nestlvl;
 	unsigned char quote;
 }	t_token;
-
 
 enum e_tokens	gettoken(const char *line);
 t_token			*tokenize(char *line);

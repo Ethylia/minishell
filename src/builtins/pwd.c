@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
+/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 11:33:44 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/22 14:25:51 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/24 11:02:33 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,7 @@ int	bi_pwd(const int argc, char *const argv[], char **envp)
 	(void) envp;
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
-	{
-		print_err("pwd");
-		return (ERROR);
-	}
+		return (print_err("pwd"));
 	printf("%s\n", cwd);
 	free(cwd);
 	return (SUCCESS);

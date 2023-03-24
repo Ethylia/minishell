@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 10:23:51 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/23 15:19:52 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/24 11:03:24 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,8 @@ int	redir_input(t_cmd *cmd, t_pipe *prev_pipe)
 		else
 			fd = bi_heredoc(cmd->redirin[i].str);
 		if (fd == ERROR)
-		{
-			print_err(cmd->redirin[i].str);
-			return (ERROR);
-		}
-		i++;
+			return (print_err(cmd->redirin[i].str));
+		++i;
 	}
 	if (fd == NO_FILE)
 		return (SUCCESS);
