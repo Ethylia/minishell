@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 08:46:35 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/24 10:35:40 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/24 10:40:28 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static int	exit_notfound(char *exec_path)
 {
 	char	*msg;
 
-	msg = concatstr(4, NAME, ": ", exec_path, ": Command not found\n");
+	msg = concatstr(4, NAME, ": ", exec_path, ": command not found\n");
 	if (!msg)
 	{
 		free(exec_path);
