@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 07:57:50 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/24 10:07:11 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/24 10:16:45 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ static t_data	*init_data(const char **envp)
 	updateps1(path);
 	data->isinteractive = isatty(STDIN_FILENO);
 	update_env(&data->local_env, "?=0");
+	rl_instream = stdin;
 	free(path);
 	return (data);
 }
@@ -118,7 +119,7 @@ int	main(__attribute__((unused))int argc,
 	init_data((const char **) envp);
 	init_sig_handlers();
 	line = displayprompt();
-	getdata()->intflag = 0;
+	rl_already_prompted = 0;
 	while (line)
 	{
 		token = tokenize(line + countwhite(line));
@@ -130,7 +131,7 @@ int	main(__attribute__((unused))int argc,
 		}
 		free(line);
 		line = displayprompt();
-		getdata()->intflag = 0;
+		rl_already_prompted = 0;
 	}
 	freedata();
 	return (EXIT_SUCCESS);
