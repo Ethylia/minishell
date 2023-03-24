@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 07:57:50 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/24 13:06:56 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/24 15:05:12 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,27 +119,27 @@ static t_data	*init_data(const char **envp)
 
 int	main(int argc, __attribute__((unused))char **argv, char **envp)
 {
-	char				*line;
-	t_token				*token;
+	char	*line;
+	t_token	*atom;
 
 	if (argc > 1)
 		return (EXIT_FAILURE);
 	init_data((const char **) envp);
 	init_sig_handlers();
 	line = displayprompt();
-	rl_already_prompted = 0;
 	while (line)
 	{
-		token = tokenize(line + countwhite(line));
-		if (token)
+		getdata()->tokens = tokenize(line + countwhite(line));
+		if (getdata()->tokens)
 		{
 			add_history(line);
-			execline(token);
-			free(token);
+			execline(getdata()->tokens);
+			atom = getdata()->tokens;
+			getdata()->tokens = 0;
+			free(atom);
 		}
 		free(line);
 		line = displayprompt();
-		rl_already_prompted = 0;
 	}
 	freedata();
 	return (EXIT_SUCCESS);
