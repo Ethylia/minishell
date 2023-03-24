@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipeline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
+/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 08:46:35 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/24 10:40:28 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/24 11:22:38 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ static void	close_pipe(t_pipe *p)
 
 static int	exit_err(char *exec_path)
 {
-	print_err(exec_path);
+	if (exec_path)
+		print_err(exec_path);
 	free(exec_path);
 	return (ERROR);
 }

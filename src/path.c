@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 14:43:46 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/24 11:03:40 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/24 11:18:51 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ char	*resolve_exec_path(char *word)
 	char const	*env_path;
 	char		*exec_path;	
 
+	if (!word)
+		return (NULL);
 	if (strchar(word, '/'))
 		return (copy_word(word));
 	env_path = get_var(getdata()->exported_env, "PATH");
