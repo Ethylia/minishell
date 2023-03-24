@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 15:05:18 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/23 16:01:11 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/24 10:08:17 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 
 char	*displayprompt(void)
 {
+	if (!(getdata()->isinteractive))
+		return (readline(""));
 	(getdata()->intflag) = 1;
 	return (readline(get_var(getdata()->local_env, "PS1")));
 	(getdata()->intflag) = 0;
