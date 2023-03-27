@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   util.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
+/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 15:21:33 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/23 16:28:03 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/27 15:18:34 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,7 @@ int		stralphanumunder(const char *c);
 char	*intoa(int n);
 
 int		starts_with(const char *s, const char *prefix);
+
+size_t	minst(size_t a, size_t b);
 
 #endif
