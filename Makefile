@@ -9,29 +9,34 @@ SRC_FILES	=	builtins/builtins.c \
 				builtins/heredoc.c \
 				builtins/pwd.c \
 				builtins/unset.c \
+				data.c \
 				env1.c \
 				env2.c \
 				error.c \
 				main.c \
+				parser/newparse.c \
 				parser/parse.c \
+				parser/parseutil.c \
 				parser/token.c \
 				parser/tokentype.c \
+				parser/tokenutil.c \
+				parser/tokenvalidation1.c \
+				parser/tokenvalidation2.c \
 				path.c \
+				pipeline.c \
+				prompt.c \
 				redir.c \
 				sig.c \
 				util/concatstr1.c \
 				util/concatstr2.c \
+				util/math.c \
 				util/mem.c \
 				util/str.c \
 				util/str2.c \
+				util/str3.c \
+				util/vector.c \
 				wildcard.c \
-				wildcard2.c \
-				parser/parseutil.c \
-				pipeline.c \
-				parser/tokenutil.c \
-				data.c \
-				prompt.c \
-				util/str3.c
+				wildcard2.c
 
 SRC_DIR		=	src
 
