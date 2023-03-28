@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 15:21:33 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/27 15:18:34 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/28 14:09:08 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <stddef.h>
 
 char	*strdupe(const char *s1);
+char	*strndupe(const char *s1, size_t n);
 void	*memcopy(void *dst, const void *src, size_t n);
 char	*strchar(const char *s, int c);
 
