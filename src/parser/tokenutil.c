@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 13:20:58 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/24 10:45:54 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/27 16:11:31 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,9 @@ size_t	tokenval(char *str, t_token *token, ssize_t *i)
 	}
 	memcopy(str, token->val, token->len);
 	return (token->len);
+}
+
+int	checksyntax(t_token *tokens)
+{
+	
 }

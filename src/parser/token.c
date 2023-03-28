@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 13:09:15 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/24 11:01:01 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/27 09:44:14 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,26 +83,26 @@ static size_t	counttokens(char *line)
 t_token	*tokenize(char *line)
 {
 	t_token	*tokens;
-	size_t	i;
-	char	q[2];
+	size_t	i[4];
+	char	*nl;
 
-	i = counttokens(line);
+	i[0] = counttokens(line);
 	if (!i)
 		return (0);
-	tokens = malloc((i + 1) * sizeof(t_token));
+	tokens = malloc((i[0] + 1) * sizeof(t_token));
 	if (!tokens)
 		return (0);
-	i = 0;
-	q[0] = '\0';
-	q[1] = 0;
-	while (line[0])
+	i[0] = -1;
+	i[1] = 0;
+	i[2] = '\0';
+	i[3] = 0;
+	while (line[i[1] + (++(i[0]) * 0)])
 	{
-		line += createtoken(&tokens[i], line, q[0]);
-		tokens[i].quote = getquote(&tokens[i], &q[0]);
-		q[1] = getnestlvl(&tokens[i], q[1]);
-		tokens[i].nestlvl = q[1];
-		++i;
+		i[1] += createtoken(&tokens[i[0]], &line[i[1]], i[2]);
+		tokens[i[0]].quote = getquote(&tokens[i[0]], &i[2]);
+		i[3] = getnestlvl(&tokens[i[0]], i[3]);
+		tokens[i[0]].nestlvl = i[3];
 	}
-	tokens[i].type = 0;
+	tokens[i[0]].type = 0;
 	return (tokens);
 }
