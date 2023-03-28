@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 07:57:50 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/24 15:08:28 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/28 16:06:42 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,11 @@ int	exec_cmd(t_token *tokens)
 		write(STDERR_FILENO, "minishell: syntax error\n", 24);
 		return (-1);
 	}
-	getdata()->cmd = buildcmd(tokens);
+	if (!buildcmd(tokens, &(getdata()->cmd)))
+	{
+		freecmd(&getdata()->cmd);
+		return (-1);
+	}
 	if (is_builtin(&getdata()->cmd) && !(getdata()->cmd.pipecmd))
 		stat = exec_redir_builtin(&getdata()->cmd);
 	else

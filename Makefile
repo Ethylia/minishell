@@ -14,14 +14,15 @@ SRC_FILES	=	builtins/builtins.c \
 				env2.c \
 				error.c \
 				main.c \
-				parser/newparse.c \
 				parser/parse.c \
+				parser/oldparse.c \
 				parser/parseutil.c \
 				parser/token.c \
 				parser/tokentype.c \
 				parser/tokenutil.c \
 				parser/tokenvalidation1.c \
 				parser/tokenvalidation2.c \
+				parser/buildwrd.c \
 				path.c \
 				pipeline.c \
 				prompt.c \

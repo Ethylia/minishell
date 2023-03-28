@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 15:24:44 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/27 09:36:59 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/28 16:14:27 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,51 +17,47 @@
 #include "data.h"
 #include "wildcard.h"
 
-static size_t	tokenchars(t_token *token, size_t *len)
-{
-	const char	*s = 0;
+// static size_t	tokenchars(t_token *token, size_t *len)
+// {
+// 	const char	*s = 0;
 
-	if (token->type == td && token->quote != '\'')
+// 	if (token->type == td && token->quote != '\'')
+// 	{
+// 		if ((++token)->type & twrd)
+// 		{
+// 			s = get_varn(getdata()->local_env, token->val, token->len);
+// 			if (!s)
+// 				s = get_varn(getdata()->exported_env, token->val, token->len);
+// 			if (s)
+// 				*len += strln(s);
+// 			return (2);
+// 		}
+// 		++(*len);
+// 		return (1);
+// 	}
+// 	*len += token->len;
+// 	return (1);
+// }
+
+char	*concattokens(t_token *tokens, size_t *len)
+{
+	size_t		i;
+	size_t		j;
+	t_vector	vec;
+
+	i = -1;
+	v_init(&vec, sizeof(char), 16);
+	while (tokens[++i].type)
 	{
-		if ((++token)->type & twrd)
-		{
-			s = get_varn(getdata()->local_env, token->val, token->len);
-			if (!s)
-				s = get_varn(getdata()->exported_env, token->val, token->len);
-			if (s)
-				*len += strln(s);
-			return (2);
-		}
+		if (tokens[i].type & tdelim && !tokens[i].quote)
+			break ;
 		++(*len);
-		return (1);
+		j = -1;
+		while (++j < tokens[i].len)
+			v_push(&vec, tokens[i].val + j);
 	}
-	*len += token->len;
-	return (1);
-}
-
-char	*concattokens(t_token *tokens, ssize_t len)
-{
-	char	*str;
-	size_t	strlen;
-	ssize_t	i[2];
-
-	i[0] = -1;
-	i[1] = 0;
-	strlen = 0;
-	if (tokens->type & tws)
-		++i[0];
-	while (tokens[++i[0]].type && i[0] < len && !((tokens[i[0]].type & tws)
-			&& !tokens[i[0]].quote))
-		if (!(tokens[i[0]].type & (tqts | tdqts) && !tokens[i[0]].quote))
-			i[0] += tokenchars(&tokens[i[0]], &strlen) - 1;
-	str = malloc(sizeof(char) * (strlen + 1));
-	if (!str)
-		return (0);
-	i[0] = 0 + !!(tokens->type & tws);
-	while (i[0] < len && !((tokens[i[0]].type & tws) && !tokens[i[0]].quote))
-		i[1] += tokenval(str + i[1], &tokens[i[0]], &i[0]);
-	str[i[1]] = 0;
-	return (str);
+	v_push(&vec, "\0");
+	return ((char *)vec.data);
 }
 
 static enum e_tokens	_gettoken2(const char *line)

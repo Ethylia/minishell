@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 13:09:15 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/27 09:44:14 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/28 16:27:50 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,26 +39,22 @@ static size_t	createtoken(t_token *token, char *line, char q)
 	token->len = 0;
 	token->type = gettoken(line);
 	token->val = line;
-	if (token->type & (tqts) && (q == '"' || (!strchar(line + 1, '\'')
-				&& !q)))
+	if (token->type & tqts && (q == '"' || (!strchar(line + 1, '\'') && !q)))
 		return (quotewrd(token));
-	if (token->type & (tdqts) && (q == '\'' || (!strchar(line + 1, '\"')
-				&& !q)))
+	if (token->type & tdqts && (q == '\'' || (!strchar(line + 1, '\"') && !q)))
 		return (quotewrd(token));
+	if ((token->type == twrd && token->val[0] == '?')
+		|| (token->type == twrd && token->val[0] == '$'))
+		return (token->len = 1);
 	i = (token->type == thdoc || token->type == tapp
 			|| token->type == tor || token->type == tand)
 		+ !(token->type == tws || token->type == twrd);
 	if (token->type != tws && token->type != twrd)
 		return (token->len = i);
-	while (line[i])
-	{
-		if (!(line[i] == '\'' && q == '\"') && !(line[i] == '\"' && q == '\'')
-			&& gettoken(line + i) != token->type)
-			break ;
+	while (line[i] && !(line[i] == '\'' && q == '\"')
+		&& !(line[i] == '\"' && q == '\'') && gettoken(line + i) == token->type)
 		++i;
-	}
-	token->len = i;
-	return (i);
+	return (token->len = i);
 }
 
 static size_t	counttokens(char *line)
@@ -84,10 +80,9 @@ t_token	*tokenize(char *line)
 {
 	t_token	*tokens;
 	size_t	i[4];
-	char	*nl;
 
 	i[0] = counttokens(line);
-	if (!i)
+	if (!i[0])
 		return (0);
 	tokens = malloc((i[0] + 1) * sizeof(t_token));
 	if (!tokens)
@@ -99,7 +94,7 @@ t_token	*tokenize(char *line)
 	while (line[i[1] + (++(i[0]) * 0)])
 	{
 		i[1] += createtoken(&tokens[i[0]], &line[i[1]], i[2]);
-		tokens[i[0]].quote = getquote(&tokens[i[0]], &i[2]);
+		tokens[i[0]].quote = getquote(&tokens[i[0]], (char *)(&i[2]));
 		i[3] = getnestlvl(&tokens[i[0]], i[3]);
 		tokens[i[0]].nestlvl = i[3];
 	}
