@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
+/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 08:38:33 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/29 14:58:58 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/29 16:09:03 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ static int	buildcmd2(t_cmdvec *vec, t_token *tokens, t_cmd *cmd, size_t i)
 		else if (tokens[i].type & (tpipe))
 		{
 			cmd->pipecmd = malloc(sizeof(t_cmd));
+			if (!cmd->pipecmd)
+				exit(EXIT_FAILURE);
 			if (!buildcmd(tokens + i + 1, cmd->pipecmd))
 				return (freecmdvec(vec));
 			break ;
@@ -89,8 +91,6 @@ int	buildcmd(t_token *tokens, t_cmd *cmd)
 	t_cmdvec		vec;
 	const t_redir	nullredir = {0, 0};
 
-	if (!cmd)
-		return (0);
 	initcmd(cmd);
 	initcmdvec(&vec);
 	ret = buildcmd2(&vec, tokens, cmd, 0);

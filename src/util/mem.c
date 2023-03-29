@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mem.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
+/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 15:19:28 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/29 14:16:10 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/29 16:11:31 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*strdupe(const char *s1)
 	len = strln(s1);
 	s2 = malloc(sizeof(*s2) * (len + 1));
 	if (!s2)
-		return (NULL);
+		exit(EXIT_FAILURE);
 	s2[len] = '\0';
 	i = 0;
 	while (s1[i])
@@ -43,7 +43,7 @@ char	*strndupe(const char *s1, size_t n)
 	n = minst(n, strln(s1));
 	s2 = malloc(sizeof(*s2) * (n + 1));
 	if (!s2)
-		return (NULL);
+		exit(EXIT_FAILURE);
 	s2[n] = '\0';
 	i = 0;
 	while (i < n)
@@ -73,10 +73,7 @@ void	*ralloc(void *src, size_t n, size_t sn)
 
 	dst = malloc(n);
 	if (!dst)
-	{
-		freedata();
-		exit(1);
-	}
+		exit(EXIT_FAILURE);
 	memcopy(dst, src, sn);
 	free(src);
 	return (dst);

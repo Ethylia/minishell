@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
+/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 07:29:06 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/29 12:42:10 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/29 16:11:52 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,7 @@ void	v_init(t_vector *v, size_t elem_size, size_t capacity)
 {
 	v->data = malloc(elem_size * capacity);
 	if (!v->data)
-	{
-		freedata();
-		exit(1);
-	}
+		exit(EXIT_FAILURE);
 	v->size = 0;
 	v->capacity = capacity;
 	v->elem_size = elem_size;

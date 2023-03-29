@@ -6,12 +6,15 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 09:47:52 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/29 13:41:24 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/29 16:13:06 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include "tokenvalidation.h"
+#include "util/util.h"
+#include "data.h"
+#include "env.h"
 
 static void	print_token_error(t_token *t)
 {
@@ -57,11 +60,13 @@ static t_token	*find_token_error(t_token *tokens)
 int	token_error(t_token *tokens)
 {
 	t_token	*t;
+	char	*stat;
 
 	t = find_token_error(tokens);
 	if (t)
 	{
 		print_token_error(t);
+		update_env(&(getdata()->local_env), "?=258");
 		return (1);
 	}
 	return (0);

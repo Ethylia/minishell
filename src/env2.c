@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env2.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
+/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 13:11:04 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/24 09:38:01 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/29 16:06:26 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,17 +30,8 @@ static void	append_env(char ***env, const char *var)
 	len = env_len((const char **)*env);
 	res = malloc(sizeof(*res) * (len + 2));
 	if (!res)
-	{
-		free_env(*env);
-		return ;
-	}
+		exit(EXIT_FAILURE);
 	tmp = strdupe(var);
-	if (!tmp)
-	{
-		free(res);
-		free_env(*env);
-		return ;
-	}
 	memcopy(res, *env, sizeof(*res) * (len));
 	res[len] = tmp;
 	res[len + 1] = NULL;
@@ -61,8 +52,7 @@ void	update_env(char ***env, const char *var)
 			tmp = strdupe(var);
 			if (!tmp)
 			{
-				free_env(*env);
-				return ;
+
 			}
 			free((*env)[i]);
 			(*env)[i] = tmp;
@@ -87,10 +77,7 @@ void	rm_env(char ***env, char *var)
 	curr_len = env_len((const char **)(*env));
 	res = malloc(sizeof(*res) * curr_len);
 	if (!res)
-	{
-		free_env(*env);
-		return ;
-	}
+		exit(EXIT_FAILURE);
 	free((*env)[i]);
 	memcopy(res, *env, sizeof(*res) * i);
 	memcopy(res + i, *env + i + 1, sizeof(*res) * (curr_len - i - 1));

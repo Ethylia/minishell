@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 14:47:52 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/23 10:04:26 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/29 16:10:49 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ char	*concatstr(size_t n, ...)
 	va_start(va, n);
 	res = alloc_res(n, va);
 	if (!res)
-		return (NULL);
+		exit(EXIT_FAILURE);
 	copy_strs(res, n, va);
 	va_end(va);
 	return (res);
