@@ -6,17 +6,25 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 14:55:02 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/29 15:00:04 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/29 16:20:55 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stddef.h>
 #include <unistd.h>
+#include "wildcard.h"
 #include "util/vector.h"
 #include "util/util.h"
 #include "data.h"
 #include "env.h"
 #include "token.h"
+
+static int	wis_ambi(const char **var)
+{
+	if (var[0] && var[1])
+		return (1);
+	return (0);
+}
 
 static int	is_ambi(const char *var)
 {
@@ -58,15 +66,11 @@ static size_t	buildtdrd(t_vector *arg, t_token *token, size_t i)
 	return (i + 1);
 }
 
-size_t	buildredir(t_cmdvec *cmd, t_token *tokens, size_t i)
+size_t	buildredir2(t_token *tokens, size_t i, t_redir *redir)
 {
-	t_redir			redir;
 	t_vector		arg;
-	t_vector *const	rv = (t_vector *)((tokens[i - 1].type == tdin)
-			* (size_t)(&cmd->redirin)
-			+ !(tokens[i - 1].type & tdin) * (size_t)(&cmd->redirout));
 
-	redir.type = tokens[i - 1].type;
+	redir->type = tokens[i - 1].type;
 	while (tokens[i].type & (tws))
 		++i;
 	v_init(&arg, sizeof(char), 16);
@@ -82,7 +86,34 @@ size_t	buildredir(t_cmdvec *cmd, t_token *tokens, size_t i)
 			return (0);
 	}
 	v_push(&arg, "\0");
-	redir.str = (char *)arg.data;
+	redir->str = (char *)arg.data;
+	return (i);
+}
+
+size_t	buildredir(t_cmdvec *cmd, t_token *tokens, size_t i)
+{
+	t_redir			redir;
+	char			**wilds;
+	t_vector *const	rv = (t_vector *)((tokens[i - 1].type == tdin)
+			* (size_t)(&cmd->redirin)
+			+ !(tokens[i - 1].type & tdin) * (size_t)(&cmd->redirout));
+
+	i = buildredir2(tokens, i, &redir);
+	if (!i)
+		return (0);
+	wilds = wildcard_values(redir.str);
+	if (wilds[0])
+	{
+		free(redir.str);
+		if (wis_ambi((const char **)wilds))
+		{
+			write(2, "minishell: ambiguous redirect\n", 30);
+			free_wildcard_values(wilds);
+			return (0);
+		}
+		redir.str = strdupe(wilds[0]);
+	}
+	free_wildcard_values(wilds);
 	v_push(rv, &redir);
 	return (i);
 }

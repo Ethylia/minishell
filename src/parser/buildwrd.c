@@ -6,11 +6,12 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:55:11 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/29 13:15:20 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/29 16:24:07 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
+#include "wildcard.h"
 #include "util/util.h"
 #include "util/vector.h"
 #include "env.h"
@@ -74,6 +75,29 @@ static size_t	buildarg(t_vector *argv, t_vector *arg, t_token *token)
 	return (1);
 }
 
+static void	pushvalue(t_cmdvec *cmd, t_vector arg)
+{
+	char	*str;
+	char	**var;
+	size_t	i;
+
+	v_push(&arg, "\0");
+	var = wildcard_values((const char *)arg.data);
+	if (*var)
+	{
+		i = -1;
+		while (var[++i])
+		{
+			str = strdupe(var[i]);
+			v_push(&cmd->argv, &str);
+		}
+		free(arg.data);
+	}
+	else
+		v_push(&cmd->argv, &arg.data);
+	free_wildcard_values(var);
+}
+
 size_t	buildwrd(t_cmdvec *cmd, t_token *tokens, size_t i)
 {
 	t_vector	arg;
@@ -83,10 +107,7 @@ size_t	buildwrd(t_cmdvec *cmd, t_token *tokens, size_t i)
 		&& (tokens[i].type & (twrd | td | tqts | tdqts) || tokens[i].quote))
 		i += buildarg(&cmd->argv, &arg, &tokens[i]);
 	if (arg.size)
-	{
-		v_push(&arg, "\0");
-		v_push(&cmd->argv, &arg.data);
-	}
+		pushvalue(cmd, arg);
 	else
 		free(arg.data);
 	return (i);
