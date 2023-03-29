@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   util.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 15:21:33 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/28 14:09:08 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/29 14:16:03 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*concatstr_ln(size_t n, ...);
 int		is_ws(char c);
 void	skipwhite(const char **line);
 size_t	countwhite(const char *line);
-void	*ralloc(const void *src, size_t n, size_t sn);
+void	*ralloc(void *src, size_t n, size_t sn);
 int		isalphaunder(char c);
 int		stralphanumunder(const char *c);
 char	*intoa(int n);
