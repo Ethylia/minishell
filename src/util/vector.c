@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 07:29:06 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/28 17:23:52 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/29 12:42:10 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,14 @@ size_t	v_pushstr(t_vector *arg, const char *str)
 	return (i);
 }
 
-void	v_resize(t_vector *v, size_t size)
+size_t	v_pushstrn(t_vector *arg, const char *str, size_t n)
 {
-	if (size > v->capacity)
-	{
-		v->data = ralloc(v->data, size * v->elem_size,
-				v->size * v->elem_size);
-		v->capacity = size;
-	}
+	size_t	i;
+
+	i = 0;
+	while (str[i] && i < n)
+		v_push(arg, str + i++);
+	return (i);
 }
 
 void	v_init(t_vector *v, size_t elem_size, size_t capacity)
@@ -64,10 +64,11 @@ void	v_free_elems(t_vector *v)
 {
 	size_t	i;
 
+	if (!v->data)
+		return ;
 	i = 0;
 	while (i < v->size)
-		free(v->data + i++ * v->elem_size);
-		// free((void *)(((void **)(v->data))[i++ *v->elem_size]));
+		free(*((void **)(v->data) + i++));
 	free(v->data);
 	v->data = 0;
 	v->size = 0;

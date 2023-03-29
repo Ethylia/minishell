@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 13:09:15 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/28 16:27:50 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/29 11:54:08 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,12 @@ static size_t	counttokens(char *line)
 	while (line[0])
 	{
 		t = gettoken(line);
+		if ((t == twrd && line[0] == '?') || (t == twrd && line[0] == '$'))
+		{
+			++line;
+			++n;
+			continue ;
+		}
 		line += (t == thdoc || t == tapp
 				|| t == tor || t == tand) + !(t == tws || t == twrd);
 		if (t == tws || t == twrd)

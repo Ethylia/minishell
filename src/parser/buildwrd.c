@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:55:11 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/28 17:10:35 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/29 13:15:20 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static size_t	insertargs(t_vector *argv, t_vector *arg, const char *str)
 	return (i);
 }
 
-static size_t	buildtd(t_vector *argv, t_vector *arg, t_token *token)
+size_t	buildtd(t_vector *argv, t_vector *arg, t_token *token)
 {
 	const char	*var;
 
@@ -53,9 +53,9 @@ static size_t	buildtd(t_vector *argv, t_vector *arg, t_token *token)
 	if (!var)
 		var = get_varn(getdata()->exported_env, token->val, token->len);
 	if (var && token->quote != '"')
-		return (insertargs(argv, arg, var) * 0 + 2);
+		return (insertargs(argv, arg, var) * 0 + 1);
 	else if (var)
-		return (v_pushstr(arg, var) * 0 + 2);
+		return (v_pushstr(arg, var) * 0 + 1);
 	return (1);
 }
 

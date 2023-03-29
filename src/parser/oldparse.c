@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 15:29:19 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/28 16:23:54 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/29 12:35:16 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,11 +107,20 @@
 // 	return (g.cmd);
 // }
 
-void	freecmdvec(t_cmdvec *cmd)
+int	freecmdvec(t_cmdvec *cmd)
 {
+	size_t	i;
+
 	v_free_elems(&cmd->argv);
-	v_free_elems(&cmd->redirin);
-	v_free_elems(&cmd->redirout);
+	i = -1;
+	while (++i < cmd->redirin.size)
+		free(((t_redir *)(cmd->redirin.data))[i].str);
+	free(cmd->redirin.data);
+	i = -1;
+	while (++i < cmd->redirout.size)
+		free(((t_redir *)(cmd->redirout.data))[i].str);
+	free(cmd->redirout.data);
+	return (0);
 }
 
 void	freecmd(t_cmd *cmd)
