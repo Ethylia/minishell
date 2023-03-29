@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
+/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 13:06:01 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/28 11:02:48 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/29 09:57:08 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,6 @@ char			*concattokens(t_token *tokens, size_t *len);
 unsigned int	getnestlvl(t_token *token, unsigned int lvl);
 char			getquote(t_token *token, char *q);
 size_t			tokenval(char *str, t_token *token, ssize_t *i);
+int				token_error(t_token *tokens);
 
 #endif

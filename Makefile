@@ -22,6 +22,7 @@ SRC_FILES	=	builtins/builtins.c \
 				parser/tokenutil.c \
 				parser/tokenvalidation1.c \
 				parser/tokenvalidation2.c \
+				parser/tokenvalidation3.c \
 				parser/buildwrd.c \
 				path.c \
 				pipeline.c \

@@ -6,17 +6,15 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 09:16:08 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/28 14:05:32 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/29 13:41:12 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
 #include "token.h"
 
 int	is_redir(t_token *token)
 {
-	return (token->type == tdin || token->type == thdoc
-		|| token->type == tdout || token->type == tapp);
+	return (token->type & (tdin | thdoc | tdout | tapp));
 }
 
 int	is_word(t_token *token)
@@ -25,7 +23,7 @@ int	is_word(t_token *token)
 		return (1);
 	else if (token->type == td)
 		return ((token + 1)->type == td || is_word(token + 1));
-	else if (token->type == tqts || token->type == tdqts)
+	else if (token->type & (tqts | tdqts))
 		return (1);
 	return (0);
 }
