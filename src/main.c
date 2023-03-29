@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
+/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 07:57:50 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/28 16:06:42 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/29 14:00:38 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,8 @@ int	main(int argc, __attribute__((unused))char **argv, char **envp)
 		if (getdata()->tokens)
 		{
 			add_history(line);
-			execline(getdata()->tokens);
+			if (!token_error(getdata()->tokens))
+				execline(getdata()->tokens);
 			atom = getdata()->tokens;
 			getdata()->tokens = 0;
 			free(atom);
