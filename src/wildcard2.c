@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wildcard2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
+/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 15:59:49 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/23 09:09:43 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/29 16:06:39 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ char	**wildcard_values(const char *wildcard)
 	var.count = count_wildcard_values(wildcard);
 	var.res = malloc(sizeof(*var.res) * (var.count + 1));
 	if (!var.res)
-		return (NULL);
+		exit(EXIT_FAILURE);
 	var.res[var.count] = NULL;
 	var.i = 0;
 	var.folder = opendir(".");

@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 13:09:15 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/29 16:28:14 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/29 16:29:54 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ t_token	*tokenize(char *line)
 		return (0);
 	tokens = malloc((i[0] + 1) * sizeof(t_token));
 	if (!tokens)
-		return (0);
+		exit(EXIT_FAILURE);
 	i[0] = -1;
 	i[1] = 0;
 	i[2] = '\0';

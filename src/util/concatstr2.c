@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   concatstr2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
+/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 13:53:53 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/17 15:57:43 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/29 16:11:03 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char	*concatstr_ln(size_t n, ...)
 	va_start(va, n);
 	res = alloc_res(n, va);
 	if (!res)
-		return (NULL);
+		exit(EXIT_FAILURE);
 	copy_strs(res, n, va);
 	va_end(va);
 	return (res);

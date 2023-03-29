@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   str3.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
+/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 15:39:27 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/27 10:35:01 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/29 16:11:42 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ char	*intoa(int n)
 	len = numlen(n);
 	str = malloc(sizeof(*str) * (len + 1));
 	if (!str)
-		return (NULL);
+		exit(EXIT_FAILURE);
 	str[len] = '\0';
 	if (n < 0)
 	{

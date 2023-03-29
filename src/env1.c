@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env1.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
+/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 14:40:05 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/24 09:38:47 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/29 16:05:43 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	**copy_env(const char **env)
 		return (NULL);
 	res = malloc(sizeof(*res) * (len + 1));
 	if (!res)
-		return (NULL);
+		exit(EXIT_FAILURE);
 	i = 0;
 	while (i < len)
 	{
@@ -75,6 +75,7 @@ void	free_env(char **env)
 		i++;
 	}
 	free(env);
+	env = NULL;
 }
 
 char const	*get_varn(char *const envp[], char const *var, size_t l)
@@ -89,7 +90,7 @@ char const	*get_varn(char *const envp[], char const *var, size_t l)
 	{
 		tmp = malloc(sizeof(*tmp) * (l + 1));
 		if (!tmp)
-			return (NULL);
+			exit(EXIT_FAILURE);
 		memcopy(tmp, var, l);
 		tmp[l] = '\0';
 		if (is_same_var(envp[i], tmp))
