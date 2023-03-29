@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 09:47:52 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/29 09:58:55 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/29 13:41:24 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,7 @@ static t_token	*find_token_error(t_token *tokens)
 		return (tokens + i);
 	while (tokens[i].type)
 	{
-		if ((tokens[i].type == tpipe || tokens[i].type == tor
-				|| tokens[i].type == tand || tokens[i].type == tpin)
+		if (tokens[i].type & (tpipe | tor | tand | tpin)
 			&& !next_to_word(tokens + i) && !next_to_redir(tokens + i)
 			&& !next_to(tokens + i, tpin))
 			return (tokens + i + 1);

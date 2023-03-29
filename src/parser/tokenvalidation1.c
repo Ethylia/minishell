@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 09:16:08 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/29 09:58:53 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/29 13:39:45 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ size_t	skip_ws_pin(t_token *tokens)
 	size_t	i;
 
 	i = 0;
-	while (tokens[i].type == tws || tokens[i].type == tpin)
+	while (tokens[i].type & (tws | tpin))
 		i++;
 	return (i);
 }
