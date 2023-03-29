@@ -6,11 +6,10 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 09:16:08 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/28 14:05:32 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/29 09:58:21 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
 #include "token.h"
 
 int	is_redir(t_token *token)
