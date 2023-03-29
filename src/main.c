@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 07:57:50 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/29 14:00:38 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/29 14:21:24 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,10 @@ t_token	*nextcmd(t_token *token, int stat)
 		return (next);
 	nestlvl = next->nestlvl;
 	if (stat != 0)
-		while (next->type == tand || next->nestlvl > nestlvl)
+		while (next->type && (next->type == tand || next->nestlvl > nestlvl))
 			next = findnext(next + 1, tand | tor);
 	else if (stat == 0)
-		while (next->type == tor || next->nestlvl > nestlvl)
+		while (next->type && (next->type == tor || next->nestlvl > nestlvl))
 			next = findnext(next + 1, tand | tor);
 	if (next->type)
 		++next;
