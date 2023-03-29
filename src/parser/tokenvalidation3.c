@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 09:47:52 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/29 16:13:06 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/29 16:14:22 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ static t_token	*find_token_error(t_token *tokens)
 int	token_error(t_token *tokens)
 {
 	t_token	*t;
-	char	*stat;
 
 	t = find_token_error(tokens);
 	if (t)
