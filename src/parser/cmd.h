@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 15:33:44 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/29 12:29:15 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/29 14:56:10 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,8 @@ int		buildcmd(t_token *tokens, t_cmd *cmd);
 int		freecmdvec(t_cmdvec *cmd);
 void	freecmd(t_cmd *cmd);
 int		toke(t_token *tokens, size_t *i, size_t *j);
-// void	buildpipe(t_cmd *cmd, t_token *tokens);
-// void	setredir(t_cmdgroup *g, enum e_tokens type, t_token *tokens, size_t i);
-// void	buildarg(t_cmdgroup *g, t_token *tokens, size_t i);
 size_t	buildtd(t_vector *argv, t_vector *arg, t_token *token);
 size_t	buildwrd(t_cmdvec *cmd, t_token *tokens, size_t i);
+size_t	buildredir(t_cmdvec *cmd, t_token *tokens, size_t i);
 
 #endif
