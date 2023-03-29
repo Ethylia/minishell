@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 15:05:18 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/24 15:02:47 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/29 15:07:32 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*displayprompt(void)
 		rl_already_prompted = 0;
 		return (line);
 	}
-	rl_already_prompted = 0;
 	line = readline(get_var(getdata()->local_env, "PS1"));
+	rl_already_prompted = 0;
 	return (line);
 }
