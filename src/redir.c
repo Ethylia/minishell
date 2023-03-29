@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 10:23:51 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/24 11:03:24 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/29 15:01:48 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static int	get_flags(t_redir *redir)
 {
 	if (redir->type == tdout)
 		return (O_TRUNC | O_CREAT | O_WRONLY);
-	return (O_APPEND | O_WRONLY);
+	return (O_CREAT | O_APPEND | O_WRONLY);
 }
 
 int	redir_output(t_cmd *cmd, t_pipe *next_pipe)
