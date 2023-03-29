@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 09:47:52 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/29 16:14:22 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/29 16:33:30 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,15 @@ static void	print_token_error(t_token *t)
 static t_token	*find_token_error(t_token *tokens)
 {
 	size_t	i;
+	int		open_p;
 
-	if (!all_parenthesis_closed(tokens))
-		return (tokens + count_tokens(tokens));
-	i = skip_ws_pin(tokens);
-	if (!is_word(tokens + i) && !is_redir(tokens + i))
-		return (tokens + i);
-	while (tokens[i].type)
+	open_p = 0;
+	i = -1;
+	while (tokens[++i].type)
 	{
+		open_p += (tokens[i].type == tpin) - (tokens[i].type == tpout);
+		if (open_p < 0)
+			return (tokens + i);
 		if (tokens[i].type & (tpipe | tor | tand | tpin)
 			&& !next_to_word(tokens + i) && !next_to_redir(tokens + i)
 			&& !next_to(tokens + i, tpin))
@@ -52,8 +53,9 @@ static t_token	*find_token_error(t_token *tokens)
 			return (tokens + i + 1);
 		else if (is_word(tokens + i) && next_to(tokens + i, tpin))
 			return (tokens + i + 1);
-		i++;
 	}
+	if (open_p)
+		return (tokens + i);
 	return (NULL);
 }
 
