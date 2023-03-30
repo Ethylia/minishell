@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:55:11 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/30 11:58:07 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/30 16:10:44 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ size_t	buildtd(t_vector *argv, t_vector *arg, t_token *token)
 	return (1);
 }
 
-static size_t	buildarg(t_vector *argv, t_vector *arg, t_token *token)
+static size_t	buildarg(t_vector *argv, t_vector *arg, t_token *token, int *b)
 {
 	size_t	i;
 
@@ -71,7 +71,7 @@ static size_t	buildarg(t_vector *argv, t_vector *arg, t_token *token)
 	if (token->type & (td) && token->quote != '\'')
 		return ((buildtd(argv, arg, token + 1)) + 1);
 	else if (token->type & (tdqts | tqts) && !token->quote)
-		return (1);
+		return (*b = 1);
 	else
 		while (i < token->len)
 			v_push(arg, token->val + i++);
@@ -109,11 +109,14 @@ static void	pushvalue(t_cmdvec *cmd, t_vector arg)
 size_t	buildwrd(t_cmdvec *cmd, t_token *tokens, size_t i)
 {
 	t_vector	arg;
+	int			b;
 
+	b = 0;
 	v_init(&arg, sizeof(char), 16);
 	while (tokens[i].type
 		&& (tokens[i].type & (twrd | td | tqts | tdqts) || tokens[i].quote))
-		i += buildarg(&cmd->argv, &arg, &tokens[i]);
-	pushvalue(cmd, arg);
+		i += buildarg(&cmd->argv, &arg, &tokens[i], &b);
+	if (b || arg.size)
+		pushvalue(cmd, arg);
 	return (i);
 }
