@@ -118,5 +118,7 @@ size_t	buildwrd(t_cmdvec *cmd, t_token *tokens, size_t i)
 		i += buildarg(&cmd->argv, &arg, &tokens[i], &b);
 	if (b || arg.size)
 		pushvalue(cmd, arg);
+	else
+		free(arg.data);
 	return (i);
 }
