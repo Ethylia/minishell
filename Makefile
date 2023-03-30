@@ -29,6 +29,7 @@ SRC_FILES	=	builtins/builtins.c \
 				path.c \
 				pipeline.c \
 				prompt.c \
+				readline_extra.c \
 				redir.c \
 				sig.c \
 				util/concatstr1.c \
