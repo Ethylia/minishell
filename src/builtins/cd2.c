@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd2.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
+/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 12:31:49 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/30 07:39:56 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/30 15:08:22 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,21 +37,19 @@ void	updateps1(const char *path)
 	free(ps1);
 }
 
-int	update_oldpwd(char **envp)
+int	update_oldpwd(void)
 {
 	char	*oldpwd;
 
-	oldpwd = concatstr(2, "OLDPWD=", get_var(envp, "PWD"));
+	oldpwd = concatstr(2, "OLDPWD=", get_var(getdata()->exported_env, "PWD"));
 	if (!oldpwd)
 		return (ERROR);
-	update_env(&envp, oldpwd);
+	update_env(&(getdata()->exported_env), oldpwd);
 	free(oldpwd);
-	if (!envp)
-		return (ERROR);
 	return (SUCCESS);
 }
 
-int	update_pwd(char **envp)
+int	update_pwd(void)
 {
 	char	*path;
 	char	*pwd;
@@ -62,9 +60,7 @@ int	update_pwd(char **envp)
 	free(path);
 	if (!pwd)
 		return (ERROR);
-	update_env(&envp, pwd);
+	update_env(&(getdata()->exported_env), pwd);
 	free(pwd);
-	if (!envp)
-		return (ERROR);
 	return (SUCCESS);
 }
