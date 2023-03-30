@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 15:21:33 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/30 08:26:01 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/30 14:44:44 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include <stddef.h>
 
-typedef unsigned char uchar;
+typedef unsigned char	t_uchar;
 
 char	*strdupe(const char *s1);
 char	*strndupe(const char *s1, size_t n);
@@ -36,7 +36,7 @@ void	*ralloc(void *src, size_t n, size_t sn);
 int		isalphaunder(char c);
 int		stralphanumunder(const char *c);
 char	*intoa(int n);
-uchar	atouc(const char *s);
+t_uchar	atouc(const char *s);
 
 int		starts_with(const char *s, const char *prefix);
 

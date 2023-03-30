@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 09:28:31 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/30 10:59:54 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/30 14:45:12 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	update_shlvl(void)
 	const char	*curr_shlvl;
 	char		*shlvl;
 	char		*tmp;
-
 
 	curr_shlvl = get_var(getdata()->exported_env, "SHLVL");
 	if (!curr_shlvl)
@@ -69,4 +68,3 @@ int	is_append_var(char const *v1, char const *v2)
 	}
 	return (0);
 }
-
