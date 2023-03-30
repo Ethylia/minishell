@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 08:46:35 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/24 15:53:41 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/30 08:12:53 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static void	exit_notfound(char *exec_path)
 		exit(EXIT_FAILURE);
 	write(STDERR_FILENO, msg, strln(msg));
 	free(msg);
-	exit(EXIT_FAILURE);
+	exit(127);
 }
 
 // cmd not found: currently displays "file or dir not found"
