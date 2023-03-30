@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 08:38:33 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/29 16:09:03 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/30 12:31:25 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@
 #include "cmd.h"
 #include "env.h"
 #include "data.h"
-
-#define NULLPTR "\0\0\0\0\0\0\0\0"
+#include "def.h"
 
 static void	initcmdvec(t_cmdvec *cmd)
 {
