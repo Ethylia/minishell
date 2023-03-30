@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 07:57:50 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/30 12:32:26 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/30 15:39:50 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ static t_data	*init_data(const char **envp)
 	update_shlvl();
 	rl_outstream = stderr;
 	updateps1(path);
-	data->isinteractive = isatty(STDIN_FILENO);
+	data->isinteractive = isatty(STDOUT_FILENO);
 	update_env(&data->local_env, "?=0");
 	free(path);
 	rl_attempted_completion_function = &completion;
