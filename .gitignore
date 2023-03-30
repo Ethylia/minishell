@@ -54,6 +54,7 @@ dkms.conf
 .DS_Store
 .vscode
 minishell
-test*
+test?*
+!test/tester.py
 *.txt
 *.out
