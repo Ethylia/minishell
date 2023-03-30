@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 12:31:49 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/24 08:53:30 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/30 07:39:56 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,6 @@
 #include "../def.h"
 #include "../env.h"
 #include "data.h"
-
-void	print_path(char *const envp[], const char *path)
-{
-	const char	*home;
-
-	home = get_var(envp, "HOME");
-	if (starts_with(path, home))
-		printf("~/%s\n", path + strln(home));
-	else
-		printf("%s\n", path);
-}
 
 void	updateps1(const char *path)
 {

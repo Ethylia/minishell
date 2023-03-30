@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 16:30:41 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/23 10:10:04 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/30 07:54:16 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ static const char	*get_oldpwd(char **envp)
 		write(STDERR_FILENO, MSG_OLDPWD_NOT_SET, strln(MSG_OLDPWD_NOT_SET));
 		return (NULL);
 	}
-	print_path(envp, path);
+	write(STDERR_FILENO, path, strln(path));
+	write(STDERR_FILENO, "\n", 1);
 	return (path);
 }
 

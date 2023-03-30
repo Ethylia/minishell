@@ -68,6 +68,9 @@ sanit: re
 debug: CCFLAGS+=-g -O0
 debug: re
 
+rel: CCFLAGS+=-O2
+rel: re
+
 clean:
 	@-rm -rf $(OBJ_DIR)/*.o $(OBJ_DIR)/*.d
 	@-rm -rf $(OBJ_DIR)/*/*.o $(OBJ_DIR)/*/*.d

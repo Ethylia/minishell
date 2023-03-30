@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 07:57:50 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/29 14:21:24 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/30 07:54:46 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ static t_data	*init_data(const char **envp)
 	path = getcwd(NULL, 0);
 	if (!path)
 		exit_error("");
+	rl_outstream = stderr;
 	updateps1(path);
 	data->isinteractive = isatty(STDIN_FILENO);
 	update_env(&data->local_env, "?=0");
