@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 15:05:18 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/30 14:52:49 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/30 15:18:57 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,18 @@
 #include "env.h"
 #include "util/util.h"
 
-// void	togglectl(int boolean)
-// {
-// 	struct termios	term;
+void	togglectl(int boolean)
+{
+	struct termios	term;
 
-// 	tcgetattr(STDOUT_FILENO, &term);
-// }
+	if (tcgetattr(STDOUT_FILENO, &term) == -1)
+		return ;
+	if (boolean)
+		term.c_lflag |= (ECHOCTL);
+	else
+		term.c_lflag &= ~(ECHOCTL);
+	tcsetattr(STDOUT_FILENO, TCSANOW, &term);
+}
 
 char	*displayprompt(void)
 {
@@ -35,7 +41,9 @@ char	*displayprompt(void)
 		rl_already_prompted = 0;
 		return (line);
 	}
+	togglectl(0);
 	line = readline(get_var(getdata()->local_env, "PS1"));
 	rl_already_prompted = 0;
+	togglectl(1);
 	return (line);
 }

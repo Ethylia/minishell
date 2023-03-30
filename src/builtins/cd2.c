@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd2.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 12:31:49 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/30 15:08:22 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/30 15:32:25 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ int	update_pwd(void)
 	char	*pwd;
 
 	path = getcwd(NULL, 0);
+	if (!path)
+		return (ERROR);
 	updateps1(path);
 	pwd = concatstr(2, "PWD=", path);
 	free(path);
