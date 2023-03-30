@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 14:43:46 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/24 11:18:51 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/30 11:48:57 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,13 @@ static char	*find_in_path(char const *word, char const *env_path)
 	return (NULL);
 }
 
-static char	*copy_word(char *word)
+static char	*copy_word(const char *word)
 {
-	return (concatstr(1, word));
+	return (strdupe(word));
 }
 
 // Must free return
-char	*resolve_exec_path(char *word)
+char	*resolve_exec_path(const char *word)
 {
 	char const	*env_path;
 	char		*exec_path;	

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenvalidation3.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
+/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 09:47:52 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/30 09:16:01 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/30 11:31:33 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,40 +30,40 @@ static void	print_token_error(t_token *t)
 	write(2, "'\n", 2);
 }
 
-static t_token	*find_token_error(t_token *tokens)
+static t_token	*find_token_error(t_token *toks)
 {
 	size_t	i;
 	int		open_p;
 
 	open_p = 0;
 	i = -1;
-	while (tokens[++i].type)
+	while (toks[++i].type)
 	{
-		open_p += (tokens[i].type == tpin) - (tokens[i].type == tpout);
+		open_p += (toks[i].type == tpin) - (toks[i].type == tpout);
 		if (open_p < 0)
-			return (tokens + i);
-		if (tokens[i].type & (tpipe | tor | tand | tpin) && (i == 0
-			|| (!next_to_word(tokens + i) && !next_to_redir(tokens + i)
-			&& !next_to(tokens + i, tpin))))
-			return (tokens + i + 1);
-		else if (is_redir(tokens + i) && !next_to_word(tokens + i))
-			return (tokens + i + 1);
-		else if (tokens[i].type == tpout
-			&& (next_to_word(tokens + i) || next_to(tokens + i, tpin)))
-			return (tokens + i + 1);
-		else if (is_word(tokens + i) && next_to(tokens + i, tpin))
-			return (tokens + i + 1);
+			return (toks + i);
+		if (toks[i].type & (tpipe | tor | tand | tpin) && ((i == 0
+					&& toks[i].type != tpin) || (!next_to_word(toks + i)
+					&& !next_to_redir(toks + i) && !next_to(toks + i, tpin))))
+			return (toks + i + 1);
+		else if (is_redir(toks + i) && !next_to_word(toks + i))
+			return (toks + i + 1);
+		else if (toks[i].type == tpout
+			&& (next_to_word(toks + i) || next_to(toks + i, tpin)))
+			return (toks + i + 1);
+		else if (is_word(toks + i) && next_to(toks + i, tpin))
+			return (toks + i + 1);
 	}
 	if (open_p)
-		return (tokens + i);
+		return (toks + i);
 	return (NULL);
 }
 
-int	token_error(t_token *tokens)
+int	token_error(t_token *toks)
 {
 	t_token	*t;
 
-	t = find_token_error(tokens);
+	t = find_token_error(toks);
 	if (t)
 	{
 		print_token_error(t);

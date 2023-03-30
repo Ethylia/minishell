@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:55:11 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/30 11:07:26 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/30 11:58:07 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,20 +85,25 @@ static void	pushvalue(t_cmdvec *cmd, t_vector arg)
 	size_t	i;
 
 	v_push(&arg, "\0");
-	var = wildcard_values((const char *)arg.data);
-	if (*var)
+	if (strchar((const char *)arg.data, '*'))
 	{
-		i = -1;
-		while (var[++i])
+		var = wildcard_values((const char *)arg.data);
+		if (*var)
 		{
-			str = strdupe(var[i]);
-			v_push(&cmd->argv, &str);
+			i = -1;
+			while (var[++i])
+			{
+				str = strdupe(var[i]);
+				v_push(&cmd->argv, &str);
+			}
+			free(arg.data);
 		}
-		free(arg.data);
+		else
+			v_push(&cmd->argv, &arg.data);
+		free_wildcard_values(var);
 	}
 	else
 		v_push(&cmd->argv, &arg.data);
-	free_wildcard_values(var);
 }
 
 size_t	buildwrd(t_cmdvec *cmd, t_token *tokens, size_t i)

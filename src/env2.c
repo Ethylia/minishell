@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 13:11:04 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/30 11:02:07 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/30 11:26:10 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	update_env(char ***env, const char *var)
 			tmp = concatstr(2, (*env)[i], strchar(var, '+') + 2);
 			free((*env)[i]);
 			(*env)[i] = tmp;
-			return ;	
+			return ;
 		}
 		i++;
 	}
