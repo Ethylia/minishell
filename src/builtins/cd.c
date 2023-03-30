@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
+/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 16:30:41 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/30 07:54:16 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/30 15:06:11 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int	bi_cd(const int argc, char *const argv[], char **envp)
 		return (ERROR);
 	}
 	free(resolved_path);
-	update_oldpwd((char **)envp);
-	update_pwd((char **)envp);
+	update_oldpwd();
+	update_pwd();
 	return (SUCCESS);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
+/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 12:34:56 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/30 07:40:00 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/30 15:06:37 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define CD_H
 
 void	updateps1(const char *path);
-int		update_oldpwd(char **envp);
-int		update_pwd(char **envp);
+int		update_oldpwd(void);
+int		update_pwd(void);
 
 #endif

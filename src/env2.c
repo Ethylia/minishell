@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env2.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
+/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 13:11:04 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/30 11:26:10 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/30 14:49:03 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ char const	*get_var(char *const envp[], char const *var)
 	if (!envp)
 		return (NULL);
 	i = 0;
-	while (envp[i])
+	while (envp && envp[i])
 	{
 		if (is_same_var(envp[i], var))
 			return (envp[i] + strln_del(envp[i], '=') + 1);
