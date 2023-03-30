@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 15:11:02 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/30 09:05:27 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/30 16:01:05 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,29 @@ static int	is_digit(const char c)
 
 static int	is_number(const char *str)
 {
-	if (*str == '-')
-		str++;
-	if (!*str)
+	size_t	sl;
+	int		n;
+	int		z;
+
+	sl = 0;
+	n = 0;
+	while (is_ws(*str))
+		++str;
+	if (*str == '-' || *str == '+')
+		if (*str++ == '-')
+			n = !n;
+	z = 0;
+	if (*str == '0')
+		z = 1;
+	while (*str == '0')
+		++str;
+	while (is_digit(str[sl]))
+		++sl;
+	if (sl > 19 || (!sl && !z) || (!!str[sl]))
 		return (0);
-	while (*str)
-		if (!is_digit(*str++))
+	if (sl == 19)
+		if ((!n && strcmp(str, "9223372036854775807") > 0)
+			|| (n && strcmp(str, "9223372036854775808") > 0))
 			return (0);
 	return (1);
 }
