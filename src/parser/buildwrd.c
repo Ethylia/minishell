@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:55:11 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/29 16:24:07 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/30 11:07:26 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,13 @@ static size_t	insertargs(t_vector *argv, t_vector *arg, const char *str)
 	{
 		if (is_ws(str[i]))
 		{
+			while (is_ws(str[i]))
+				++i;
+			if (!str[i])
+				break ;
 			v_push(arg, "\0");
 			v_push(argv, &arg->data);
 			v_init(arg, sizeof(char), 16);
-			while (is_ws(str[i]))
-				++i;
 		}
 		else
 			v_push(arg, str + i++);
@@ -43,7 +45,8 @@ size_t	buildtd(t_vector *argv, t_vector *arg, t_token *token)
 {
 	const char	*var;
 
-	if (token->type & (tdelim | tdqts | tqts) || !token->type)
+	if (token->type & (tdelim | tdqts | tqts)
+		|| (token->type & (twrd) && token->val[0] == '=') || !token->type)
 	{
 		if ((!token->type) || ((token - 1)->quote == '\"')
 			|| !(token->type & (tdqts | tqts) && token->quote != '\''))
@@ -106,9 +109,6 @@ size_t	buildwrd(t_cmdvec *cmd, t_token *tokens, size_t i)
 	while (tokens[i].type
 		&& (tokens[i].type & (twrd | td | tqts | tdqts) || tokens[i].quote))
 		i += buildarg(&cmd->argv, &arg, &tokens[i]);
-	if (arg.size)
-		pushvalue(cmd, arg);
-	else
-		free(arg.data);
+	pushvalue(cmd, arg);
 	return (i);
 }

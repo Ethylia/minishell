@@ -6,10 +6,11 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 09:28:31 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/30 09:43:25 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/30 10:59:54 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include "util/util.h"
 #include "data.h"
 #include "env.h"
@@ -46,3 +47,26 @@ void	update_shlvl(void)
 		free(shlvl);
 	}
 }
+
+int	is_same_var(char const *v1, char const *v2)
+{
+	return (strcmp_del(v1, v2, '=') == 0);
+}
+
+int	is_append_var(char const *v1, char const *v2)
+{
+	size_t	i;
+
+	i = 0;
+	while (v1[i] && v2[i])
+	{
+		if (v1[i] == '='
+			&& (v2[i] == '+' && v2[i + 1] == '='))
+			return (1);
+		if (v1[i] != v2[i])
+			return (0);
+		i++;
+	}
+	return (0);
+}
+

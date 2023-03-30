@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 15:39:27 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/30 08:59:40 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/30 10:39:11 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	stralphanumunder(const char *c)
 	size_t	i;
 
 	i = 0;
-	while (c[i] && c[i] != '=')
+	while (c[i] && (c[i] != '=' && !(c[i] == '+' && c[i + 1] == '=')))
 	{
 		if (!isalphaunder(c[i]) && (c[i] < '0' || c[i] > '9'))
 			return (0);

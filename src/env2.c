@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env2.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 13:11:04 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/29 16:06:26 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/30 11:02:07 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,19 @@
 
 size_t	env_len(const char **env);
 
-int	is_same_var(char const *v1, char const *v2)
+static char	*remove_plus(const char *var)
 {
-	return (strcmp_del(v1, v2, '=') == 0);
+	size_t	i;
+	int		removed_plus;
+
+	removed_plus = 0;
+	i = 0;
+	while (var[i] && var[i] != '+' && var[i + 1] != '=')
+		i++;
+	return (concatstr_ln(2, var, i, var + i + 1, strln(var + i + 1)));
 }
 
-static void	append_env(char ***env, const char *var)
+void	append_env(char ***env, const char *var)
 {
 	size_t	len;
 	char	**res;
@@ -31,7 +38,10 @@ static void	append_env(char ***env, const char *var)
 	res = malloc(sizeof(*res) * (len + 2));
 	if (!res)
 		exit(EXIT_FAILURE);
-	tmp = strdupe(var);
+	if (strchar(var, '+') && strchar(var, '+')[1] == '=')
+		tmp = remove_plus(var);
+	else
+		tmp = strdupe(var);
 	memcopy(res, *env, sizeof(*res) * (len));
 	res[len] = tmp;
 	res[len + 1] = NULL;
@@ -50,13 +60,16 @@ void	update_env(char ***env, const char *var)
 		if (is_same_var((*env)[i], var))
 		{
 			tmp = strdupe(var);
-			if (!tmp)
-			{
-
-			}
 			free((*env)[i]);
 			(*env)[i] = tmp;
 			return ;
+		}
+		else if (is_append_var((*env)[i], var))
+		{
+			tmp = concatstr(2, (*env)[i], strchar(var, '+') + 2);
+			free((*env)[i]);
+			(*env)[i] = tmp;
+			return ;	
 		}
 		i++;
 	}
