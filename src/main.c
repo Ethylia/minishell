@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 07:57:50 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/30 08:14:03 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/30 09:42:38 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	exec_cmd(t_token *tokens)
 	if (n->type & (tor | tand | tpipe))
 	{
 		write(STDERR_FILENO, "minishell: syntax error\n", 24);
-		return (-1);
+		return (258);
 	}
 	if (!buildcmd(tokens, &(getdata()->cmd)))
 	{
@@ -114,6 +114,7 @@ static t_data	*init_data(const char **envp)
 	path = getcwd(NULL, 0);
 	if (!path)
 		exit_error("");
+	update_shlvl();
 	rl_outstream = stderr;
 	updateps1(path);
 	data->isinteractive = isatty(STDIN_FILENO);

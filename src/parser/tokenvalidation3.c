@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenvalidation3.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 09:47:52 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/29 16:33:30 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/30 09:16:01 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ static t_token	*find_token_error(t_token *tokens)
 		open_p += (tokens[i].type == tpin) - (tokens[i].type == tpout);
 		if (open_p < 0)
 			return (tokens + i);
-		if (tokens[i].type & (tpipe | tor | tand | tpin)
-			&& !next_to_word(tokens + i) && !next_to_redir(tokens + i)
-			&& !next_to(tokens + i, tpin))
+		if (tokens[i].type & (tpipe | tor | tand | tpin) && (i == 0
+			|| (!next_to_word(tokens + i) && !next_to_redir(tokens + i)
+			&& !next_to(tokens + i, tpin))))
 			return (tokens + i + 1);
 		else if (is_redir(tokens + i) && !next_to_word(tokens + i))
 			return (tokens + i + 1);

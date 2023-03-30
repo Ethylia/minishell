@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 15:11:02 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/30 08:14:37 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/30 09:05:27 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include "data.h"
 #include "error.h"
 #include "util/util.h"
+#include "def.h"
 
 static int	is_digit(const char c)
 {
@@ -36,11 +37,12 @@ static int	is_number(const char *str)
 	return (1);
 }
 
-int	bi_exit(const int argc, char *const argv[], char **envp)
+int	bi_exit(const int argc, char *const argv[],
+	__attribute__((unused))char **envp)
 {
 	const unsigned char	exit_status = atouc(get_var(getdata()->local_env, "?"));
+	unsigned char		e;
 
-	(void) envp;
 	if (getdata()->isinteractive)
 		write(STDERR_FILENO, "exit\n", 5);
 	if (argc < 2)
@@ -57,9 +59,10 @@ int	bi_exit(const int argc, char *const argv[], char **envp)
 	if (argc > 2)
 	{
 		write(STDERR_FILENO, "minishell: exit: too many arguments\n", 36);
-		return (EXIT_FAILURE);
+		return (ERROR);
 	}
+	e = atouc(argv[1]);
 	freedata();
-	exit(atouc(argv[1]));
+	exit(e);
 	return (0);
 }

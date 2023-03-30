@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 12:48:23 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/23 16:48:59 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/30 09:16:12 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,30 @@ static void	print_er(const char *str)
 	write(STDERR_FILENO, "': not a valid identifier\n", 26);
 }
 
+static int	penv(char **envp)
+{
+	size_t	i;
+
+	if (!envp)
+		return (ERROR);
+	i = -1;
+	while (envp[++i])
+	{
+		write(STDOUT_FILENO, "declare -x ", 11);
+		write(STDOUT_FILENO, envp[i], strln_del(envp[i], '=') + 1);
+		write(STDOUT_FILENO, "\"", 1);
+		write(STDOUT_FILENO, envp[i] + strln_del(envp[i], '=') + 1,
+			strln(envp[i] + strln_del(envp[i], '=') + 1));
+		write(STDOUT_FILENO, "\"", 1);
+		write(STDOUT_FILENO, "\n", 1);
+	}
+	return (SUCCESS);
+}
+
 int	bi_export(const int argc, char *const argv[], char **envp)
 {
-	(void) envp;
 	if (argc < 2)
-		return (ERROR);
+		return (penv(envp));
 	if (!isalphaunder(argv[1][0]) || !stralphanumunder(argv[1]))
 	{
 		print_er(argv[1]);

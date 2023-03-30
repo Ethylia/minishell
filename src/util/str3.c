@@ -6,12 +6,13 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 15:39:27 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/30 08:15:59 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/30 08:59:40 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "stddef.h"
-#include "stdlib.h"
+#include <stddef.h>
+#include <stdlib.h>
+#include <unistd.h>
 
 int	isalphaunder(char c)
 {
@@ -79,11 +80,11 @@ char	*intoa(int n)
 
 unsigned char	atouc(const char *str)
 {
-	unsigned char	res;
-	int				sign;
+	ssize_t	res;
+	int		sign;
 
 	if (!str)
-		return (EXIT_FAILURE);
+		return (0);
 	sign = 1;
 	if (*str == '-')
 	{

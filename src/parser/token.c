@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 13:09:15 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/29 16:29:54 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/30 09:22:48 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,16 @@ static size_t	createtoken(t_token *token, char *line, char q)
 		return (quotewrd(token));
 	if ((token->type == twrd && token->val[0] == '?')
 		|| (token->type == twrd && token->val[0] == '$')
-		|| (token->type == twrd && token->val[0] == '*'))
+		|| (token->type == twrd && token->val[0] == '*')
+		|| (token->type == twrd && token->val[0] == '='))
 		return (token->len = 1);
 	i = (token->type == thdoc || token->type == tapp
 			|| token->type == tor || token->type == tand)
 		+ !(token->type == tws || token->type == twrd);
 	if (token->type != tws && token->type != twrd)
 		return (token->len = i);
-	while (line[i] && !(line[i] == '\'' && q == '\"') && !(line[i] == '*')
+	while (line[i] && !(line[i] == '\'' && q == '\"')
+		&& !(line[i] == '*') && !(line[i] == '=')
 		&& !(line[i] == '\"' && q == '\'') && gettoken(line + i) == token->type)
 		++i;
 	return (token->len = i);
@@ -68,7 +70,7 @@ static size_t	counttokens(char *line)
 	{
 		t = gettoken(line);
 		if ((t == twrd && line[0] == '?') || (t == twrd && line[0] == '$')
-			|| (t == twrd && line[0] == '*'))
+			|| (t == twrd && line[0] == '*') || (t == twrd && line[0] == '='))
 		{
 			++line;
 			++n;
@@ -77,7 +79,8 @@ static size_t	counttokens(char *line)
 		line += (t == thdoc || t == tapp
 				|| t == tor || t == tand) + !(t == tws || t == twrd);
 		if (t == tws || t == twrd)
-			while (line[0] && line[0] != '*' && gettoken(line) == t)
+			while (line[0] && line[0] != '*'
+				&& line[0] != '=' && gettoken(line) == t)
 				++line;
 		++n;
 	}

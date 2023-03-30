@@ -12,6 +12,7 @@ SRC_FILES	=	builtins/builtins.c \
 				data.c \
 				env1.c \
 				env2.c \
+				env3.c \
 				error.c \
 				main.c \
 				parser/parse.c \

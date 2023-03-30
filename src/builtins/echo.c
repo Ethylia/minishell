@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 11:15:18 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/22 14:28:06 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/30 08:57:11 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,34 @@ struct s_options
 	int	arg_start;
 };
 
-static struct s_options	parse_option(char *option)
+static int	is_option(char *arg)
+{
+	size_t	i;
+
+	i = 0;
+	if (arg[i++] != '-')
+		return (0);
+	while (arg[i])
+	{
+		if (arg[i] != 'n')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+static struct s_options	parse_option(char *const argv[])
 {
 	struct s_options	res;
+	size_t				i;
 
-	if (strcmp(option, "-n") == 0)
+	i = 1;
+	res.end_nl = 1;
+	res.arg_start = i;
+	while (argv[i] && is_option(argv[i]))
 	{
-		res.arg_start = 2;
 		res.end_nl = 0;
-	}
-	else
-	{
-		res.arg_start = 1;
-		res.end_nl = 1;
+		res.arg_start = ++i;
 	}
 	return (res);
 }
@@ -48,7 +63,7 @@ int	bi_echo(const int argc, char *const argv[], char **envp)
 		write(STDOUT_FILENO, "\n", 1);
 		return (SUCCESS);
 	}
-	opts = parse_option(argv[1]);
+	opts = parse_option(argv);
 	i = opts.arg_start;
 	while (i < argc)
 	{
