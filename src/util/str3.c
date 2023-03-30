@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   str3.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 15:39:27 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/29 16:11:42 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/30 08:15:59 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,27 @@ char	*intoa(int n)
 	}
 	str[--len] = n + '0';
 	return (str);
+}
+
+unsigned char	atouc(const char *str)
+{
+	unsigned char	res;
+	int				sign;
+
+	if (!str)
+		return (EXIT_FAILURE);
+	sign = 1;
+	if (*str == '-')
+	{
+		sign = -1;
+		str++;
+	}
+	res = 0;
+	while (*str)
+	{
+		res *= 10;
+		res += *str - '0';
+		str++;
+	}
+	return (sign * res);
 }

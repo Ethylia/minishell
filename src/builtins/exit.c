@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 15:11:02 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/24 16:01:31 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/30 08:14:37 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,36 +36,13 @@ static int	is_number(const char *str)
 	return (1);
 }
 
-static unsigned char	atouc(const char *str)
-{
-	unsigned char	res;
-	int				sign;
-
-	if (!str)
-		return (EXIT_FAILURE);
-	sign = 1;
-	if (*str == '-')
-	{
-		sign = -1;
-		str++;
-	}
-	res = 0;
-	while (*str)
-	{
-		res *= 10;
-		res += *str - '0';
-		str++;
-	}
-	return (sign * res);
-}
-
 int	bi_exit(const int argc, char *const argv[], char **envp)
 {
 	const unsigned char	exit_status = atouc(get_var(getdata()->local_env, "?"));
 
 	(void) envp;
 	if (getdata()->isinteractive)
-		write(STDOUT_FILENO, "exit\n", 5);
+		write(STDERR_FILENO, "exit\n", 5);
 	if (argc < 2)
 	{
 		freedata();

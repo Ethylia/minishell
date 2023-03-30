@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 07:57:50 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/30 07:54:46 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/30 08:14:03 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,5 +148,5 @@ int	main(int argc, __attribute__((unused))char **argv, char **envp)
 		line = displayprompt();
 	}
 	freedata();
-	return (EXIT_SUCCESS);
+	return (atouc(get_var(getdata()->local_env, "?")));
 }
