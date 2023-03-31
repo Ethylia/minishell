@@ -3,17 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
+/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 15:11:02 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/30 16:01:05 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/31 09:10:13 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include <unistd.h>
-#include <readline/readline.h>
-#include "readline_extra.h"
 #include "env.h"
 #include "data.h"
 #include "error.h"
@@ -25,7 +22,7 @@ static int	is_digit(const char c)
 	return (c >= '0' && c <= '9');
 }
 
-static int	is_number(const char *str)
+static int	is_long_long(const char *str)
 {
 	size_t	sl;
 	int		n;
@@ -67,7 +64,7 @@ int	bi_exit(const int argc, char *const argv[],
 		freedata();
 		exit(exit_status);
 	}
-	if (!is_number(argv[1]))
+	if (!is_long_long(argv[1]))
 	{
 		print_err2("exit", argv[1], "numeric argument required");
 		freedata();

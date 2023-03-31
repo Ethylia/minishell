@@ -3,19 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
+/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 11:33:44 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/30 15:33:40 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/31 09:19:50 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>	// getcwd, write
-#include <stdio.h>	// printf
-#include <stdlib.h>	// free
 #include "util/util.h"
 #include "env.h"
-#include "error.h"
 #include "def.h"
 
 int	bi_pwd(const int argc, char *const argv[], char **envp)

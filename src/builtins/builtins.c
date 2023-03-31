@@ -3,20 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
+/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 09:03:29 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/28 15:39:58 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/31 09:03:55 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser/cmd.h"
-#include "util/util.h"
-#include "def.h"
 #include "builtins.h"
-#include "env.h"
-#include "data.h"
-#include "redir.h"
+#include "util/util.h"
 
 const char	**get_builtins_names(void)
 {

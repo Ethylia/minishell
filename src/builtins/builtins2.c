@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
+/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 14:16:22 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/23 15:40:55 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/31 09:03:26 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@
 #include "redir.h"
 #include "def.h"
 #include "data.h"
-#include "env.h"
-#include "redir.h"
 
 static int	get_argc(char *const argv[])
 {

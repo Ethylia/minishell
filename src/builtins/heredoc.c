@@ -6,18 +6,16 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 13:29:26 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/30 11:58:13 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/31 09:17:16 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <readline/readline.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <stdio.h>
-#include "../parser/cmd.h"
-#include "../util/util.h"
-#include "../redir.h"
-#include "../def.h"
+#include <stdlib.h> // free
+#include <unistd.h> // pipe, close
+#include "util/util.h"
+#include "redir.h"
+#include "def.h"
 
 int	bi_heredoc(const char *eof)
 {

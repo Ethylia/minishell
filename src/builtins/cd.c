@@ -6,16 +6,16 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 16:30:41 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/31 08:56:49 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/31 09:01:42 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>	// free
 #include <unistd.h>	// write
+#include <stdio.h>	// perror
 #include "../util/util.h"
 #include "../def.h"
 #include "../env.h"
-#include "data.h"
 #include "cd.h"
 
 #define MSG_OLDPWD_NOT_SET "minishell: cd: OLDPWD not set\n"
