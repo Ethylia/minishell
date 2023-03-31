@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 16:30:41 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/30 15:06:11 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/31 08:56:49 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,17 +61,11 @@ static char	*resolve_home(char **envp, char *argv)
 	return (path);
 }
 
-// if stdin: don't cd
 // no arg: cd $(HOME)
 // arg1: path
 // arg2+: ignored
-
 // ~							: cd $HOME
 // -							: cd $OLDPWD, pwd
-// /							: separator
-// .							: (pwd)
-// ..							: (remove last dir of pwd)
-// does not start with /		: modifies pwd
 // set $PWD $OLDPWD
 int	bi_cd(const int argc, char *const argv[], char **envp)
 {
