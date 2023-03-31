@@ -6,12 +6,11 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 07:29:06 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/29 16:11:52 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/31 09:34:11 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include "data.h"
 #include "vector.h"
 #include "util.h"
 

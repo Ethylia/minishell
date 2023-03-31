@@ -6,14 +6,12 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 15:19:28 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/29 16:11:31 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/31 09:28:23 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
 #include <stdlib.h>
 #include "util.h"
-#include "data.h"
 
 char	*strdupe(const char *s1)
 {

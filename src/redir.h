@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
+/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 11:05:10 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/23 13:59:01 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/31 09:27:52 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,12 @@
 
 # include <unistd.h>
 # include <fcntl.h>
+# include "parser/cmd.h"
 
 # define NO_FILE -1
-// redir output mode is defined by umask
+// redir output mode is normally defined by umask
 //	e.g. the mask 0022 gives the mode 0755
+//	here we define it as 0755
 # define REDIROUT_MODE 0755
 
 int	redir_input(t_cmd *cmd, t_pipe *prev_pipe);

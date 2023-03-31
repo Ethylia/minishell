@@ -6,11 +6,10 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 15:39:27 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/30 10:39:11 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/31 09:34:38 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
 #include <stdlib.h>
 #include <unistd.h>
 
@@ -54,6 +53,7 @@ size_t	numlen(int n)
 	return (len);
 }
 
+// int to ascii
 char	*intoa(int n)
 {
 	char	*str;
@@ -78,6 +78,7 @@ char	*intoa(int n)
 	return (str);
 }
 
+// ascii to unsigned char
 unsigned char	atouc(const char *str)
 {
 	ssize_t	res;
