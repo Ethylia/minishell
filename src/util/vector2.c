@@ -1,23 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   readline_extra.h                                   :+:      :+:    :+:   */
+/*   vector2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/20 11:41:51 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/31 16:58:15 by francoma         ###   ########.fr       */
+/*   Created: 2023/03/27 07:29:06 by eboyce-n          #+#    #+#             */
+/*   Updated: 2023/03/31 16:08:08 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef READLINE_EXTRA_H
-# define READLINE_EXTRA_H
+#include <stdlib.h>
+#include "vector.h"
+#include "util.h"
 
-# include "util/vector.h"
-
-void	rl_replace_line(const char *s, int clear_undo);
-void	rl_clear_history(void);
-void	get_path_executables(const char *s, int p, t_vector *vec);
-char	**completion(const char *s, int start, int end);
-
-#endif
+void	v_pushelem(t_vector *v, void *data)
+{
+	if (v->size == v->capacity)
+	{
+		v->data = ralloc(v->data, v->capacity * v->elem_size * 2,
+				v->size * v->elem_size);
+		v->capacity *= 2;
+	}
+	memcopy(v->data + v->size * v->elem_size, &data, v->elem_size);
+	++(v->size);
+}

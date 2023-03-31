@@ -30,6 +30,7 @@ SRC_FILES	=	builtins/builtins.c \
 				pipeline.c \
 				prompt.c \
 				readline_extra.c \
+				readline_extra2.c \
 				redir.c \
 				sig.c \
 				util/concatstr1.c \
@@ -40,6 +41,7 @@ SRC_FILES	=	builtins/builtins.c \
 				util/str2.c \
 				util/str3.c \
 				util/vector.c \
+				util/vector2.c \
 				wildcard.c \
 				wildcard2.c
 

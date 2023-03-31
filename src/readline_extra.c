@@ -6,16 +6,17 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 12:23:54 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/31 10:04:02 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/31 17:00:40 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "util/util.h"
 #include "builtins/builtins.h"
 #include "def.h"
+#include "util/vector.h"
+#include "readline_extra.h"
 
-void	insertfirst(t_vector *vec, char *s)
+static void	insertfirst(t_vector *vec, char *s)
 {
 	char	*tmp;
 
@@ -24,7 +25,7 @@ void	insertfirst(t_vector *vec, char *s)
 	v_push(vec, &tmp);
 }
 
-char	*longuestcommon(t_vector *vec)
+static char	*longuestcommon(t_vector *vec)
 {
 	t_vector	str;
 	size_t		i;
@@ -37,7 +38,8 @@ char	*longuestcommon(t_vector *vec)
 		j = -1;
 		while (++j < vec->size - 1)
 		{
-			if (((char **)vec->data)[j + 1][i] != ((char **)vec->data)[j][i])
+			if (((char **)vec->data)[j + 1][i] != ((char **)vec->data)[j][i]
+				|| !((char **)vec->data)[j + 1][i])
 			{
 				v_push(&str, "\0");
 				return ((char *)str.data);
@@ -53,7 +55,6 @@ char	*longuestcommon(t_vector *vec)
 char	**completion(const char *s, int start, int end)
 {
 	t_vector	res;
-	char		*tmp;
 	size_t		i;
 
 	if (end - start <= 0 || !s || start)
@@ -61,13 +62,9 @@ char	**completion(const char *s, int start, int end)
 	i = -1;
 	v_init(&res, sizeof(char *), 8);
 	while (get_builtins_names()[++i])
-	{
 		if (!strncmp(get_builtins_names()[i], s, end - start))
-		{
-			tmp = strdupe(get_builtins_names()[i]);
-			v_push(&res, &tmp);
-		}
-	}
+			v_pushelem(&res, strdupe(get_builtins_names()[i]));
+	get_path_executables(s, end - start, &res);
 	if (res.size)
 	{
 		if (res.size > 1)

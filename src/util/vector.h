@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
+/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 09:34:29 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/29 12:42:34 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/31 16:11:50 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,6 @@ size_t	v_pushstrn(t_vector *arg, const char *str, size_t n);
 void	v_free_elems(t_vector *v);
 void	v_push(t_vector *v, const void *elem);
 size_t	v_pushstr(t_vector *arg, const char *str);
+void	v_pushelem(t_vector *v, void *data);
 
 #endif

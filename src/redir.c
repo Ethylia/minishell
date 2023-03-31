@@ -6,12 +6,12 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 10:23:51 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/31 10:06:18 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/31 17:01:51 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h> // dup2, close
-# include <fcntl.h> // open
+#include <fcntl.h> // open
 #include "builtins/builtins.h"
 #include "error.h"
 #include "redir.h"
