@@ -57,6 +57,8 @@ LDLIBS=-lreadline
 
 all: $(NAME)
 
+bonus: all
+
 norm:
 	norminette src/
 
