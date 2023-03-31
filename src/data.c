@@ -3,14 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   data.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
+/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 14:54:24 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/24 15:03:24 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/31 09:36:34 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "data.h"
 #include "env.h"
 #include "readline_extra.h"

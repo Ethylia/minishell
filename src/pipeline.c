@@ -3,29 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   pipeline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
+/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 08:46:35 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/30 11:50:37 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/31 10:01:13 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <fcntl.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <sys/wait.h>
-#include <signal.h>
-#include <readline/readline.h>
+#include <unistd.h> // close
 #include "builtins/builtins.h"
-#include "parser/cmd.h"
-#include "pipeline.h"
 #include "redir.h"
 #include "error.h"
 #include "path.h"
 #include "def.h"
 #include "env.h"
-#include "sig.h"
 #include "data.h"
 #include "util/util.h"
 

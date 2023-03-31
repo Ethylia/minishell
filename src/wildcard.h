@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   wildcard.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
+/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 11:43:24 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/23 09:09:59 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/31 10:07:02 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef WILDCARD_H
 # define WILDCARD_H
+
+# include <stddef.h>
 
 size_t	count_wildcard_values(const char *wildcard);
 int		matches_wildcard(const char *wildcard, const char *candidate);

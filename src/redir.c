@@ -6,16 +6,13 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 10:23:51 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/29 15:01:48 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/31 10:06:18 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <fcntl.h>
+#include <unistd.h> // dup2, close
+# include <fcntl.h> // open
 #include "builtins/builtins.h"
-#include "parser/token.h"
-#include "parser/cmd.h"
-#include "pipeline.h"
 #include "error.h"
 #include "redir.h"
 #include "def.h"

@@ -6,12 +6,12 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 14:40:05 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/29 16:05:43 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/31 09:52:59 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
+#include <stdio.h> // printf
+#include <stdlib.h>	// malloc
 #include "util/util.h"
 #include "env.h"
 

@@ -3,14 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   env3.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
+/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 09:28:31 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/30 14:45:12 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/31 09:54:52 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "util/util.h"
 #include "data.h"
 #include "env.h"

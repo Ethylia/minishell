@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
+/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 14:43:46 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/30 11:48:57 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/31 09:59:05 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
+#include <unistd.h>	// access
+#include <stdlib.h>	// free
 #include "env.h"
 #include "util/util.h"
 #include "data.h"

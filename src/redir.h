@@ -6,15 +6,13 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 11:05:10 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/31 09:27:52 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/31 10:05:41 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef REDIR_H
 # define REDIR_H
 
-# include <unistd.h>
-# include <fcntl.h>
 # include "parser/cmd.h"
 
 # define NO_FILE -1

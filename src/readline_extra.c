@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   readline_extra.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
+/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 12:23:54 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/30 15:15:03 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/31 10:04:02 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "readline_extra.h"
-#include "util/vector.h"
+#include <stdlib.h>
 #include "util/util.h"
 #include "builtins/builtins.h"
 #include "def.h"

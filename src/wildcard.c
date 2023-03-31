@@ -6,11 +6,10 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 11:39:40 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/23 10:02:19 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/31 10:06:45 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
 #include "util/util.h"
 
 static size_t	count_asterisks(const char *str)
