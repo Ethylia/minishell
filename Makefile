@@ -15,8 +15,10 @@ SRC_FILES	=	builtins/builtins.c \
 				env3.c \
 				error.c \
 				main.c \
+				parser/buildredir.c \
+				parser/buildwrd.c \
 				parser/parse.c \
-				parser/oldparse.c \
+				parser/parse2.c \
 				parser/parseutil.c \
 				parser/token.c \
 				parser/tokentype.c \
@@ -24,8 +26,6 @@ SRC_FILES	=	builtins/builtins.c \
 				parser/tokenvalidation1.c \
 				parser/tokenvalidation2.c \
 				parser/tokenvalidation3.c \
-				parser/buildwrd.c \
-				parser/buildredir.c \
 				path.c \
 				pipeline.c \
 				prompt.c \

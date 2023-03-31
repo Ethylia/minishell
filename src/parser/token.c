@@ -6,12 +6,11 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 13:09:15 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/30 09:22:48 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/31 10:14:48 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "token.h"
-
 #include "util/util.h"
 
 t_token	*findnext(t_token *tokens, enum e_tokens type)

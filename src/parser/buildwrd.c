@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   buildwrd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
+/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:55:11 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/30 16:10:44 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/31 10:12:32 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include <stdlib.h> // free
 #include "wildcard.h"
 #include "util/util.h"
 #include "util/vector.h"

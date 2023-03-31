@@ -6,15 +6,15 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 13:06:01 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/29 09:57:08 by francoma         ###   ########.fr       */
+/*   Updated: 2023/03/31 10:09:59 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TOKEN_H
 # define TOKEN_H
 
+# include <unistd.h>
 # include <stdlib.h>
-# include <stdio.h>
 
 enum e_tokens
 {

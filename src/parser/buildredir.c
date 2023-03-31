@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   buildredir.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
+/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 14:55:02 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/29 16:20:55 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/03/31 10:11:18 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 #include "util/util.h"
 #include "data.h"
 #include "env.h"
-#include "token.h"
 
 static int	wis_ambi(const char **var)
 {
