@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 13:09:15 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/31 10:14:48 by francoma         ###   ########.fr       */
+/*   Updated: 2023/04/04 11:04:51 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,9 @@ static size_t	createtoken(t_token *token, char *line, char q)
 		return (quotewrd(token));
 	if (token->type & tdqts && (q == '\'' || (!strchar(line + 1, '\"') && !q)))
 		return (quotewrd(token));
-	if ((token->type == twrd && token->val[0] == '?')
-		|| (token->type == twrd && token->val[0] == '$')
-		|| (token->type == twrd && token->val[0] == '*')
-		|| (token->type == twrd && token->val[0] == '='))
+	if ((token->type == twrd) && (token->val[0] == '?'
+			|| token->val[0] == '$' || token->val[0] == '*'
+			|| token->val[0] == '=' || token->val[0] == '/'))
 		return (token->len = 1);
 	i = (token->type == thdoc || token->type == tapp
 			|| token->type == tor || token->type == tand)
@@ -53,7 +52,7 @@ static size_t	createtoken(t_token *token, char *line, char q)
 	if (token->type != tws && token->type != twrd)
 		return (token->len = i);
 	while (line[i] && !(line[i] == '\'' && q == '\"')
-		&& !(line[i] == '*') && !(line[i] == '=')
+		&& !(line[i] == '*') && !(line[i] == '=') && !(line[i] == '/')
 		&& !(line[i] == '\"' && q == '\'') && gettoken(line + i) == token->type)
 		++i;
 	return (token->len = i);
@@ -69,7 +68,8 @@ static size_t	counttokens(char *line)
 	{
 		t = gettoken(line);
 		if ((t == twrd && line[0] == '?') || (t == twrd && line[0] == '$')
-			|| (t == twrd && line[0] == '*') || (t == twrd && line[0] == '='))
+			|| (t == twrd && line[0] == '*') || (t == twrd && line[0] == '=')
+			|| (t == twrd && line[0] == '/'))
 		{
 			++line;
 			++n;
@@ -78,7 +78,7 @@ static size_t	counttokens(char *line)
 		line += (t == thdoc || t == tapp
 				|| t == tor || t == tand) + !(t == tws || t == twrd);
 		if (t == tws || t == twrd)
-			while (line[0] && line[0] != '*'
+			while (line[0] && line[0] != '*' && line[0] != '/'
 				&& line[0] != '=' && gettoken(line) == t)
 				++line;
 		++n;
