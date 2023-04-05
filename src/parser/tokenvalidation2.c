@@ -6,15 +6,15 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 09:16:08 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/29 13:41:12 by francoma         ###   ########.fr       */
+/*   Updated: 2023/04/04 11:40:02 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "token.h"
+#include "tokenvalidation.h"
 
-int	is_redir(t_token *token)
+int	is_type(t_token *token, enum e_tokens type)
 {
-	return (token->type & (tdin | thdoc | tdout | tapp));
+	return (token->type & type && !token->quote);
 }
 
 int	is_word(t_token *token)
@@ -52,5 +52,5 @@ int	next_to(t_token *tokens, enum e_tokens type)
 
 	i = 1;
 	i += (tokens[i].type == tws);
-	return (tokens[i].type == type);
+	return (tokens[i].type == type && !tokens[i].quote);
 }

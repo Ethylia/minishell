@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 09:47:52 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/30 11:31:33 by francoma         ###   ########.fr       */
+/*   Updated: 2023/04/05 07:50:30 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,16 @@
 #include "util/util.h"
 #include "data.h"
 #include "env.h"
+
+int	is_redir(t_token *token)
+{
+	return (is_type(token, tdin | tdout | tapp | thdoc));
+}
+
+static int	is_delimpin(t_token *token)
+{
+	return (is_type(token, tpipe | tor | tand | tpin));
+}
 
 static void	print_token_error(t_token *t)
 {
@@ -39,16 +49,16 @@ static t_token	*find_token_error(t_token *toks)
 	i = -1;
 	while (toks[++i].type)
 	{
-		open_p += (toks[i].type == tpin) - (toks[i].type == tpout);
+		open_p += is_type(toks + i, tpin) - is_type(toks + i, tpout);
 		if (open_p < 0)
 			return (toks + i);
-		if (toks[i].type & (tpipe | tor | tand | tpin) && ((i == 0
-					&& toks[i].type != tpin) || (!next_to_word(toks + i)
-					&& !next_to_redir(toks + i) && !next_to(toks + i, tpin))))
+		if (is_delimpin(toks + i) && ((!i && !is_type(toks + i, tpin))
+				|| (!next_to_word(toks + i) && !next_to_redir(toks + i)
+					&& !next_to(toks + i, tpin))))
 			return (toks + i + 1);
 		else if (is_redir(toks + i) && !next_to_word(toks + i))
 			return (toks + i + 1);
-		else if (toks[i].type == tpout
+		else if (is_type(toks + i, tpout)
 			&& (next_to_word(toks + i) || next_to(toks + i, tpin)))
 			return (toks + i + 1);
 		else if (is_word(toks + i) && next_to(toks + i, tpin))
