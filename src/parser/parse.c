@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 08:38:33 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/30 12:31:25 by francoma         ###   ########.fr       */
+/*   Updated: 2023/04/05 11:32:52 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,13 @@ static size_t	buildhdoc(t_cmdvec *cmd, t_token *tokens, size_t i)
 
 	v_init(&arg, sizeof(char), 16);
 	redir.type = thdoc;
+	redir.quoted = 0;
 	while (tokens[i].type & (tws))
 		++i;
 	while (tokens[i].type && (!(tokens[i].type & (tdelim)) || tokens[i].quote))
 	{
+		if (tokens[i].type & (tqts | tdqts))
+			redir.quoted = 1;
 		if (!(tokens[i].type & (tqts | tdqts)) || tokens[i].quote)
 			i += v_pushstrn(&arg, tokens[i].val, tokens[i].len) * 0 + 1;
 		else
@@ -88,7 +91,7 @@ int	buildcmd(t_token *tokens, t_cmd *cmd)
 {
 	int				ret;
 	t_cmdvec		vec;
-	const t_redir	nullredir = {0, 0};
+	const t_redir	nullredir = {0, 0, 0};
 
 	initcmd(cmd);
 	initcmdvec(&vec);

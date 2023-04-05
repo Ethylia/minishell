@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 13:29:26 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/05 11:06:07 by francoma         ###   ########.fr       */
+/*   Updated: 2023/04/05 11:30:05 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "redir.h"
 #include "data.h"
 #include "def.h"
+#include "env.h"
 
 static void	sig_handler(int signo)
 {
@@ -26,9 +27,42 @@ static void	sig_handler(int signo)
 	exit(128 + signo);
 }
 
-void	bi_heredoc2(t_pipe p, const char *eof)
+static size_t	tdlen(const char *s)
+{
+	size_t	i;
+
+	i = 0;
+	while (s[i] && gettoken(s + i) == twrd && s[i] != '/' && s[i] != '*'
+		&& s[i] != '?' && s[i] != '=')
+		i++;
+	return (i);
+}
+
+size_t	writeline(const char *line, int quoted)
+{
+	size_t		i;
+	const char	*var;
+
+	if (*line == '$' && !quoted)
+	{
+		var = get_varn(getdata()->exported_env, line + 1, tdlen(line + 1));
+		if (!var)
+			get_varn(getdata()->local_env, line + 1, tdlen(line + 1));
+		if (var)
+			write(getdata()->backup_fd.write, var, strln(var));
+		return (tdlen(line + 1) + 1);
+	}
+	i = 0;
+	while (line[i] && (line[i] != '$' || quoted))
+		i++;
+	write(getdata()->backup_fd.write, line, i);
+	return (i);
+}
+
+void	bi_heredoc2(t_pipe p, const char *eof, int quoted)
 {
 	char	*line;
+	size_t	i;
 
 	close(p.read);
 	while (1)
@@ -36,7 +70,9 @@ void	bi_heredoc2(t_pipe p, const char *eof)
 		line = readline(HEREDOC_PS);
 		if (!line || strcmp(line, eof) == 0)
 			break ;
-		write(p.write, line, strln(line));
+		i = 0;
+		while (line[i])
+			i += writeline(line + i, quoted);
 		write(p.write, "\n", 1);
 		free(line);
 	}
@@ -45,7 +81,7 @@ void	bi_heredoc2(t_pipe p, const char *eof)
 	exit(EXIT_SUCCESS);
 }
 
-int	bi_heredoc(const char *eof)
+int	bi_heredoc(const char *eof, int quoted)
 {
 	t_pipe	p;
 	pid_t	pid;
@@ -62,6 +98,6 @@ int	bi_heredoc(const char *eof)
 			;
 		return (p.read);
 	}
-	bi_heredoc2(p, eof);
+	bi_heredoc2(p, eof, quoted);
 	return (NO_FILE);
 }

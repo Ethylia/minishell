@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 17:22:04 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/24 13:21:39 by francoma         ###   ########.fr       */
+/*   Updated: 2023/04/05 11:26:54 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int				bi_export(const int argc, char *const argv[], char **envp);
 int				bi_unset(const int argc, char *const argv[], char **envp);
 int				bi_env(const int argc, char *const argv[], char **envp);
 int				bi_exit(const int argc, char *const argv[], char **envp);
-int				bi_heredoc(const char *eof);
+int				bi_heredoc(const char *eof, int quoted);
 int				assignment(const char *str);
 
 const char		**get_builtins_names(void);
