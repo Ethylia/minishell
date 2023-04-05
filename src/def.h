@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 17:48:26 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/30 12:31:35 by francoma         ###   ########.fr       */
+/*   Updated: 2023/04/05 08:36:17 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # define SUCCESS 0
 # define ANY_CHILD -1
 # define NO_CHILD_LEFT -1
+# define NO_FILE -1
 
 # define NAME "minishell"
 # define HEREDOC_PS "> "

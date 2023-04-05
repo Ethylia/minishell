@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
+/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 14:54:39 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/24 14:59:36 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/04/05 08:34:02 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ typedef struct s_data
 	t_token	*tokens;
 	t_cmd	cmd;
 	int		isinteractive;
+	t_pipe	backup_fd;
 }	t_data;
 
 t_data	*getdata(void);
