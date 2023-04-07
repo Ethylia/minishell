@@ -6,11 +6,12 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 14:16:22 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/07 08:49:40 by francoma         ###   ########.fr       */
+/*   Updated: 2023/04/07 10:41:00 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>	// dup
+#include <stdio.h> // perror
 #include "util/util.h"
 #include "builtins.h"
 #include "redir.h"
@@ -33,14 +34,26 @@ static void	backup_fd(void)
 
 	data->backup_fd.read = dup(STDIN_FILENO);
 	data->backup_fd.write = dup(STDOUT_FILENO);
+	if (data->backup_fd.read == ERROR
+		|| data->backup_fd.write == ERROR)
+	{
+		freedata();
+		perror("backup_fd\n");
+		exit(EXIT_FAILURE);
+	}
 }
 
 static void	recover_fd_backup(void)
 {
 	t_data *const	data = getdata();
 
-	dup2(data->backup_fd.read, STDOUT_FILENO);
-	dup2(data->backup_fd.write, STDIN_FILENO);
+	if (dup2(data->backup_fd.read, STDIN_FILENO) != STDIN_FILENO
+		|| dup2(data->backup_fd.write, STDOUT_FILENO) != STDOUT_FILENO)
+	{
+		freedata();
+		perror("recover_fd_backup\n");
+		exit(EXIT_FAILURE);
+	}
 	close(data->backup_fd.read);
 	close(data->backup_fd.write);
 	data->backup_fd.read = NO_FILE;

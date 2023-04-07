@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 13:29:26 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/05 11:30:05 by francoma         ###   ########.fr       */
+/*   Updated: 2023/04/07 10:38:27 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,6 @@ int	bi_heredoc(const char *eof, int quoted)
 
 	if (pipe(p.pipe) == ERROR)
 		return (ERROR);
-	getdata()->backup_fd = p;
-	signal(SIGINT, sig_handler);
 	pid = fork();
 	if (pid != 0)
 	{
@@ -98,6 +96,8 @@ int	bi_heredoc(const char *eof, int quoted)
 			;
 		return (p.read);
 	}
+	signal(SIGINT, sig_handler);
+	getdata()->backup_fd = p;
 	bi_heredoc2(p, eof, quoted);
 	return (NO_FILE);
 }
