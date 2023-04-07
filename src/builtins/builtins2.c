@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 14:16:22 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/05 08:52:09 by francoma         ###   ########.fr       */
+/*   Updated: 2023/04/07 08:49:40 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ static void	recover_fd_backup(void)
 
 	dup2(data->backup_fd.read, STDOUT_FILENO);
 	dup2(data->backup_fd.write, STDIN_FILENO);
+	close(data->backup_fd.read);
+	close(data->backup_fd.write);
 	data->backup_fd.read = NO_FILE;
 	data->backup_fd.write = NO_FILE;
 }
