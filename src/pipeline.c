@@ -6,11 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 08:46:35 by francoma          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2023/04/07 11:31:10 by eboyce-n         ###   ########.fr       */
-=======
-/*   Updated: 2023/04/07 11:38:32 by francoma         ###   ########.fr       */
->>>>>>> 8facadbb4842bd1e09c4b02eaff6a27811e5b05c
+/*   Updated: 2023/04/07 13:00:49 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,15 +55,14 @@ static int	exec_cmd(t_cmd *cmd, t_pipe *prev_pipe, t_pipe *next_pipe)
 	const int	res = redir_input(cmd, prev_pipe);
 
 	if (res == ERROR - 1)
-		return (ERROR - 1);
+		return (0);
 	if (res == ERROR || redir_output(cmd, next_pipe) == ERROR)
 		exit_err(NULL);
 	if (is_builtin(cmd))
 	{
 		if (exec_builtin(cmd) == ERROR)
 			exit_notfound(NULL);
-		exitfree();
-		exit(EXIT_SUCCESS);
+		exitfree(EXIT_SUCCESS);
 	}
 	exec_path = resolve_exec_path(cmd->argv[0]);
 	if (!exec_path)
@@ -79,6 +74,16 @@ static int	exec_cmd(t_cmd *cmd, t_pipe *prev_pipe, t_pipe *next_pipe)
 	if (p && p[0] && !strchar(cmd->argv[0], '/'))
 		exit_notfound(exec_path);
 	exit_err(exec_path);
+	return (1);
+}
+#include <stdio.h>
+void	sigs(int sig)
+{
+	if (sig == SIGINT)
+	{
+		write(1, "ppppp", 5);
+		exit(255);
+	}
 }
 
 int	pipeline(t_cmd *cmd, t_pipe *prev_pipe)
@@ -91,7 +96,9 @@ int	pipeline(t_cmd *cmd, t_pipe *prev_pipe)
 		return (ERROR);
 	cmd_pid = fork();
 	if (cmd_pid == 0)
-		exec_cmd(cmd, prev_pipe, &next_pipe);
+		signal(SIGINT, sigs);
+	if (cmd_pid == 0 && !exec_cmd(cmd, prev_pipe, &next_pipe))
+		exitfree(255);
 	if (prev_pipe)
 		close_pipe(prev_pipe);
 	if (cmd->pipecmd)
