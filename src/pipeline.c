@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 08:46:35 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/31 10:01:13 by francoma         ###   ########.fr       */
+/*   Updated: 2023/04/07 11:38:32 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,15 @@ static void	exit_notfound(char *exec_path)
 }
 
 // cmd not found: currently displays "file or dir not found"
-static void	exec_cmd(t_cmd *cmd, t_pipe *prev_pipe, t_pipe *next_pipe)
+static int	exec_cmd(t_cmd *cmd, t_pipe *prev_pipe, t_pipe *next_pipe)
 {
 	char		*exec_path;
 	const char	*p;
+	const int	res = redir_input(cmd, prev_pipe);
 
-	if (redir_input(cmd, prev_pipe) == ERROR
-		|| redir_output(cmd, next_pipe) == ERROR)
+	if (res == ERROR - 1)
+		return (ERROR - 1);
+	if (res == ERROR || redir_output(cmd, next_pipe) == ERROR)
 		exit_err(NULL);
 	if (is_builtin(cmd))
 	{
