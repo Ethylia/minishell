@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 13:29:26 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/07 10:54:46 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/04/07 11:32:46 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@ static void	sig_handler(int signo)
 {
 	if (signo != SIGINT)
 		return ;
-	freedata();
-	exit(128 + signo);
+	exitfree(128 + signo);
 }
 
 static size_t	tdlen(const char *s)
@@ -79,9 +78,8 @@ void	bi_heredoc2(t_pipe p, const char *eof, int quoted)
 		write(p.write, "\n", 1);
 		free(line);
 	}
-	freedata();
 	close(p.write);
-	exit(EXIT_SUCCESS);
+	exitfree(EXIT_SUCCESS);
 }
 
 int	bi_heredoc(const char *eof, int quoted)

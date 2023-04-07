@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipeline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 08:46:35 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/31 10:01:13 by francoma         ###   ########.fr       */
+/*   Updated: 2023/04/07 11:31:10 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,22 +31,20 @@ static void	exit_err(char *exec_path)
 	if (exec_path)
 		print_err(exec_path);
 	free(exec_path);
-	freedata();
-	exit(EXIT_FAILURE);
+	exitfree(EXIT_FAILURE);
 }
 
 static void	exit_notfound(char *exec_path)
 {
 	char	*msg;
 
-	freedata();
 	msg = concatstr(4, NAME, ": ", exec_path, ": command not found\n");
 	free(exec_path);
 	if (!msg)
-		exit(EXIT_FAILURE);
+		exitfree(EXIT_FAILURE);
 	write(STDERR_FILENO, msg, strln(msg));
 	free(msg);
-	exit(127);
+	exitfree(127);
 }
 
 // cmd not found: currently displays "file or dir not found"
@@ -62,7 +60,7 @@ static void	exec_cmd(t_cmd *cmd, t_pipe *prev_pipe, t_pipe *next_pipe)
 	{
 		if (exec_builtin(cmd) == ERROR)
 			exit_notfound(NULL);
-		freedata();
+		exitfree();
 		exit(EXIT_SUCCESS);
 	}
 	exec_path = resolve_exec_path(cmd->argv[0]);

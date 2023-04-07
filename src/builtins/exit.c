@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 15:11:02 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/31 09:10:13 by francoma         ###   ########.fr       */
+/*   Updated: 2023/04/07 11:33:26 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,28 +55,21 @@ int	bi_exit(const int argc, char *const argv[],
 	__attribute__((unused))char **envp)
 {
 	const unsigned char	exit_status = atouc(get_var(getdata()->local_env, "?"));
-	unsigned char		e;
 
 	if (getdata()->isinteractive)
 		write(STDERR_FILENO, "exit\n", 5);
 	if (argc < 2)
-	{
-		freedata();
-		exit(exit_status);
-	}
+		exitfree(exit_status);
 	if (!is_long_long(argv[1]))
 	{
 		print_err2("exit", argv[1], "numeric argument required");
-		freedata();
-		exit(255);
+		exitfree(255);
 	}
 	if (argc > 2)
 	{
 		write(STDERR_FILENO, "minishell: exit: too many arguments\n", 36);
 		return (ERROR);
 	}
-	e = atouc(argv[1]);
-	freedata();
-	exit(e);
+	exitfree(atouc(argv[1]));
 	return (0);
 }

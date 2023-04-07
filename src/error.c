@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 10:51:16 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/31 09:55:20 by francoma         ###   ########.fr       */
+/*   Updated: 2023/04/07 11:30:40 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,5 @@ int	print_err2(const char *program, const char *val, const char *error)
 void	exit_error(const char *problem)
 {
 	print_err(problem);
-	freedata();
-	exit(EXIT_FAILURE);
+	exitfree(EXIT_FAILURE);
 }

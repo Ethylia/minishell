@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 14:54:24 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/05 10:48:20 by francoma         ###   ########.fr       */
+/*   Updated: 2023/04/07 11:34:23 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_data	*getdata(void)
 	return (&data);
 }
 
-void	freedata(void)
+void	exitfree(int status)
 {
 	t_data *const	data = getdata();
 
@@ -47,4 +47,5 @@ void	freedata(void)
 		close(data->backup_fd.read);
 	if (data->backup_fd.write != NO_FILE)
 		close(data->backup_fd.write);
+	exit(status);
 }

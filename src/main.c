@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 07:57:50 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/04/05 10:25:22 by francoma         ###   ########.fr       */
+/*   Updated: 2023/04/07 11:30:49 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,5 @@ int	main(int argc, __attribute__((unused))char **argv, char **envp)
 		free(line);
 		line = displayprompt();
 	}
-	freedata();
-	return (atouc(get_var(getdata()->local_env, "?")));
+	exitfree(atouc(get_var(getdata()->local_env, "?")));
 }

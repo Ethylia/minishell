@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 14:54:39 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/05 10:25:16 by francoma         ###   ########.fr       */
+/*   Updated: 2023/04/07 11:34:19 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,6 @@ typedef struct s_data
 }	t_data;
 
 t_data	*getdata(void);
-void	freedata(void);
+void	exitfree(int status);
 
 #endif

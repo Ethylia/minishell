@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 14:16:22 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/07 10:52:43 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/04/07 11:31:39 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,8 @@ static void	backup_fd(void)
 	if (data->backup_fd.read == ERROR
 		|| data->backup_fd.write == ERROR)
 	{
-		freedata();
 		perror("backup_fd\n");
-		exit(EXIT_FAILURE);
+		exitfree(EXIT_FAILURE);
 	}
 }
 
@@ -50,9 +49,8 @@ static void	recover_fd_backup(void)
 	if (dup2(data->backup_fd.read, STDIN_FILENO) != STDIN_FILENO
 		|| dup2(data->backup_fd.write, STDOUT_FILENO) != STDOUT_FILENO)
 	{
-		freedata();
 		perror("recover_fd_backup\n");
-		exit(EXIT_FAILURE);
+		exitfree(EXIT_FAILURE);
 	}
 	close(data->backup_fd.read);
 	close(data->backup_fd.write);
