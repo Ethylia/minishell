@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 13:29:26 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/07 10:38:27 by francoma         ###   ########.fr       */
+/*   Updated: 2023/04/07 10:54:46 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <readline/readline.h>
 #include <stdlib.h> // free
 #include <unistd.h> // pipe, close
+#include "prompt.h"
 #include "util/util.h"
 #include "redir.h"
 #include "data.h"
@@ -67,7 +68,9 @@ void	bi_heredoc2(t_pipe p, const char *eof, int quoted)
 	close(p.read);
 	while (1)
 	{
+		togglectl(0);
 		line = readline(HEREDOC_PS);
+		togglectl(1);
 		if (!line || strcmp(line, eof) == 0)
 			break ;
 		i = 0;
@@ -85,6 +88,7 @@ int	bi_heredoc(const char *eof, int quoted)
 {
 	t_pipe	p;
 	pid_t	pid;
+	int		status;
 
 	if (pipe(p.pipe) == ERROR)
 		return (ERROR);
@@ -92,9 +96,15 @@ int	bi_heredoc(const char *eof, int quoted)
 	if (pid != 0)
 	{
 		close(p.write);
-		while (waitpid(pid, NULL, 0) != pid)
+		while (waitpid(pid, &status, 0) != pid)
 			;
-		return (p.read);
+		if (WIFEXITED(status) && WEXITSTATUS(status) == EXIT_SUCCESS)
+			return (p.read);
+		else
+		{
+			close(p.read);
+			return (ERROR - 1);
+		}
 	}
 	signal(SIGINT, sig_handler);
 	getdata()->backup_fd = p;

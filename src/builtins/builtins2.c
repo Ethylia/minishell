@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 14:16:22 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/07 10:41:00 by francoma         ###   ########.fr       */
+/*   Updated: 2023/04/07 10:52:43 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,10 @@ int	exec_redir_builtin(t_cmd *cmd)
 	int			res;
 
 	backup_fd();
-	if (redir_input(cmd, NULL) == ERROR
-		|| redir_output(cmd, NULL) == ERROR)
+	res = redir_input(cmd, NULL);
+	if (res == ERROR - 1)
+		return (1);
+	if (res == ERROR || redir_output(cmd, NULL) == ERROR)
 		return (EXIT_FAILURE);
 	res = exec_builtin(cmd);
 	recover_fd_backup();

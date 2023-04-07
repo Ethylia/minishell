@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 10:23:51 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/07 10:19:55 by francoma         ###   ########.fr       */
+/*   Updated: 2023/04/07 10:50:49 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ int	redir_input(t_cmd *cmd, t_pipe *prev_pipe)
 			fd = bi_heredoc(cmd->redirin[i].str, cmd->redirin[i].quoted);
 		if (fd == ERROR)
 			return (print_err(cmd->redirin[i].str));
+		else if (fd == ERROR - 1)
+			return (ERROR - 1);
 		++i;
 	}
 	if (fd == NO_FILE)
