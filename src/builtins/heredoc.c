@@ -13,6 +13,8 @@
 #include <readline/readline.h>
 #include <stdlib.h> // free
 #include <unistd.h> // pipe, close
+#include <wait.h>
+#include <signal.h>
 #include "prompt.h"
 #include "util/util.h"
 #include "redir.h"
@@ -94,8 +96,7 @@ int	bi_heredoc(const char *eof, int quoted)
 	if (pid != 0)
 	{
 		close(p.write);
-		while (waitpid(pid, &status, 0) != pid)
-			;
+		waitpid(pid, &status, 0);
 		if (WIFEXITED(status) && WEXITSTATUS(status) == EXIT_SUCCESS)
 			return (p.read);
 		else

@@ -14,6 +14,7 @@
 # define DATA_H
 
 # include "parser/cmd.h"
+# include "util/pipe.h"
 
 typedef struct s_data
 {

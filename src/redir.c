@@ -45,15 +45,12 @@ int	redir_input(t_cmd *cmd, t_pipe *prev_pipe)
 		if (fd == ERROR)
 			return (print_err(cmd->redirin[i].str));
 		else if (fd == ERROR - 1)
-			return (ERROR - 1);
+			return (ERROR);
 		++i;
 	}
 	if (fd == NO_FILE)
-		return (SUCCESS);
-	if (dup2(fd, STDIN_FILENO) == ERROR)
-		return (ERROR);
-	close(fd);
-	return (SUCCESS);
+		return (0);
+	return (fd);
 }
 
 static int	handle_next_pipe(t_cmd *cmd, t_pipe *next_pipe)

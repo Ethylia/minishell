@@ -14,6 +14,7 @@
 # define PIPELINE_H
 
 # include "parser/cmd.h"
+# include "util/pipe.h"
 
 int	pipeline(t_cmd *cmd, t_pipe *prev_pipe);
 

@@ -11,8 +11,9 @@
 /* ************************************************************************** */
 
 #include <signal.h>
-#include <stdlib.h>				// NULL
-#include <readline/readline.h>	// rl_...
+#include <stdlib.h>
+#include <readline/readline.h>
+#include <wait.h>
 #include "readline_extra.h"
 #include "error.h"
 #include "def.h"

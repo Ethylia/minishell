@@ -12,6 +12,8 @@
 
 #include <unistd.h>
 #include <readline/readline.h>
+#include <readline/history.h>
+#include <wait.h>
 #include "readline_extra.h"
 #include "pipeline.h"
 #include "builtins/builtins.h"

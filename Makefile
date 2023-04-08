@@ -42,6 +42,7 @@ SRC_FILES	=	builtins/builtins.c \
 				util/str3.c \
 				util/vector.c \
 				util/vector2.c \
+				util/pipe.c \
 				wildcard.c \
 				wildcard2.c
 

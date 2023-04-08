@@ -17,19 +17,6 @@
 # include "token.h"
 # include "util/vector.h"
 
-typedef struct s_pipe
-{
-	union
-	{
-		int	pipe[2];
-		struct
-		{
-			int	read;
-			int	write;
-		};	
-	};
-}	t_pipe;
-
 enum e_OP
 {
 	OP_NONE,

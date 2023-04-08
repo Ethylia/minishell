@@ -11,6 +11,8 @@
 /* ************************************************************************** */
 
 #include <unistd.h> // close
+#include <wait.h>
+#include <signal.h>
 #include "builtins/builtins.h"
 #include "redir.h"
 #include "error.h"
@@ -20,10 +22,13 @@
 #include "data.h"
 #include "util/util.h"
 
-static void	close_pipe(t_pipe *p)
+static void	endpipeline(int	cmd_pid, int *res)
 {
-	close(p->read);
-	close(p->write);
+	waitpid(cmd_pid, res, 0);
+	if (!WIFEXITED(*res) && *res == SIGQUIT)
+		write(1, "Quit: 3\n", 8);
+	else if (WIFEXITED(*res))
+		*res = WEXITSTATUS(*res);
 }
 
 static void	exit_err(char *exec_path)
@@ -47,16 +52,12 @@ static void	exit_notfound(char *exec_path)
 	exitfree(127);
 }
 
-// cmd not found: currently displays "file or dir not found"
-static int	exec_cmd(t_cmd *cmd, t_pipe *prev_pipe, t_pipe *next_pipe)
+static int	exec_cmd(t_cmd *cmd, t_pipe *next_pipe)
 {
 	char		*exec_path;
 	const char	*p;
-	const int	res = redir_input(cmd, prev_pipe);
 
-	if (res == ERROR - 1)
-		return (0);
-	if (res == ERROR || redir_output(cmd, next_pipe) == ERROR)
+	if (redir_output(cmd, next_pipe) == ERROR)
 		exit_err(NULL);
 	if (is_builtin(cmd))
 	{
@@ -76,14 +77,6 @@ static int	exec_cmd(t_cmd *cmd, t_pipe *prev_pipe, t_pipe *next_pipe)
 	exit_err(exec_path);
 	return (1);
 }
-#include <stdio.h>
-void	sigs(int sig)
-{
-	if (sig == SIGINT)
-	{
-		exit(255);
-	}
-}
 
 int	pipeline(t_cmd *cmd, t_pipe *prev_pipe)
 {
@@ -93,22 +86,23 @@ int	pipeline(t_cmd *cmd, t_pipe *prev_pipe)
 
 	if (cmd->pipecmd && pipe(next_pipe.pipe) == ERROR)
 		return (ERROR);
+	res = redir_input(cmd, prev_pipe);
+	if (res == ERROR)
+		return (ERROR);
 	cmd_pid = fork();
-	if (cmd_pid == 0)
-		signal(SIGINT, sigs);
-	if (cmd_pid == 0 && !exec_cmd(cmd, prev_pipe, &next_pipe))
-		exitfree(255);
+	if (cmd_pid == 0 && res)
+	{
+		if (dup2(res, STDIN_FILENO) == ERROR)
+			exitfree(1);
+		close(res);
+	}
+	if (cmd_pid == 0 && !exec_cmd(cmd, &next_pipe))
+		exitfree(1);
 	if (prev_pipe)
 		close_pipe(prev_pipe);
 	if (cmd->pipecmd)
 		res = pipeline(cmd->pipecmd, &next_pipe);
 	else
-	{
-		waitpid(cmd_pid, &res, 0);
-		if (!WIFEXITED(res) && res == SIGQUIT)
-			write(1, "Quit: 3\n", 8);
-		else if (WIFEXITED(res))
-			res = WEXITSTATUS(res);
-	}
+		endpipeline(cmd_pid, &res);
 	return (res);
 }

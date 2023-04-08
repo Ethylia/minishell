@@ -19,9 +19,7 @@ size_t	env_len(const char **env);
 static char	*remove_plus(const char *var)
 {
 	size_t	i;
-	int		removed_plus;
 
-	removed_plus = 0;
 	i = 0;
 	while (var[i] && var[i] != '+' && var[i + 1] != '=')
 		i++;
