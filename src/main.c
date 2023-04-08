@@ -112,7 +112,7 @@ static t_data	*init_data(const char **envp)
 	if (!path)
 		exit_error("");
 	update_shlvl();
-	rl_outstream = stderr;
+	rl_outstream = stdout;
 	updateps1(path);
 	data->isinteractive = isatty(STDOUT_FILENO);
 	update_env(&data->local_env, "?=0");

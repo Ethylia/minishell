@@ -21,11 +21,15 @@
 #include "data.h"
 #include "def.h"
 #include "env.h"
+#include "sig.h"
 
 static void	sig_handler(int signo)
 {
 	if (signo != SIGINT)
+	{
+		rl_redisplay();
 		return ;
+	}
 	exitfree(128 + signo);
 }
 
@@ -95,16 +99,16 @@ int	bi_heredoc(const char *eof, int quoted)
 	pid = fork();
 	if (pid != 0)
 	{
+		// signal(SIGQUIT, SIG_IGN);
 		close(p.write);
 		waitpid(pid, &status, 0);
+		// init_sig_handlers();
 		if (WIFEXITED(status) && WEXITSTATUS(status) == EXIT_SUCCESS)
 			return (p.read);
 		else
-		{
-			close(p.read);
-			return (ERROR - 1);
-		}
+			return (close(p.read) * 0 + (ERROR - 1));
 	}
+	signal(SIGQUIT, sig_handler);
 	signal(SIGINT, sig_handler);
 	getdata()->backup_fd = p;
 	bi_heredoc2(p, eof, quoted);

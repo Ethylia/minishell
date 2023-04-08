@@ -24,7 +24,11 @@
 
 static void	endpipeline(int	cmd_pid, int *res)
 {
-	waitpid(cmd_pid, res, 0);
+	pid_t	pid;
+
+	pid = waitpid(cmd_pid, res, 0);
+	if (pid == -1)
+		*res = 2;
 	if (!WIFEXITED(*res) && *res == SIGQUIT)
 		write(1, "Quit: 3\n", 8);
 	else if (WIFEXITED(*res))

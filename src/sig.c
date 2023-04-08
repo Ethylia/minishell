@@ -23,15 +23,16 @@
 
 static void	sig_handler(int signo)
 {
-	if (signo == SIGINT && isatty(STDOUT_FILENO) && !rl_already_prompted)
+	if (signo == SIGINT && isatty(STDOUT_FILENO))
 	{
-		while (waitpid(-1, NULL, 0) != NO_CHILD_LEFT)
-			;
 		rl_replace_line("", 0);
 		write(1, "\n", 1);
-		rl_on_new_line();
-		rl_redisplay();
-		rl_already_prompted = 1;
+		if(waitpid(-1, NULL, 0) == NO_CHILD_LEFT)
+		{
+			rl_on_new_line();
+			rl_redisplay();
+			rl_already_prompted = 1;
+		}
 	}
 	else if (signo == SIGQUIT && isatty(STDOUT_FILENO))
 		rl_redisplay();
