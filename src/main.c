@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 07:57:50 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/04/10 08:53:51 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/04/10 09:45:41 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ static t_data	*init_data(const char **envp)
 	rl_attempted_completion_function = &completion;
 	data->backup_fd.read = NO_FILE;
 	data->backup_fd.write = NO_FILE;
+	data->misc = 0;
 	return (data);
 }
 

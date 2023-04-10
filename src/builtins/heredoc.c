@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 13:29:26 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/10 09:28:22 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/04/10 09:47:22 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ void	bi_heredoc2(t_pipe p, char *eof, int quoted)
 		free(line);
 	}
 	close(p.write);
-	free(eof);
 	exitfree(EXIT_SUCCESS);
 }
 
@@ -106,6 +105,7 @@ int	bi_heredoc(char *eof, int quoted, t_cmdvec *cmd)
 		else
 			return (close(p.read) * 0 + ERROR);
 	}
+	getdata()->misc = (void *)eof;
 	freecmdvec(cmd);
 	signal(SIGQUIT, sig_handler);
 	signal(SIGINT, sig_handler);
