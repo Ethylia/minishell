@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 08:46:35 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/10 08:01:21 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/04/10 09:03:00 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 #include "data.h"
 #include "util/util.h"
 
-static void	endpipeline(int	cmd_pid, int *res)
+static void	endpipeline(int cmd_pid, int *res)
 {
 	pid_t	pid;
 
