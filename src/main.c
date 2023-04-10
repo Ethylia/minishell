@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 07:57:50 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/04/10 08:02:32 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/04/10 08:53:51 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int	exec_cmd(t_token *tokens)
 	if (!buildcmd(tokens, &(getdata()->cmd)))
 	{
 		freecmd(&getdata()->cmd);
+		update_env(&(getdata()->local_env), "?=1");
 		return (-1);
 	}
 	if (is_builtin(&getdata()->cmd) && !(getdata()->cmd.pipecmd))
