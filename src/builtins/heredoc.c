@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 13:29:26 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/10 08:24:57 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/04/10 09:28:22 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ size_t	writeline(const char *line, int quoted)
 	return (i);
 }
 
-void	bi_heredoc2(t_pipe p, const char *eof, int quoted)
+void	bi_heredoc2(t_pipe p, char *eof, int quoted)
 {
 	char	*line;
 	size_t	i;
@@ -84,10 +84,11 @@ void	bi_heredoc2(t_pipe p, const char *eof, int quoted)
 		free(line);
 	}
 	close(p.write);
+	free(eof);
 	exitfree(EXIT_SUCCESS);
 }
 
-int	bi_heredoc(const char *eof, int quoted)
+int	bi_heredoc(char *eof, int quoted, t_cmdvec *cmd)
 {
 	t_pipe	p;
 	pid_t	pid;
@@ -105,6 +106,7 @@ int	bi_heredoc(const char *eof, int quoted)
 		else
 			return (close(p.read) * 0 + ERROR);
 	}
+	freecmdvec(cmd);
 	signal(SIGQUIT, sig_handler);
 	signal(SIGINT, sig_handler);
 	getdata()->backup_fd = p;

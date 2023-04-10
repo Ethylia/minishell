@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 08:38:33 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/04/10 08:30:35 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/04/10 09:28:27 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static size_t	buildhdoc(t_cmdvec *cmd, t_token *tokens, size_t i)
 	}
 	v_push(&arg, "\0");
 	redir.str = (char *)arg.data;
-	redir.fd = bi_heredoc(redir.str, redir.fd);
+	redir.fd = bi_heredoc(redir.str, redir.fd, cmd);
 	v_push(&cmd->redirin, &redir);
 	if (redir.fd == ERROR)
 		return (0);

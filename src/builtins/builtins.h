@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 17:22:04 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/05 11:26:54 by francoma         ###   ########.fr       */
+/*   Updated: 2023/04/10 09:29:05 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int				bi_export(const int argc, char *const argv[], char **envp);
 int				bi_unset(const int argc, char *const argv[], char **envp);
 int				bi_env(const int argc, char *const argv[], char **envp);
 int				bi_exit(const int argc, char *const argv[], char **envp);
-int				bi_heredoc(const char *eof, int quoted);
+int				bi_heredoc(char *eof, int quoted, t_cmdvec *cmd);
 int				assignment(const char *str);
 
 const char		**get_builtins_names(void);
