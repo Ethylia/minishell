@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   str.c                                              :+:      :+:    :+:   */
+/*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 15:24:11 by francoma          #+#    #+#             */
-/*   Updated: 2023/03/24 08:59:37 by francoma         ###   ########.fr       */
+/*   Updated: 2023/04/10 10:27:52 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 
 void	close_pipe(t_pipe *pipe)
 {
-	close(pipe->read);
-	close(pipe->write);
+	if (pipe->read != -1)
+		close(pipe->read);
+	if (pipe->write != -1)
+		close(pipe->write);
 }

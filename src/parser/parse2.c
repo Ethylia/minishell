@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 15:29:19 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/04/10 09:26:20 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/04/10 10:33:18 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,12 @@ int	freecmdvec(t_cmdvec *cmd)
 	v_free_elems(&cmd->argv);
 	i = -1;
 	while (++i < cmd->redirin.size)
+	{
+		if (((t_redir *)(cmd->redirin.data))[i].type == thdoc)
+			if (((t_redir *)(cmd->redirin.data))[i].fd > 2)
+				close(((t_redir *)(cmd->redirin.data))[i].fd);
 		free(((t_redir *)(cmd->redirin.data))[i].str);
+	}
 	free(cmd->redirin.data);
 	cmd->redirin.data = 0;
 	cmd->redirin.size = 0;
@@ -29,7 +34,7 @@ int	freecmdvec(t_cmdvec *cmd)
 		free(((t_redir *)(cmd->redirout.data))[i].str);
 	free(cmd->redirout.data);
 	cmd->redirout.data = 0;
-	cmd->redirout.size = 0;
+	cmd->redirout.size = 0; 
 	return (0);
 }
 

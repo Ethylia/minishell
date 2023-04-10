@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 14:54:24 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/10 09:47:56 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/04/10 10:21:13 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,10 @@ void	exitfree(int status)
 		close(data->backup_fd.read);
 	if (data->backup_fd.write != NO_FILE)
 		close(data->backup_fd.write);
+	if (data->heredoc_fd.read != NO_FILE)
+		close(data->heredoc_fd.read);
+	if (data->heredoc_fd.write != NO_FILE)
+		close(data->heredoc_fd.write);
 	free(data->misc);
 	exit(status);
 }
