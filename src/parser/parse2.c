@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 15:29:19 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/03/31 10:14:54 by francoma         ###   ########.fr       */
+/*   Updated: 2023/04/10 08:45:09 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,14 @@ int	freecmdvec(t_cmdvec *cmd)
 	return (0);
 }
 
+void	freecmd2(t_redir *redir)
+{
+	if (redir->type == thdoc)
+		if (redir->fd > 2)
+			close(redir->fd);
+	free(redir->str);
+}
+
 void	freecmd(t_cmd *cmd)
 {
 	size_t	i;
@@ -45,7 +53,7 @@ void	freecmd(t_cmd *cmd)
 	free(cmd->argv);
 	i = -1;
 	while (cmd->redirin && cmd->redirin[++i].type)
-		free(cmd->redirin[i].str);
+		freecmd2(&cmd->redirin[i]);
 	free(cmd->redirin);
 	i = -1;
 	while (cmd->redirout && cmd->redirout[++i].type)

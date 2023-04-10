@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 08:38:33 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/04/05 11:32:52 by francoma         ###   ########.fr       */
+/*   Updated: 2023/04/10 08:30:35 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include "util/util.h"
 #include "util/vector.h"
+#include "builtins/builtins.h"
 #include "cmd.h"
 #include "env.h"
 #include "data.h"
@@ -40,13 +41,13 @@ static size_t	buildhdoc(t_cmdvec *cmd, t_token *tokens, size_t i)
 
 	v_init(&arg, sizeof(char), 16);
 	redir.type = thdoc;
-	redir.quoted = 0;
+	redir.fd = 0;
 	while (tokens[i].type & (tws))
 		++i;
 	while (tokens[i].type && (!(tokens[i].type & (tdelim)) || tokens[i].quote))
 	{
 		if (tokens[i].type & (tqts | tdqts))
-			redir.quoted = 1;
+			redir.fd = 1;
 		if (!(tokens[i].type & (tqts | tdqts)) || tokens[i].quote)
 			i += v_pushstrn(&arg, tokens[i].val, tokens[i].len) * 0 + 1;
 		else
@@ -54,7 +55,10 @@ static size_t	buildhdoc(t_cmdvec *cmd, t_token *tokens, size_t i)
 	}
 	v_push(&arg, "\0");
 	redir.str = (char *)arg.data;
+	redir.fd = bi_heredoc(redir.str, redir.fd);
 	v_push(&cmd->redirin, &redir);
+	if (redir.fd == ERROR)
+		return (0);
 	return (i);
 }
 

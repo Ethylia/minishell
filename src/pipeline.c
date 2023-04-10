@@ -6,12 +6,11 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 08:46:35 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/07 13:06:39 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/04/10 08:01:21 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h> // close
-#include <wait.h>
 #include <signal.h>
 #include "builtins/builtins.h"
 #include "redir.h"

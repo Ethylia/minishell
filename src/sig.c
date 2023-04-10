@@ -6,14 +6,13 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 09:05:19 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/07 13:11:22 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/04/10 08:50:37 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <signal.h>
 #include <stdlib.h>
 #include <readline/readline.h>
-#include <wait.h>
 #include "readline_extra.h"
 #include "error.h"
 #include "def.h"
@@ -27,7 +26,7 @@ static void	sig_handler(int signo)
 	{
 		rl_replace_line("", 0);
 		write(1, "\n", 1);
-		if(waitpid(-1, NULL, 0) == NO_CHILD_LEFT)
+		if (waitpid(-1, NULL, WNOHANG) == -1)
 		{
 			rl_on_new_line();
 			rl_redisplay();

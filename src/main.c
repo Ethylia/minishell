@@ -6,14 +6,13 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 07:57:50 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/04/07 11:30:49 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/04/10 08:02:32 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <readline/readline.h>
 #include <readline/history.h>
-#include <wait.h>
 #include "readline_extra.h"
 #include "pipeline.h"
 #include "builtins/builtins.h"
@@ -112,7 +111,7 @@ static t_data	*init_data(const char **envp)
 	if (!path)
 		exit_error("");
 	update_shlvl();
-	rl_outstream = stdout;
+	rl_outstream = stderr;
 	updateps1(path);
 	data->isinteractive = isatty(STDOUT_FILENO);
 	update_env(&data->local_env, "?=0");

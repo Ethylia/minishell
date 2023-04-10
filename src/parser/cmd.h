@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 15:33:44 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/04/05 11:10:12 by francoma         ###   ########.fr       */
+/*   Updated: 2023/04/10 08:16:29 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ typedef struct s_redir
 {
 	char			*str;
 	enum e_tokens	type;
-	int				quoted;
+	int				fd;
 }	t_redir;
 
 typedef struct s_cmd

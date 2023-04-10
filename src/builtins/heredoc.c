@@ -6,14 +6,13 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 13:29:26 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/07 11:56:09 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/04/10 08:24:57 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <readline/readline.h>
 #include <stdlib.h> // free
 #include <unistd.h> // pipe, close
-#include <wait.h>
 #include <signal.h>
 #include "prompt.h"
 #include "util/util.h"
@@ -99,14 +98,12 @@ int	bi_heredoc(const char *eof, int quoted)
 	pid = fork();
 	if (pid != 0)
 	{
-		// signal(SIGQUIT, SIG_IGN);
 		close(p.write);
 		waitpid(pid, &status, 0);
-		// init_sig_handlers();
 		if (WIFEXITED(status) && WEXITSTATUS(status) == EXIT_SUCCESS)
 			return (p.read);
 		else
-			return (close(p.read) * 0 + (ERROR - 1));
+			return (close(p.read) * 0 + ERROR);
 	}
 	signal(SIGQUIT, sig_handler);
 	signal(SIGINT, sig_handler);

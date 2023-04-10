@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 10:23:51 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/07 10:50:49 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/04/10 08:25:55 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,9 @@ int	redir_input(t_cmd *cmd, t_pipe *prev_pipe)
 		if (cmd->redirin[i].type & tdin)
 			fd = open(cmd->redirin[i].str, O_RDONLY);
 		else
-			fd = bi_heredoc(cmd->redirin[i].str, cmd->redirin[i].quoted);
+			fd = cmd->redirin[i].fd;
 		if (fd == ERROR)
 			return (print_err(cmd->redirin[i].str));
-		else if (fd == ERROR - 1)
-			return (ERROR);
 		++i;
 	}
 	if (fd == NO_FILE)
