@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipeline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
+/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 08:46:35 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/10 09:03:00 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/04/11 09:10:56 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,12 @@ static void	endpipeline(int cmd_pid, int *res)
 	pid = waitpid(cmd_pid, res, 0);
 	if (pid == -1)
 		*res = 2;
-	if (!WIFEXITED(*res) && *res == SIGQUIT)
-		write(1, "Quit: 3\n", 8);
+	else if (WIFSIGNALED(*res))
+	{
+		*res = 128 + WTERMSIG(*res);
+		if (WTERMSIG(*res) == SIGQUIT)
+			write(1, "Quit: 3\n", 8);
+	}
 	else if (WIFEXITED(*res))
 		*res = WEXITSTATUS(*res);
 }
