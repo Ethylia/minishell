@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
+/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 15:29:19 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/04/10 10:33:18 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/04/11 09:13:43 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	freecmdvec(t_cmdvec *cmd)
 		free(((t_redir *)(cmd->redirout.data))[i].str);
 	free(cmd->redirout.data);
 	cmd->redirout.data = 0;
-	cmd->redirout.size = 0; 
+	cmd->redirout.size = 0;
 	return (0);
 }
 
