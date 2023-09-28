@@ -1,4 +1,0 @@
-redir should happen before fork but get that dup2 shit outta there for after fork
-readline flag for ctrl c to work more consistently
-fix ctrl C for the heredoc just figure that shit out later
-shit's wack yo
