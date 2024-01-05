@@ -1,4 +1,4 @@
-A shell written in C that mimicks bash. It features:
+A shell written in C that imitates bash. It features:
 
 .history
 
